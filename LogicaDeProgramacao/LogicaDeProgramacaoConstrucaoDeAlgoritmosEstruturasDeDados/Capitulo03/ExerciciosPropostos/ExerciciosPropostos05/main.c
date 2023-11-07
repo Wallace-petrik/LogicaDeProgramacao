@@ -6,7 +6,7 @@ int main(){
 
     int anoNasc, mesNasc,diaNasc;
     int anoAtual, mesAtual, diaAtual;
-    int idadeAnos;
+    int idadeAnos,idadeMeses,idadeDias;
 
     printf("\nEntre com a data de nascimento com dia, mês e ano separadamente!");
     printf("\nEntre com o dia: ");
@@ -27,13 +27,15 @@ int main(){
     printf("Entre com o ano: ");
         scanf("%d",&anoAtual);
 
-    if(mesAtual>=mesNasc){
-        printf("\nIdade em anos = %d",anoAtual-anoNasc);
-        printf("\nIdade em meses = %d",((anoAtual-anoNasc)*12)+(mesAtual-mesNasc));
-    }else{
-        printf("\nIdade em anos = %d",anoAtual-anoNasc-1);
-        printf("\nIdade em meses = %d",((anoAtual-anoNasc-1)*12)+mesAtual);
-    }
+
+    idadeAnos = anoAtual-anoNasc;
+    idadeMeses = idadeAnos*12;
+    idadeDias = idadeMeses*30;
+
+
+    printf("\nIdade em anos = %d aproximadamente.",idadeAnos);
+    printf("\nIdade em meses = %d aproximadamente.",idadeMeses);
+    printf("\nIdade em dias = %d aproximadamente.\n",idadeDias);
 
 
     return 0;
