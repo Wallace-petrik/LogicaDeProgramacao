@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include <locale.h>
-#include<math.h>
 
 int main(){
     setlocale(LC_ALL,"");
 
-    float H;
-    int i = -1,j = 0;
+    double h = 0;
+    int i = -1, j = 0;
 
-    while((i+=2)<=100 && (j++)<=50){
+    while((i+=2)<=99 && j++<=50){
 
-    printf("%d/%d = \n",i,j);
-
+        h+=((float)i/j);
 
     }
+
+    printf("\n%.2f",h);
 
     return 0;
 }
