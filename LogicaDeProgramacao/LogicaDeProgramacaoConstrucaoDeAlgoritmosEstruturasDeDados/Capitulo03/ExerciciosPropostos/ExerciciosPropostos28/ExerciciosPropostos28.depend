@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1700492018 source:c:\users\petrik\documents\meusrepositorios\logicadeprogramacao\logicadeprogramacao\logicadeprogramacaoconstrucaodealgoritmosestruturasdedados\capitulo03\exerciciospropostos\exerciciospropostos28\main.c
+	<stdio.h>
+	<math.h>
+	<locale.h>
+
