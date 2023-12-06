@@ -54,20 +54,3 @@ int main(){
 
     return 0;
 }
-
-
-
-
-
-
-/* if(controle==0){
-                controle=1;
-            }else{
-                if((cidade>=0 && cidade<=6) && (proxCidade>=0 &&proxCidade<=6)){
-
-                    printf("\nMain");
-
-                }else{
-
-                }
-            }*/
