@@ -22,7 +22,7 @@ int main(){
             printf("\nEntre as cidades acima, escola uma para o ponto de partida: ");
                 scanf("%d",&cidade);
         }else{
-            printf("\nEscola a proxima cidade: ");
+            printf("\nEscola a próxima cidade: ");
                 scanf("%d",&cidade);
         }
 

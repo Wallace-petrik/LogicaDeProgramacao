@@ -16,7 +16,7 @@ int main(){
     int cidade01,cidade02;
 
     do{
-        printf("\n0/p Rio de Janeiro\n1/p São Gonçalo\n2/p Duque de Caxias\n3/p Nova Iguaçu\n4/p Belford Roxo\n5/p Niterói\n6/p Petrópolis\n\nPara sair digite a mesma cidade duas vezesn");
+        printf("\n0/p Rio de Janeiro\n1/p São Gonçalo\n2/p Duque de Caxias\n3/p Nova Iguaçu\n4/p Belford Roxo\n5/p Niterói\n6/p Petrópolis\n\nPara sair digite a mesma cidade duas vezes");
         printf("\nEscolha duas cidades: ");
             scanf("%d%d",&cidade01,&cidade02);
 
@@ -27,8 +27,8 @@ int main(){
             if((cidade01>=0 && cidade01<=6)&&(cidade02>=0 && cidade02<=6)){
 
                 system("cls");
-                printf("\nO tempo necessário para percorrer as duas é  igual = %d",matriz[cidade01][cidade02]);
-                printf("\nPressione qualquer tecla para continúar");
+                printf("\nO tempo necessário para percorrer as duas é igual = %d",matriz[cidade01][cidade02]);
+                printf("\nPressione qualquer tecla para continuar");
                 getch();
                 system("cls");
 
