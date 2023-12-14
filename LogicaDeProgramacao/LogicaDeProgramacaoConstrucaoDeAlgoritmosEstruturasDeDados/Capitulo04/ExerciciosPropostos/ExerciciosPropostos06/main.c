@@ -12,12 +12,12 @@ int main(){
 
     printf("\nEntre com o dados o primeiro vetor:");
     for(int i = 0; i < tam; i++){
-        scanf("%d",vetA[i]);
+        scanf("%d",&vetA[i]);
     }
-    printf("\nEntre com o dados o segundo vetor:");
+    /*printf("\nEntre com o dados o segundo vetor:");
     for(int i = 0; i < tam; i++){
         scanf("%d",vetB[i]);
-    }
+    }*/
 
     bubbleSort(vetA,tam);
     return 0;
