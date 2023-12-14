@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define tan 4
+#define tam 4
 int main(){
     setlocale(LC_ALL,"");
 

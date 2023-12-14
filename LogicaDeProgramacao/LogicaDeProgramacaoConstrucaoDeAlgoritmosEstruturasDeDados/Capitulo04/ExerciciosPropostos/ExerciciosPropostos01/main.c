@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <locale.h>
-#define tan 5
+#define tam 5
 int main(){
     setlocale(LC_ALL,"");
 
-    int vetA[tan],vetB[tan];
+    int vetA[tam],vetB[tam];
 
-    for(int i = 0; i < tan; i++){
+    for(int i = 0; i < tam; i++){
         printf("\nEntre com o %dº elemento do array: ",i+1);
             scanf("%d",&vetA[i]);
 
@@ -18,12 +18,12 @@ int main(){
 
     }
     printf("\n");
-    for(int i = 0; i < tan; i++){
+    for(int i = 0; i < tam; i++){
         printf("[%2.d] ",vetA[i]);
 
     }
     printf("\n");
-    for(int i = 0; i < tan; i++){
+    for(int i = 0; i < tam; i++){
 
         printf("[%2.d] ",vetB[i]);
     }

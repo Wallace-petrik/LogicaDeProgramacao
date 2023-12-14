@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define tam 40
+#define tam 5
 typedef struct {
 
         int numPas;
@@ -16,9 +16,9 @@ typedef struct {
 int main(){
     setlocale(LC_ALL,"");
 
-    reEmbarque onibus;
+    reEmbarque onibus[tam];
 
-    int somaIdade;
+    float somaIdade;
     float mediaIdade;
 
     for(int i = 0; i < tam; i++){
@@ -29,11 +29,11 @@ int main(){
 
     mediaIdade = (float)somaIdade/tam;
 
-    printf("%.1f".mediaIdade);
+    printf("%.1f",mediaIdade);
 
     for(int i = 0; i < tam; i++){
         if(onibus[i].idade>mediaIdade){
-            printf("\n%.1f",onibus[i].nome);
+            printf("\n%s",onibus[i].nome);
         }
 
     }

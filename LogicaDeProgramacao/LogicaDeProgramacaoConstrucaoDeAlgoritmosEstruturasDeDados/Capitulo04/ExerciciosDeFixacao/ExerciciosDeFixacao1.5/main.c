@@ -17,7 +17,7 @@ int main(){
 
     }
 
-    do{//Bubble Sort
+    do{//Bubb       e Sort
         continuar = 0;
         for(int i = 0; i < tam-1; i++){
             if(vet[i] > vet[i+1]){

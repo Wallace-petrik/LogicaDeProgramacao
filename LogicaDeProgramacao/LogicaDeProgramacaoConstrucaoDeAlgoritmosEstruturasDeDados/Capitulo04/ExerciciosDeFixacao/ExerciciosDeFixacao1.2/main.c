@@ -9,6 +9,7 @@ int main(){
     int a[qtd],b[qtd];
     float r[qtd];
     char operacao[qtd];
+    int resp;
 
     do{
         for(int i = 0 ; i < qtd ; i++){
@@ -38,6 +39,10 @@ int main(){
             printf("\nResp da %dª operação = %.1f.",i+1,r[i]);
 
         }
-    }while()
+        do{
+        printf("\n Quer continuar 1/SIM 2/NÂO ? ");
+            scanf("%d",&resp);
+        }while(resp!=2 || resp!=1);
+    }while(resp!=2);
     return 0;
 }
