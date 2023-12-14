@@ -4,7 +4,7 @@
 int main(){
     setlocale(LC_ALL,"");
 
-    int vet[tan][tan][tan] = {
+    int vet[tam][tam][tam] = {
     {
         {1, 1, 1, 1},
         {1, 1, 1, 1},
@@ -29,13 +29,13 @@ int main(){
         {4, 4, 4, 4},
         {4, 4, 4, 4}
     }};
-    int vetAux[tan][tan];
+    int vetAux[tam][tam];
 
     printf("\nEntre com os dados!\n\n");
 
-    /*for(int i = 0; i < tan; i++){
-        for(int j = 0; j < tan; j++){
-            for(int k = 0; k < tan; k++){
+    /*for(int i = 0; i < tam; i++){
+        for(int j = 0; j < tam; j++){
+            for(int k = 0; k < tam; k++){
 
                 printf("\nEntre com os dados VET[%d][%d][%d]:",i+1,j+1,k+1);
                 scanf("%d",&vet[i][j][k]);
@@ -44,9 +44,9 @@ int main(){
         }
     }*/
 
-     for(int i = 0; i < tan; i++){
-        for(int j = 0; j < tan; j++){
-            for(int k = 0; k < tan; k++){
+     for(int i = 0; i < tam; i++){
+        for(int j = 0; j < tam; j++){
+            for(int k = 0; k < tam; k++){
 
                printf("[%d] ",vet[i][j][k]);
             }
@@ -55,17 +55,17 @@ int main(){
         printf("\n");
     }
 
-    for(int i = 0; i < tan; i++){
-        for(int j = 0; j < tan; j++){
+    for(int i = 0; i < tam; i++){
+        for(int j = 0; j < tam; j++){
 
             vetAux[i][j] = vet[0][i][j];
 
         }
     }
 
-    for(int i = 0; i < tan; i++){
-        for(int j = 0; j < tan; j++){
-            for(int k = 0; k < tan - 1; k++){
+    for(int i = 0; i < tam; i++){
+        for(int j = 0; j < tam; j++){
+            for(int k = 0; k < tam - 1; k++){
 
                 vet[k][i][j] = vet[k+1][i][j];
 
@@ -73,17 +73,17 @@ int main(){
         }
     }
 
-    for(int i = 0; i < tan; i++){
-        for(int j = 0; j < tan; j++){
+    for(int i = 0; i < tam; i++){
+        for(int j = 0; j < tam; j++){
 
-            vet[tan-1][i][j] = vetAux[i][j];
+            vet[tam-1][i][j] = vetAux[i][j];
 
         }
     }
     printf("Resposta\n\n");
-    for(int i = 0; i < tan; i++){
-        for(int j = 0; j < tan; j++){
-            for(int k = 0; k < tan; k++){
+    for(int i = 0; i < tam; i++){
+        for(int j = 0; j < tam; j++){
+            for(int k = 0; k < tam; k++){
 
                printf("[%d] ",vet[i][j][k]);
             }

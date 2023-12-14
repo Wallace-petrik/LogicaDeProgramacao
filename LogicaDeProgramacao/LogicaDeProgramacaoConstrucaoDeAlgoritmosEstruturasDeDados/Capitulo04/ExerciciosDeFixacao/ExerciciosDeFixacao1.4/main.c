@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <locale.h>
-#define tan 5
+#define tam 5
 
 int main(){
     setlocale(LC_ALL,"");
 
-    int vet[tan];
+    int vet[tam];
     int menor;
 
-    for(int i = 0; i < tan ; i++){
+    for(int i = 0; i < tam ; i++){
 
         printf("Entre um número: ");
             scanf("%d",&vet[i]);
 
     }
 
-    for(int i = 0; i < tan - 1; i++){ //Selection sort
+    for(int i = 0; i < tam - 1; i++){ //Selection sort
         menor = i;
-        for(int j = i+1; j < tan; j++){
+        for(int j = i+1; j < tam; j++){
             if(vet[j]<vet[menor]){
                 menor = j;
             }
@@ -31,7 +31,7 @@ int main(){
 
     printf("\n");
 
-    for(int i = 0; i < tan; i++){
+    for(int i = 0; i < tam; i++){
         printf("[%d] ",vet[i]);
     }
     return 0;

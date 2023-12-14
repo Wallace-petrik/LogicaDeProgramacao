@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define tan 40
+#define tam 40
 typedef struct {
 
         int numPas;
@@ -21,17 +21,17 @@ int main(){
     int somaIdade;
     float mediaIdade;
 
-    for(int i = 0; i < tan; i++){
+    for(int i = 0; i < tam; i++){
 
         somaIdade+=onibus[i].idade;
 
     }
 
-    mediaIdade = (float)somaIdade/tan;
+    mediaIdade = (float)somaIdade/tam;
 
     printf("%.1f".mediaIdade);
 
-    for(int i = 0; i < tan; i++){
+    for(int i = 0; i < tam; i++){
         if(onibus[i].idade>mediaIdade){
             printf("\n%.1f",onibus[i].nome);
         }

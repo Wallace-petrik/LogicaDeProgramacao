@@ -23,11 +23,11 @@ int main(){
     return 0;
 }
 
-void bubbleSort (int *vet, int tan){
+void bubbleSort (int *vet, int tam){
 		int continua;
 		do{
 				continua = 0;
-				for(int i = 0; i < tan-1; i++){
+				for(int i = 0; i < tam-1; i++){
 						if(vet[i] > vet[i+1]){
 								vet[i] = vet[i] + vet[i+1];
 								vet[i+1] = vet[i] - vet[i+1];
@@ -35,6 +35,6 @@ void bubbleSort (int *vet, int tan){
 								continua = i;
 						}
 				}
-				tan--;
+				tam--;
 		}while(continua != 0);
 }

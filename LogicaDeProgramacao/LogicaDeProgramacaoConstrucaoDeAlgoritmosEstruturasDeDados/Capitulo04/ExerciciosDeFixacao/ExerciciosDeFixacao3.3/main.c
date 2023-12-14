@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define tan 500
+#define tam 500
 
 
 
@@ -15,9 +15,9 @@ typedef struct {
 int main(){
     setlocale(LC_ALL,"");
 
-    regProduto produto[tan];
+    regProduto produto[tam];
 
-    for(int i = 0; i < tan; i++){
+    for(int i = 0; i < tam; i++){
 
         produto[i].cod = i;
         for(int l = 0; i < 4; i++){
