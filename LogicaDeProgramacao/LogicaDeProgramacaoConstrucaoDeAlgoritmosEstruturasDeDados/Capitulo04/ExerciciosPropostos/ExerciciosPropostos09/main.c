@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-#define max 5
+#define max 4
 
 int main(){
     setlocale(LC_ALL,"");
@@ -27,7 +27,7 @@ int main(){
 
     for(int i = 0; i < fim; i++){
         for(int j = 0; j < fim; j++){
-            if(alturas[i]==alturas[j]){
+            if((alturas[i]==alturas[j])&& i!=j){
                 contador++;
             }
         }
@@ -37,16 +37,16 @@ int main(){
         }
     }
 
-    if(max%2==1){
-        mediana = alturas[(max/2)+1];
+    if(max%2==0){
+        mediana = (alturas[(max/2)-1]+alturas[(max/2)])/2;
     }else{
         mediana = (alturas[(max/2)+1]+alturas[(max/2)]);
     }
 
     printf("\nMédia = %.1f",media);
     printf("\nDesvio Padrão = %.1f",desvioPadrao);
-    printf("\nModa = %.1f",alturas[moda]);
-    printf("\nMediana = %.1f",mediana);
+    contador==0 ? printf("\nModa = ***") : printf("\nModa = %.1f",alturas[moda]);
+    printf("\nMediana = %.1f\n",mediana);
 
     return 0;
 }
@@ -63,8 +63,8 @@ void bubblesort(float *vet,int tam){
 
                 controlador = 1;
             }
-            tam--;
         }
+        tam--;
     }while(controlador != 0);
 
 }
