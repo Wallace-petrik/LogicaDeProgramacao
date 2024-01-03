@@ -1,13 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <math.h>
 #include <locale.h>
 
-#define max 4
+#define max 5
 
 int main(){
     setlocale(LC_ALL,"");
 
-    float alturas[max],somatoria = 0;
+    float alturas[max],somatoria = 0,variancia = 0;
     float media, mediana = 0, desvioPadrao;
     int moda = 0, fim, maior = 0, contador = 0;
 
@@ -19,9 +19,16 @@ int main(){
     }
 
     bubblesort(alturas,max);
-
     media = somatoria/max;
-    desvioPadrao = ((somatoria*somatoria)/max) - media*media;
+
+    for(int i = 0; i < max; i++){
+
+        variancia += pow(alturas[i]-media,2);
+
+    }
+    variancia = variancia/max;
+
+    desvioPadrao = sqrt(variancia);
 
     fim = max;
 
@@ -40,7 +47,7 @@ int main(){
     if(max%2==0){
         mediana = (alturas[(max/2)-1]+alturas[(max/2)])/2;
     }else{
-        mediana = (alturas[(max/2)+1]+alturas[(max/2)]);
+        mediana = (alturas[max/2]);
     }
 
     printf("\nMédia = %.1f",media);
