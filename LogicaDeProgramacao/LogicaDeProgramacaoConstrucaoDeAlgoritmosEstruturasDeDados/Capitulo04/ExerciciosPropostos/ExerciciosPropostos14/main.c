@@ -4,11 +4,15 @@
 #include <time.h>
 
 #define tam 10
+
+void imprimeMatriz(int matrizP[tam][tam]);
+
 int main(){
     setlocale(LC_ALL,"");
 
     srand(time(NULL));
-    int matriz[tam][tam];
+
+    int matriz[tam][tam],matrizAux[tam][tam];
 
     for(int i = 0; i < tam; i++){
         for(int j = 0; j < tam; j++){
@@ -17,24 +21,30 @@ int main(){
     }
 
     printf("MATRIZ NORMAL\n\n");
+    imprimeMatriz(matriz);
 
     for(int i = 0; i < tam; i++){
         for(int j = 0; j < tam; j++){
-            printf("[%d]",matriz[i][j]);
+            matrizAux[i][j] = matriz[i][j];
         }
-        printf("\n");
     }
 
-
+    for(int i = 0; i < tam; i++){
+        for(int j = 0; j < tam; j++){
+            matriz[i][j] = matrizAux[j][i];
+        }
+    }
 
     printf("\nMATRIZ 90º\n\n");
+    imprimeMatriz(matriz);
+    return 0;
+}
 
-     for(int i = 0; i < tam; i++){
+void imprimeMatriz(int matrizP[tam][tam]){
+    for(int i = 0; i < tam; i++){
         for(int j = 0; j < tam; j++){
-            printf("[%d]",matriz[i][j]);
+            printf("[%d]",matrizP[i][j]);
         }
         printf("\n");
     }
-
-    return 0;
 }
