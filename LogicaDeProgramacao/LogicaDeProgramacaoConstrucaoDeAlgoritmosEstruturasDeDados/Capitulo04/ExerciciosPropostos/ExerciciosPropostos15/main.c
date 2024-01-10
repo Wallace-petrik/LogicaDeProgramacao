@@ -20,16 +20,17 @@ typedef struct{
 void bubblesort(Obras livros[TMP_MAX]);
 int buscarLivros(Obras livros[TAM_MAX], int codigoDeBusca);
 int buscarLivrosPorNome(Obras livros[TAM_MAX], char nomeDoLivrosDeBusca[40]);
+int impremi(Obras livros[TAM_MAX]);
 
 int main(){
     setlocale(LC_ALL,"");
 
-    int codigo,opcao,area;
+    int codigo,opcao,area,totaDeLivrosDoados = 0;
     char nome[40];
 
-    Obras cienciasExatas[TAM_MAX] = {75,155,"Banana Rei","Calor Machado","Book","Reis",8,50,"ABC","Machado","Book","Leandra",22,300,"C++","wallace","Alura","Berenice"};
-    Obras cienciasHumanas[TAM_MAX] = {80,290,"Rei macaco","Maria Clara","Darkside","CLara",15,70,"Design Patterns","Wallace","Saraiva","Rita",46,255,"Java","IGor","Alura","Ana"};
-    Obras cienciasBiomedicas[TAM_MAX] = {55,120,"Rei Leão","Gabriel Reis","Rocco","Lucas",06,180,"Amigos","Gustavo","Saraiva","Fenanda",11,75,"C++","Thiago","Alura","Ellen"};
+    Obras cienciasExatas[TAM_MAX] = {75,155,"Banana Rei","Calor Machado","Book","Sim",8,50,"ABC","Machado","Book","Não",22,300,"C++","wallace","Alura","Sim"};
+    Obras cienciasHumanas[TAM_MAX] = {80,290,"Rei macaco","Maria Clara","Darkside","Sim",15,70,"Design Patterns","Wallace","Sim","Rita",46,255,"Java","IGor","Alura","Nâo"};
+    Obras cienciasBiomedicas[TAM_MAX] = {55,120,"Rei Leão","Gabriel Reis","Rocco","Sim",06,180,"Amigos","Gustavo","Saraiva","Não",11,75,"C++","Thiago","Alura","Não"};
 
     bubblesort(cienciasBiomedicas);
     bubblesort(cienciasExatas);
@@ -39,6 +40,7 @@ int main(){
         printf("\nESCOLHA UMA OPÇÂO\n");
         printf("\n1/P buscar um livro código");
         printf("\n2/P buscar um livro nome");
+        printf("\n3/P listar todos os livros doados.");
         printf("\n10/P Sair: ");
             scanf("%d",&opcao);
 
@@ -141,6 +143,14 @@ int main(){
                     }while(opcao!=2);
 
             break;
+            case 3:
+                //livros doados
+                printf("\nLivros doados\n");
+                totaDeLivrosDoados=impremi(cienciasHumanas);
+                totaDeLivrosDoados+=impremi(cienciasExatas);
+                totaDeLivrosDoados+=impremi(cienciasBiomedicas);
+                printf("\n\nTotal de livros doados = %d",totaDeLivrosDoados);
+            break;
             case 10:
                 printf("\nAté logo");
             break;
@@ -165,6 +175,18 @@ int buscarLivrosPorNome(Obras livros[TAM_MAX], char nomeDoLivrosDeBusca[40]){
         printf("\nLivro não encontrado.");
     }
 }
+
+int impremi(Obras livros[TAM_MAX]){
+    int contador = 0;
+    for(int i  = 0; i < TAM_MAX; i++){
+        if((strcmp(livros[i].doado,"Sim"))==0){
+            printf("\n%s",livros[i].nomeDaObra);
+            contador++;
+        }
+    }
+    return contador;
+}
+
 int buscarLivros(Obras livros[TAM_MAX], int codigoDeBusca){
     int controle = 0;
     for(int i = 0; i < TAM_MAX; i++){
