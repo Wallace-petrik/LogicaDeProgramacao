@@ -14,11 +14,14 @@ typedef struct{
     char doado[40];
 }Obras;
 
+int tamAreaB = TAM_MAX, tamAreaE = TAM_MAX, tamAreaH = TAM_MAX;
 void bubblesort(Obras livros[TMP_MAX]);
+void excluirLivro(Obras area[TAM_MAX], int cod,int op);
 int buscarLivros(Obras livros[TAM_MAX], int codigoDeBusca);
 int buscarLivrosPorNome(Obras livros[TAM_MAX], char nomeDoLivrosDeBusca[40]);
-int impremi(Obras livros[TAM_MAX],int number);
+int impremi(Obras livros[TAM_MAX],int number, int max);
 int alterarLivro(Obras livros[TAM_MAX], int cod);
+
 int main(){
     setlocale(LC_ALL,"");
 
@@ -151,9 +154,9 @@ int main(){
             case 3:
                 system("cls");
                 printf("\nLivros doados\n");
-                totaDeLivrosDoados=impremi(cienciasHumanas,opcao);
-                totaDeLivrosDoados+=impremi(cienciasExatas,opcao);
-                totaDeLivrosDoados+=impremi(cienciasBiomedicas,opcao);
+                totaDeLivrosDoados=impremi(cienciasHumanas,opcao,tamAreaH);
+                totaDeLivrosDoados+=impremi(cienciasExatas,opcao,tamAreaE);
+                totaDeLivrosDoados+=impremi(cienciasBiomedicas,opcao,tamAreaB);
                 printf("\n\nTotal de livros doados = %d\n\n",totaDeLivrosDoados);
                 system("pause");
             break;
@@ -161,9 +164,9 @@ int main(){
                 system("cls");
                 totaDeLivrosDoados = 0;
                 printf("\nLivros comprados\n");
-                totaDeLivrosDoados=impremi(cienciasHumanas,opcao);
-                totaDeLivrosDoados+=impremi(cienciasExatas,opcao);
-                totaDeLivrosDoados+=impremi(cienciasBiomedicas,opcao);
+                totaDeLivrosDoados=impremi(cienciasHumanas,opcao,tamAreaH);
+                totaDeLivrosDoados+=impremi(cienciasExatas,opcao,tamAreaE);
+                totaDeLivrosDoados+=impremi(cienciasBiomedicas,opcao,tamAreaB);
                 printf("\n\nTotal de livros comprados = %d\n\n",totaDeLivrosDoados);
                 system("pause");
             break;
@@ -212,13 +215,13 @@ int main(){
 
                     switch(area){
                         case 1:
-                            //Criar função para excluir
+
                         break;
                         case 2:
 
                         break;
                         case 3:
-
+                            excluirLivro(cienciasBiomedicas,codigo,area);
                         break;
                         case 4:
                             system("cls");
@@ -262,9 +265,9 @@ int buscarLivrosPorNome(Obras livros[TAM_MAX], char nomeDoLivrosDeBusca[40]){
     }
 }
 
-int impremi(Obras livros[TAM_MAX],int number){
+int impremi(Obras livros[TAM_MAX],int number, int max){
     int contador = 0;
-    for(int i  = 0; i < TAM_MAX; i++){
+    for(int i  = 0; i < max; i++){
         if((strcmp(livros[i].doado,"Sim"))==0 && number ==3){
             printf("\n%s",livros[i].nomeDaObra);
             contador++;
@@ -378,3 +381,25 @@ int alterarLivro(Obras livros[TAM_MAX], int cod){
 }
 
 
+void excluirLivro(Obras area[TAM_MAX], int cod,int op){
+    int controle = 0;
+    for(int i = 0; i < TAM_MAX; i++){
+        if(area[i].codigoDeCatalogacao==cod){
+            area[i].codigoDeCatalogacao = 1000;
+            bubblesort(area);
+            if(op==1){
+                tamAreaB--;
+            }else if(op==2){
+                tamAreaH--;
+            }else{
+                tamAreaE--;
+            }
+            controle = 1;
+        }
+    }
+    if(controle==1){
+        printf("\nLivro excluido.");
+    }else{
+        printf("\nDados invalidos.");
+    }
+}
