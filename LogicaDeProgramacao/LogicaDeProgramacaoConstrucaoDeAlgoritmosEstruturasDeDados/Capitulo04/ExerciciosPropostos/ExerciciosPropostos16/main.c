@@ -17,14 +17,15 @@ typedef struct{
 int main(){
     setlocale(LC_ALL,"");
 
-    Veiculo carros[Tam_Max] = {"Wallace","Astra","APS-0805","Prata",3,123321,2014};
+    Veiculo carros[Tam_Max] = {"Wallace","Astra","AES-0802","Prata",3,123321,2014};
 
-    int controle = 0, contador = 0, opcao;
+    int controle = 0, contador = 0, opcao, soma;
 
     do{
         printf("Escolha uma opção\n");
         printf("\n1/Para listar proprietários de carros com anos posterios 1980 movidos a diesel.");
-        printf("\n2/Para listar todas as placas que comecem com a letra A e termina com 0, 2, 4 ou 7");
+        printf("\n2/Para listar todas as placas que comecem com a letra A e termina com 0, 2, 4 ou 7.");
+        printf("\n3/Para listar modelo e cor de carros que aplaca tem como segunda letra uma goval.");
         printf("\nDigite uma opção: ");
             scanf("%d",&opcao);
         switch(opcao){
@@ -59,6 +60,26 @@ int main(){
                 }
                 if(controle==0){
                     printf("Nenhum placa encontrado\n");
+                }
+                system("pause");
+                system("cls");
+            break;
+            case 3:
+                system("cls");
+                for(int i = 0; i < Tam_Max; i++){
+                    for(int j = 4; j < 8; j ++){
+                        soma+=carros[i].placa[j]-'0';
+                    }
+                    if((carros[i].placa[1]=='a'||carros[i].placa[1]=='e'||carros[i].placa[1]=='i'||carros[i].placa[1]=='o'||carros[i].placa[1]=='u'||
+                        carros[i].placa[1]=='A'||carros[i].placa[1]=='E'||carros[i].placa[1]=='I'||carros[i].placa[1]=='O'||carros[i].placa[1]=='U')&&
+                        soma%2==0){
+                        printf("Modelo = %s\n",carros[i].modelo);
+                        printf("Cor = %s \n",carros[i].cor);
+                        controle = 1;
+                    }
+                }
+                if(controle==0){
+                    printf("Nenhum carro encontrado\n");
                 }
                 system("pause");
                 system("cls");
