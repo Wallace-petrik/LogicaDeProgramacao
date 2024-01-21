@@ -17,20 +17,23 @@ typedef struct{
 int main(){
     setlocale(LC_ALL,"");
 
-    Veiculo carros[Tam_Max] = {"Wallace","Astra","AES-0802","Prata",3,123321,2014};
+    Veiculo carros[Tam_Max] = {"Wallace","Astra","AES-1832","Prata",3,123321,2014};
 
-    int controle = 0, contador = 0, opcao, soma;
+    int controle = 0, contador = 0, opcao, soma, chassi;
 
     do{
+        system("cls");
         printf("Escolha uma opção\n");
         printf("\n1/Para listar proprietários de carros com anos posterios 1980 movidos a diesel.");
         printf("\n2/Para listar todas as placas que comecem com a letra A e termina com 0, 2, 4 ou 7.");
         printf("\n3/Para listar modelo e cor de carros que aplaca tem como segunda letra uma goval.");
+        printf("\n4/Para troca de propiretário com o fornecimento do número de chassi.");
         printf("\nDigite uma opção: ");
             scanf("%d",&opcao);
-        switch(opcao){
             controle = 0;
             contador = 0;
+        switch(opcao){
+            printf("\nPassei aqui");
             case 1:
                 system("cls");
                 for(int i = 0; i < Tam_Max; i++){ // 1 para álcool, 2 para gasolina e 3 para diesel.
@@ -74,7 +77,7 @@ int main(){
                         carros[i].placa[1]=='A'||carros[i].placa[1]=='E'||carros[i].placa[1]=='I'||carros[i].placa[1]=='O'||carros[i].placa[1]=='U')&&
                         soma%2==0){
                         printf("Modelo = %s\n",carros[i].modelo);
-                        printf("Cor = %s \n",carros[i].cor);
+                        printf("Cor = %s \n\n",carros[i].cor);
                         controle = 1;
                     }
                 }
@@ -83,6 +86,33 @@ int main(){
                 }
                 system("pause");
                 system("cls");
+            break;
+            case 4:
+                do{
+                    system("cls");
+                    printf("Entre com o numero do chassi: ");
+                        scanf("%d",&chassi);
+                        for(int i = 0; i < Tam_Max; i++){
+                            if(carros[i].chassi==chassi && carros[i].placa[4]!='0'&&carros[i].placa[5]!='0'&&
+                                carros[i].placa[6]!='0'&&carros[i].placa[7]!='0'){
+                                system("cls");
+                                printf("Entre com o novo nome do proprietário: ");
+                                    scanf("%s",carros[i].proprietario);
+                                printf("\nProprietário alterado com sucesso.");
+                                printf("\nNome do novo proprietário = %s\n",carros[i].proprietario);
+                                system("pause");
+                                system("cls");
+                                controle = 1;
+                            }
+                        }
+
+                        if(controle==0){
+                            printf("\nCarro não encontrado.\n");
+                            printf("0/Para tentar novamente\n1/Para sair");
+                                scanf("%d",&controle);
+                        }
+
+                }while(controle==0);
             break;
             default:
                 system("cls");
