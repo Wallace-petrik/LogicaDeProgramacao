@@ -23,7 +23,7 @@ int main(){
     Linha onibus[10] = {{"Campinas","Rio de Janeiro","20/03/2024",17,30,400,01,"Wallace",1}};
 
     int opcao = 0, linhasDoOnibus = 0, controle = 0,contador = 0,horas = 0, minutos = 0, horasChegada = 0, minutosChegada = 0;
-    float tempo = 0,chegada;
+    float tempo = 0,chegada, percentual;
     const int velocidadeM = 60;
 
     do{
@@ -31,6 +31,7 @@ int main(){
         printf("1 Para buscar ônibus.\n");
         printf("2 Para linha de ônibus que estão lotadas.\n");
         printf("3 Para informa tempo estimado de chegada e duração da viagem.\n");
+        printf("4 Para listar quantidade de poltronas livres e seu percentual.\n");
         printf("10 Para sair\n");
             scanf("%d",&opcao);
         switch(opcao){
@@ -111,6 +112,34 @@ int main(){
                 }while(controle<0&&controle>9);
                 system("pause");
                 system("cls");
+            break;
+            case 4:
+                system("cls");
+                contador = 0;
+                do{
+                    printf("Entre com a linha do ônibus: ");
+                        scanf("%d",&controle);
+
+                    if(controle>=0&&controle<=9){
+
+                    for(int i = 0; i < 10; i++){
+                        if(onibus[controle].passageiros[i].sexo>0&&onibus[controle].passageiros[i].sexo<3){
+                            contador++;
+                        }
+                    }
+
+                    if(contador>0){
+                        percentual = (contador*100)/44;
+                        printf("Percentual de ocupaçao = %.0f%%\n",percentual);
+                        printf("Poltronas livres = %d\n",44-contador);
+                    }
+
+                    }else{
+                        printf("\nLinha não encontrada.\n");
+                    }
+                    system("pause");
+                    system("cls");
+                }while(controle<0&&controle>9);
             break;
             case 10:
                 system("cls");
