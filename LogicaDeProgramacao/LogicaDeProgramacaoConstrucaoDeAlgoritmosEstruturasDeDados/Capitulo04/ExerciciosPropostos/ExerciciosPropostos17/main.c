@@ -20,7 +20,7 @@ typedef struct{
 int main(){
     setlocale(LC_ALL,"");
 
-    Linha onibus[10] = {{"Campinas","Rio de Janeiro","20/03/2024",17,30,400,01,"Wallace",1}};
+    Linha onibus[10] = {{"Campinas","Rio de Janeiro","20/03/2024",17,30,400,00,"Wallace",1}};
 
     int opcao = 0, linhasDoOnibus = 0, controle = 0,contador = 0,horas = 0, minutos = 0, horasChegada = 0, minutosChegada = 0;
     float tempo = 0,chegada, percentual,contadorM, contadorF,janelaP = 0, janelaI = 0;
@@ -33,8 +33,8 @@ int main(){
         printf("3 Para informa tempo estimado de chegada e duração da viagem.\n");
         printf("4 Para listar quantidade de poltronas livres e seu percentual.\n");
         printf("5 Para percentual de homens e mulheres.\n");
-        printf("6 Para listar todas as poltronas livres de todos os ônibus.");
-        printf("10 Para sair\n");
+        printf("6 Para listar todas as poltronas livres de todos os ônibus.\n");
+        printf("7 Para sair\n");
             scanf("%d",&opcao);
         switch(opcao){
 
@@ -133,7 +133,7 @@ int main(){
                     if(contador>0){
                         percentual = (contador*100.0)/44;
                         printf("Percentual de ocupaçao = %.2f%%\n",percentual);
-                        printf("Poltronas livres = %.2f\n",44-contador);
+                        printf("Poltronas livres = %d\n",44-contador);
                     }
 
                     }else{
@@ -174,16 +174,23 @@ int main(){
                     for(int j = 0; j < 44; j++){
                         if(onibus[i].passageiros[j].sexo>0&&onibus[i].passageiros[j].sexo<3){
                             if(i%2==0){
-
+                                janelaP++;
+                            }else{
+                                janelaI++;
                             }
+                            controle++;
                         }
                     }
+                    printf("Linha [%d] janela %.2f%% ocupada, corredor %.2f%% ocupado, poltronas livres = %d\n",i,(janelaI*100)/22,(janelaP*100)/22,44-controle);
+                    janelaI = 0;
+                    janelaP = 0;
+                    controle = 0;
                 }
 
                 system("pause");
                 system("cls");
             break;
-            case 10:
+            case 7:
                 system("cls");
                 printf("Até logo.\n");
             break;
@@ -192,7 +199,7 @@ int main(){
                 printf("Opção invalida\n");
                 system("pause");
         }
-    }while(opcao!=10);
+    }while(opcao!=7);
 
     return 0;
 }
