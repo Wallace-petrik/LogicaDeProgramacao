@@ -23,7 +23,7 @@ int main(){
     Linha onibus[10] = {{"Campinas","Rio de Janeiro","20/03/2024",17,30,400,01,"Wallace",1}};
 
     int opcao = 0, linhasDoOnibus = 0, controle = 0,contador = 0,horas = 0, minutos = 0, horasChegada = 0, minutosChegada = 0;
-    float tempo = 0,chegada, percentual;
+    float tempo = 0,chegada, percentual,contadorM, contadorF,janelaP = 0, janelaI = 0;
     const int velocidadeM = 60;
 
     do{
@@ -32,6 +32,8 @@ int main(){
         printf("2 Para linha de ônibus que estão lotadas.\n");
         printf("3 Para informa tempo estimado de chegada e duração da viagem.\n");
         printf("4 Para listar quantidade de poltronas livres e seu percentual.\n");
+        printf("5 Para percentual de homens e mulheres.\n");
+        printf("6 Para listar todas as poltronas livres de todos os ônibus.");
         printf("10 Para sair\n");
             scanf("%d",&opcao);
         switch(opcao){
@@ -129,9 +131,9 @@ int main(){
                     }
 
                     if(contador>0){
-                        percentual = (contador*100)/44;
-                        printf("Percentual de ocupaçao = %.0f%%\n",percentual);
-                        printf("Poltronas livres = %d\n",44-contador);
+                        percentual = (contador*100.0)/44;
+                        printf("Percentual de ocupaçao = %.2f%%\n",percentual);
+                        printf("Poltronas livres = %.2f\n",44-contador);
                     }
 
                     }else{
@@ -140,6 +142,46 @@ int main(){
                     system("pause");
                     system("cls");
                 }while(controle<0&&controle>9);
+            break;
+            case 5:
+                system("cls");
+                contadorM = 0;
+                contadorF = 0;
+                do{
+                    printf("Entre com a linha do ônibus: ");
+                        scanf("%d",&controle);
+
+                    if(controle>=0&&controle<=9){
+
+                        for(int i = 0; i < 10; i++){
+                            if(onibus[controle].passageiros[i].sexo>0&&onibus[controle].passageiros[i].sexo<3){
+                                onibus[controle].passageiros[i].sexo==1 ? contadorM++ : contadorF++;
+                            }
+                        }
+                        printf("Percentual de Homens = %.2f%%\nPercentual de Mulheres = %.2f%%\n",(contadorM*100.0)/44,(contadorF*100.0)/44);
+                    }else{
+                        printf("\nLinha não encontrada.\n");
+                    }
+                    system("pause");
+                    system("cls");
+                }while(controle<0&&controle>9);
+            break;
+            case 6:
+                system("cls");
+                janelaP = 0;
+                janelaI = 0;
+                for(int i = 0; i < 10; i++){
+                    for(int j = 0; j < 44; j++){
+                        if(onibus[i].passageiros[j].sexo>0&&onibus[i].passageiros[j].sexo<3){
+                            if(i%2==0){
+
+                            }
+                        }
+                    }
+                }
+
+                system("pause");
+                system("cls");
             break;
             case 10:
                 system("cls");
