@@ -2,26 +2,35 @@
 #include <stdlib.h>
 #include <locale.h>
 
-#define tam 3
+#define tam 6
 
 typedef struct{
     int numeroDeMatricula;
     char nome[40];
     int serie;
     int turma;
-    int sexo;
+    char sexo;
     float media;
-    char aprovado;
+    char situacao;
     int anoDeNascimento;
     char naturalidade[40];
 }Alunos;
 
+void ordenarDados (Alunos alunoParaOrdenar[tam]);
+Alunos alunoAux;
+
 int main(){
     setlocale(LC_ALL,"");
 
-    Alunos aluno[tam] = {112233,"Wallace",7,20241,"M",8.9,"S",1994,"SP"};
+    Alunos aluno[tam] = {112233,"Wallace",1,1001,"M",8.9,'S',1994,"SP",
+                         445566,"Reis",1,1001,"M",7.5,'S',1995,"RJ",
+                         778899,"Ellen",1,1001,"F",6.5,'N',2001,"RJ",
+                         112233,"Wallace",1,1002,"M",8.9,'S',1994,"SP",
+                         445566,"Reis",1,1002,"M",7.5,'S',1995,"RJ",
+                         778899,"Ellen",1,1002,"F",6.5,'S',2001,"RJ"};
 
-    int opcao;
+    int opcao, contador;
+    float AP = 0, RP = 0;
 
     do{
         system("cls");
@@ -30,11 +39,35 @@ int main(){
         printf(" Escolha uma opção: ");
             scanf("%d",&opcao);
 
+        ordenarDados(aluno);
+
         switch(opcao){
             case 1:
+                system("cls");
 
+                for(int i = 0; i < tam; i++){
+                    if(aluno[i].turma==aluno[i+1].turma){
+                        if(aluno[i].situacao=='S'){
+                            AP++;
+                        }else{
+                            RP++;
+                        }
+                        contador++;
+                    }else{
+                        if(aluno[i].situacao=='S'){
+                            AP++;
+                        }else{
+                            RP++;
+                        }
+                        contador++;
+                        printf(" Turma %d\n %.2f%% alunos aprovados\n %.2f%% alunos reprovados\n\n",aluno[i].turma,(AP/contador)*100.0,(RP/contador)*100.0);
+                        AP = 0;
+                        RP = 0;
+                        contador = 0;
+                    }
 
-
+                }
+                system("pause");
             break;
             case 9:
                 system("cls");
@@ -51,4 +84,19 @@ int main(){
     return 0;
 }
 
-void ordenarDados (Alunos alunoParaOrdenar, )
+void ordenarDados (Alunos alunoParaOrdenar[tam]){
+    int continua = 0, fim = tam;
+    do{
+        continua = 0;
+        for(int i  = 0; i < tam-1; i++){
+            if(alunoParaOrdenar[i].turma>alunoParaOrdenar[i+1].turma){
+
+                alunoAux = alunoParaOrdenar[i];
+                alunoParaOrdenar[i] = alunoParaOrdenar[i+1];
+                alunoParaOrdenar[i+1] = alunoAux;
+                continua = i;
+            }
+        }
+        fim--;
+    }while(continua !=0);
+}
