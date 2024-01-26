@@ -27,10 +27,10 @@ int main(){
                          778899,"Ellen",1,1001,"F",6.5,'N',2001,"RJ",
                          112233,"Wallace",1,1002,"M",8.9,'S',1994,"SP",
                          445566,"Reis",1,1002,"M",7.5,'S',1995,"RJ",
-                         778899,"Ellen",1,1002,"F",6.5,'S',2001,"RJ"};
+                         778899,"Ellen",1,1002,"F",6.5,'N',2001,"RJ"};
 
-    int opcao, contador;
-    float AP = 0, RP = 0;
+    int opcao, contador = 0, contTurma = 0;
+    float AP = 0, RP = 0, aprovados = 0, reprovados = 0;
 
     do{
         system("cls");
@@ -60,7 +60,19 @@ int main(){
                             RP++;
                         }
                         contador++;
+
+                        aprovados += (AP/contador)*100.0;
+                        reprovados += (RP/contador)*100.0;
+
                         printf(" Turma %d\n %.2f%% alunos aprovados\n %.2f%% alunos reprovados\n\n",aluno[i].turma,(AP/contador)*100.0,(RP/contador)*100.0);
+                        contTurma++;
+
+                        if(aluno[i].serie!=aluno[i+1].serie){
+                            printf("\n Aprovados por série = %.2f\n",(float)aprovados/contTurma);
+                            printf(" Reprovados por série = %.2f\n",(float)reprovados/contTurma);
+                            contTurma = 0;
+                        }
+
                         AP = 0;
                         RP = 0;
                         contador = 0;
