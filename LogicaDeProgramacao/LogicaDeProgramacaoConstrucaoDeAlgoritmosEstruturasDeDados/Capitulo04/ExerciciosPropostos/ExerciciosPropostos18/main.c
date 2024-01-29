@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 #include <time.h>
 
 #define tam 6
@@ -23,14 +24,14 @@ Alunos alunoAux;
 int main(){
     setlocale(LC_ALL,"");
 
-    Alunos aluno[tam] = {112233,"Wallace",1,1001,'F',8.9,'S',1994,"SP",
+    Alunos aluno[tam] = {112233,"Wallace",1,1001,'F',8.9,'S',1994,"RJ",
                          445566,"Reis",1,1001,'M',7.5,'S',1995,"RJ",
                          778899,"Ellen",1,1001,'M',6.5,'N',2001,"RJ",
-                         112233,"Wallace",1,1002,'M',8.9,'S',1994,"SP",
+                         112233,"Wallace",1,1002,'M',8.9,'S',1994,"NI",
                          445566,"Reis",1,1002,'F',7.5,'S',1995,"RJ",
                          778899,"Ellen",1,1002,'F',6.5,'N',2001,"RJ"};
 
-    int opcao, contador = 0, contTurma = 0, soma =0;
+    int opcao, contador = 0, contTurma = 0, soma =0, estrangeiros = 0;
     float AP = 0, RP = 0, aprovados = 0, reprovados = 0 , sexoM = 0, sexoF = 0 ,masculino = 0, feminino = 0;
 
     do{
@@ -38,6 +39,7 @@ int main(){
         printf(" 1 Para porcentagem de aprovados e reprovados.\n");
         printf(" 2 Para porcentagem de alunos do sexo masculino e feminino.\n");
         printf(" 3 Para média de cada série.\n");
+        printf(" 4 Para o percentual de alunos de outra cidade.\n");
         printf(" 9 Para sair.\n");
         printf(" Escolha uma opção: ");
             scanf("%d",&opcao);
@@ -131,8 +133,8 @@ int main(){
 
             break;
             case 3:
-                system("cls");
 
+                system("cls");
                 for(int i = 0; i < tam; i++){
                     if(aluno[i].serie==aluno[i+1].serie){
                         soma += 2024 - aluno[i].anoDeNascimento;
@@ -146,6 +148,19 @@ int main(){
                         contador = 0;
                     }
                 }
+                system("pause");
+
+            break;
+            case 4:
+
+                system("cls");
+                for(int i = 0; i < tam; i++){
+
+                    if(strcmp(aluno[i].naturalidade,"RJ")!=0){
+                        estrangeiros++;
+                    }
+                }
+                printf(" A porcentagem de alunos estrangeiros é de %.2f%%\n ",(float)(estrangeiros*100)/tam);
                 system("pause");
 
             break;
