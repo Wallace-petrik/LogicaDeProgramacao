@@ -22,19 +22,20 @@ Alunos alunoAux;
 int main(){
     setlocale(LC_ALL,"");
 
-    Alunos aluno[tam] = {112233,"Wallace",1,1001,"M",8.9,'S',1994,"SP",
-                         445566,"Reis",1,1001,"M",7.5,'S',1995,"RJ",
-                         778899,"Ellen",1,1001,"F",6.5,'N',2001,"RJ",
-                         112233,"Wallace",1,1002,"M",8.9,'S',1994,"SP",
-                         445566,"Reis",1,1002,"M",7.5,'S',1995,"RJ",
-                         778899,"Ellen",1,1002,"F",6.5,'N',2001,"RJ"};
+    Alunos aluno[tam] = {112233,"Wallace",1,1001,'F',8.9,'S',1994,"SP",
+                         445566,"Reis",1,1001,'M',7.5,'S',1995,"RJ",
+                         778899,"Ellen",1,1001,'M',6.5,'N',2001,"RJ",
+                         112233,"Wallace",1,1002,'M',8.9,'S',1994,"SP",
+                         445566,"Reis",1,1002,'F',7.5,'S',1995,"RJ",
+                         778899,"Ellen",1,1002,'F',6.5,'N',2001,"RJ"};
 
     int opcao, contador = 0, contTurma = 0;
-    float AP = 0, RP = 0, aprovados = 0, reprovados = 0;
+    float AP = 0, RP = 0, aprovados = 0, reprovados = 0 , sexoM = 0, sexoF = 0 ,masculino = 0, feminino = 0;
 
     do{
         system("cls");
         printf(" 1 Para porcentagem de aprovados e reprovados.\n");
+        printf(" 2 Para porcentagem de alunos do sexo masculino e feminino.\n");
         printf(" 9 Para sair.\n");
         printf(" Escolha uma opção: ");
             scanf("%d",&opcao);
@@ -43,8 +44,8 @@ int main(){
 
         switch(opcao){
             case 1:
-                system("cls");
 
+                system("cls");
                 for(int i = 0; i < tam; i++){
                     if(aluno[i].turma==aluno[i+1].turma){
                         if(aluno[i].situacao=='S'){
@@ -80,6 +81,48 @@ int main(){
 
                 }
                 system("pause");
+
+            break;
+            case 2:
+
+                system("cls");
+                for(int i = 0; i < tam; i++){
+                    if(aluno[i].turma==aluno[i+1].turma){
+                        if(aluno[i].sexo=='M'){
+                            sexoM++;
+                        }else{
+                            sexoF++;
+                        }
+                        contador++;
+                    }else{
+                        if(aluno[i].sexo=='M'){
+                            sexoM++;
+                        }else{
+                            sexoF++;
+                        }
+                        contador++;
+
+                        masculino += (sexoM/contador)*100.0;
+                        feminino += (sexoF/contador)*100.0;
+
+                        printf(" Turma %d\n %.2f%% alunos do sexo masculino\n %.2f%% alunos do sexo feminino\n\n",aluno[i].turma,(sexoM/contador)*100.0,(sexoF/contador)*100.0);
+
+                        contTurma++;
+
+                        if(aluno[i].serie!=aluno[i+1].serie){
+                            printf("\n Sexo masculino por série = %.2f\n",(float)masculino/contTurma);
+                            printf(" Sexo feminino por série = %.2f\n",(float)feminino/contTurma);
+                            contTurma = 0;
+                        }
+
+                        sexoM = 0;
+                        sexoF = 0;
+                        contador = 0;
+                    }
+
+                }
+                system("pause");
+
             break;
             case 9:
                 system("cls");
