@@ -26,10 +26,10 @@ int main(){
 
     Alunos aluno[tam] = {112233,"Wallace",1,1001,'F',8.9,'S',1994,"RJ",
                          445566,"Reis",1,1001,'M',7.5,'S',1995,"RJ",
-                         778899,"Ellen",1,1001,'M',6.5,'N',2001,"RJ",
+                         778899,"Ellen",1,1001,'M',4.5,'N',2001,"RJ",
                          112233,"Wallace",1,1002,'M',8.9,'S',1994,"NI",
                          445566,"Reis",1,1002,'F',7.5,'S',1995,"RJ",
-                         778899,"Ellen",1,1002,'F',6.5,'N',2001,"RJ"};
+                         778899,"Ellen",1,1002,'F',4.5,'N',2001,"RJ"};
 
     int opcao, contador = 0, contTurma = 0, soma =0, estrangeiros = 0;
     float AP = 0, RP = 0, aprovados = 0, reprovados = 0 , sexoM = 0, sexoF = 0 ,masculino = 0, feminino = 0;
@@ -40,6 +40,7 @@ int main(){
         printf(" 2 Para porcentagem de alunos do sexo masculino e feminino.\n");
         printf(" 3 Para média de cada série.\n");
         printf(" 4 Para o percentual de alunos de outra cidade.\n");
+        printf(" 5 Para o percentual de alunos repetentes.\n");
         printf(" 9 Para sair.\n");
         printf(" Escolha uma opção: ");
             scanf("%d",&opcao);
@@ -163,6 +164,38 @@ int main(){
                 printf(" A porcentagem de alunos estrangeiros é de %.2f%%\n ",(float)(estrangeiros*100)/tam);
                 system("pause");
 
+            break;
+            case 5:
+                system("cls");
+                contador = 0;
+                for(int i = 0; i < tam; i++){
+                    contTurma++;
+                    if(aluno[i].turma==aluno[i+1].turma){
+
+                        if(aluno[i].media<6){
+                            contador++;
+
+                        }
+
+                    }else{
+
+                        if(aluno[i].media<6){
+                            contador++;
+
+                        }
+
+                        if(aluno[i].turma!=aluno[i+1].turma){
+
+                            printf("A porcentagem de alunos reprovados da tuma %d é de  %.2f%%\n",aluno[i].turma,(contador*100.0)/contTurma);
+                            contTurma = 0;
+                        }
+
+                        contador = 0;
+                    }
+
+                }
+
+                system("pause");
             break;
             case 9:
                 system("cls");
