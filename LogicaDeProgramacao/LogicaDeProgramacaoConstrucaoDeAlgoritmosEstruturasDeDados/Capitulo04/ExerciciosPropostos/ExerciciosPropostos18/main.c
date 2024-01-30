@@ -23,15 +23,16 @@ Alunos alunoAux;
 
 int main(){
     setlocale(LC_ALL,"");
+    Alunos alunoAux;
 
     Alunos aluno[tam] = {112233,"Wallace",1,1001,'F',8.9,'S',1994,"RJ",
                          445566,"Reis",1,1001,'M',7.5,'S',1995,"RJ",
                          778899,"Ellen",1,1001,'M',4.5,'N',2001,"RJ",
-                         112233,"Wallace",1,1002,'M',8.9,'S',1994,"NI",
-                         445566,"Reis",1,1002,'F',7.5,'S',1995,"RJ",
-                         778899,"Ellen",1,1002,'F',4.5,'N',2001,"RJ"};
+                         112233,"Carla",1,1002,'M',8.9,'S',1994,"NI",
+                         445566,"Santos",1,1002,'F',7.5,'S',1995,"RJ",
+                         778899,"Vitor",1,1002,'F',4.5,'N',2001,"RJ"};
 
-    int opcao, contador = 0, contTurma = 0, soma =0, estrangeiros = 0;
+    int opcao, contador = 0, contTurma = 0, soma =0, estrangeiros = 0,controlador = 0, classificacao = 0;
     float AP = 0, RP = 0, aprovados = 0, reprovados = 0 , sexoM = 0, sexoF = 0 ,masculino = 0, feminino = 0;
 
     do{
@@ -41,7 +42,8 @@ int main(){
         printf(" 3 Para média de cada série.\n");
         printf(" 4 Para o percentual de alunos de outra cidade.\n");
         printf(" 5 Para o percentual de alunos repetentes.\n");
-        printf(" 9 Para sair.\n");
+        printf(" 6 Para o mostrar os 5 melhores alunos de cada série.\n");
+        printf(" 7 Para sair.\n");
         printf(" Escolha uma opção: ");
             scanf("%d",&opcao);
 
@@ -166,6 +168,7 @@ int main(){
 
             break;
             case 5:
+
                 system("cls");
                 contador = 0;
                 for(int i = 0; i < tam; i++){
@@ -194,10 +197,56 @@ int main(){
                     }
 
                 }
-
                 system("pause");
+
             break;
-            case 9:
+            case 6:
+
+                system("cls");
+                contador = 0;
+                int continua = 0, inicio = 0, fim = 0;
+                for(int i = 0; i < tam; i++){
+                    contador++;
+                    if(aluno[i].turma!=aluno[i+1].turma){
+                        controlador = i+1;
+                        fim = controlador;
+                        do{
+                            continua = 0;
+                            for(inicio = controlador-contador; inicio < fim-1; inicio++){
+                                if(aluno[inicio].media>aluno[inicio+1].media){
+                                    alunoAux = aluno[inicio];
+                                    aluno[inicio] = aluno[inicio+1];
+                                    aluno[inicio+1] = alunoAux;
+                                    continua = i;
+                                }
+                            }
+                            fim--;
+                        }while(continua!=0);
+
+                        printf(" Tuma: %d\n\n",aluno[i].turma);
+                        if(contador>=5){
+                            classificacao = 0;
+                            for(int y = controlador-1; y >= controlador-5 ; y--){
+                                printf(" %dº aluno com maior nota.\n",++classificacao);
+                                printf(" Nome %s\n",aluno[y].nome);
+                                printf(" Nota %.2f\n\n",aluno[y].media);
+                            }
+                        }else{
+                            classificacao = 0;
+                            for(int y = controlador-1; y >= controlador-contador ; y--){
+                                printf(" %dº aluno com maior nota.\n",++classificacao);
+                                printf(" Nome %s\n",aluno[y].nome);
+                                printf(" Nota %.2f\n\n",aluno[y].media);
+                            }
+                        }
+                        contador = 0;
+                    }
+
+                }
+                system("pause");
+
+            break;
+            case 7:
                 system("cls");
                 printf("Até logo!\n");
             break;
@@ -207,7 +256,7 @@ int main(){
                 system("pause");
         }
 
-    }while(opcao!=9);
+    }while(opcao!=7);
 
     return 0;
 }
