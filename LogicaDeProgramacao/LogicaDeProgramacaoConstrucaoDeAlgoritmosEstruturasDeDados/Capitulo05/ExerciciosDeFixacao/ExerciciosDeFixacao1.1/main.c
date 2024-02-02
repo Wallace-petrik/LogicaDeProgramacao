@@ -15,15 +15,42 @@ typedef struct{
 int main(){
     setlocale(LC_ALL,"");
 
-    FILE *arq;
+    Livro livro;
 
-    arq = fopen("acervo.txt","a+");
+    FILE *arquivo;
 
-    if(arq==NULL){
+    int opcao;
+
+    if((arquivo=fopen("banco","a+b"))==NULL){
         printf("Problema na criação do arquivo!\n");
-    }else{
-        printf("O arquivo foi criado com sucesso!\n");
+        system("pause");
+        exit(0);
     }
-    fclose(arq);
+
+    do{
+        printf("Escolha uma opção\n\n");
+        printf("1 Para buscar livros por assunto\n");
+        printf("3 Para sair\n");
+            scanf("%d",&opcao);
+
+        switch(opcao){
+            case 1:
+                system("cls");
+
+
+            break;
+            case 3:
+                system("cls");
+                printf("Até logo!!!");
+            break;
+            default:
+                system("cls");
+                printf("Opção invalida!!!\n");
+                system("pause");
+                system("cls");
+        }
+    }while(opcao!=3);
+
+    fclose(arquivo);
     return 0;
 }
