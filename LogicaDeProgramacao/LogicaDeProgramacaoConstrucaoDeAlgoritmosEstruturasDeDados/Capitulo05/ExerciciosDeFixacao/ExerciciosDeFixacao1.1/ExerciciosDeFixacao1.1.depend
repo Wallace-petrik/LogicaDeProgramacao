@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1706838545 source:c:\users\petrik\documents\meusrepositorios\logicadeprogramacao\logicadeprogramacao\logicadeprogramacaoconstrucaodealgoritmosestruturasdedados\capitulo05\exerciciosdefixacao\exerciciosdefixacao1.1\main.c
+1706900336 source:c:\users\petrik\documents\meusrepositorios\logicadeprogramacao\logicadeprogramacao\logicadeprogramacaoconstrucaodealgoritmosestruturasdedados\capitulo05\exerciciosdefixacao\exerciciosdefixacao1.1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<locale.h>
+	<string.h>
 
