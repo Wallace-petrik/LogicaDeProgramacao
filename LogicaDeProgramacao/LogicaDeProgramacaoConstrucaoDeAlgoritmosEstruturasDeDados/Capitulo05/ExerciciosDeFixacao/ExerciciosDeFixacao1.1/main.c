@@ -14,7 +14,7 @@ typedef struct{
 }Livro;
 
 int main(){
-    setlocale(LC_ALL,"");
+    setlocale(LC_ALL,"Portuguese");
 
     FILE *arquivo;
 
@@ -33,7 +33,7 @@ int main(){
             case 1:
                 system("cls");
                 arquivo = fopen("arquivo","a+b");
-                if((arquivo ==NULL)){
+                if((arquivo == NULL)){
                     printf("Erro na abertura do arquivo!!!\n");
                 }else{
                     printf("\nEntre com os dados do livro!\n\n");
@@ -58,7 +58,7 @@ int main(){
 
                     fwrite(&livro,sizeof(livro),1,arquivo);
 
-                    if(ferror(arquivo)){
+                    if(ferror(arquivo)){ //ferrir retorna ZERO se nunhum erro ocorreu.
                         printf("Erro na gravação!\n");
                     }else{
                         printf("Dados gravados com sucesso!\n");
@@ -78,19 +78,29 @@ int main(){
                 printf("Sobre qual assunto está buscando?");
                     scanf("%s",&aux.assunto);
 
-            while(!feof(arquivo)){
-                controle = fread(&livro,sizeof(Livro),1,arquivo);
-                if(ferror(arquivo)){
-                    printf("Erro na leitura do arquivo");
+                arquivo = fopen("arquivo","a+b");
+
+                if(arquivo == NULL){
+                    printf("Erro na abertura do arquivo!!!\n");
                 }else{
-                    if(strcmp(aux.assunto,livro.assunto)){
-                        printf("Nome do livro: %s",livro.titulo);
-                        printf("Nome do autor: %s",livro.autor);
+
+                    while(!feof(arquivo)){
+                        controle = fread(&livro,sizeof(Livro),1,arquivo);
+                        if(ferror(arquivo)){
+                            printf("Erro na leitura do arquivo");
+                        }else{
+                            if((strcmp(aux.assunto,livro.assunto) == 0) && controle != 0){
+                                printf("Nome do livro: %s\n",livro.titulo);
+                                printf("Nome do autor: %s\n",livro.autor);
+                            }
+                        }
                     }
                 }
-
-            }
-
+                if(fclose(arquivo)){
+                    printf("Erro no fechamentob do arquivo!!!\n");
+                }
+                system("pause");
+                system("cls");
             break;
             case 3:
                 system("cls");
