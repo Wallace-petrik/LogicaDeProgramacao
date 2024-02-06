@@ -223,8 +223,46 @@ int main(){
 
             break;
             case 5:
+                system("cls");
+                FILE *novoArquivo;
+                arquivo = fopen("arquivo.dat","rb");
+                novoArquivo = fopen("novoArquivo.dat","a+b");
 
+                printf("Digite o código do livro que deseja excluir: ");
+                    scanf("%d",&aux.codLivro);
+                if(!arquivo && !novoArquivo){
+                    printf("Erro na abertura do arquivo!");
+                    exit (1);
+                }else{
+                    while(!feof(arquivo)){
 
+                         controle = fread(&livro,sizeof(livro),1,arquivo);
+
+                        if(livro.codLivro!=aux.codLivro && controle != 0){
+                            fwrite(&livro,sizeof(livro),1,novoArquivo);
+                        }
+                    }
+                }
+
+                if(fclose(novoArquivo)|| fclose(arquivo)){
+                    printf("Erro no fechamentob do arquivo!!!\n");
+                }
+
+                if(remove("arquivo.dat") == 0) {
+                    puts("Arquivo removido com sucesso!");
+                } else {
+                    printf("Não foi possível remover o arquivo arquivo.dat");
+                }
+
+                if((rename("novoArquivo.dat","arquivo.dat")) == 0) {
+                    printf("Arquivo novoArquivo.dat  renomeado para arquivo.dat com sucesso!\n");
+                    puts("Livro excluido com sucesso!");
+                } else {
+                    printf("Não foi possível renomear o arquivo novoArquivo.dat.");
+                }
+
+                system("pause");
+                system("cls");
 
             break;
             case 6:
