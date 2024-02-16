@@ -16,10 +16,12 @@ int main(){
 
     FILE *arq;
     Aluno aluno;
-    int opcao;
+    int opcao,controle,contador;
 
     do{
+        system("cls");
         printf("1 para cadastrar aluno\n");
+        printf("2 para listar alunos por curso\n");
             scanf("%d",&opcao);
         switch(opcao){
             case 0:
@@ -61,6 +63,36 @@ int main(){
                         system("pause");
                     }
 
+                }
+
+            break;
+            case 2:
+
+                system("cls");
+                if((arq = fopen("arquivo.dat","ab+"))==NULL){
+                    printf("Erro ao abrir o arquivo!\n");
+                }else{
+                    for(int i = 1; i <= 3; i++){
+                        fseek(arq,0,SEEK_SET);
+
+                        if(i==3){
+                            printf("\nMatemática\n\n");
+                        }else if(i==2){
+                            printf("\nDireíto\n\n");
+                        }else{
+                            printf("\nPedagogía\n\n");
+                        }
+
+                        while((fread(&aluno,sizeof(aluno),1,arq)!=0)){
+                            if(aluno.curso==i){
+                                printf("Nome: %s",aluno.nome);
+                            }
+                        }
+                    }
+                    if(fclose(arq)==0){
+                        printf("\n\nDados salvos!\n");
+                        system("pause");
+                    }
                 }
 
             break;
