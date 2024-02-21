@@ -36,13 +36,14 @@ int main(){
 
     FILE *arquivoSociados, *arquivoMensalidade;
 
-    Associados socio;
+    Associados socio,socioAux;
     Mensalidade boleto;
     do{
 
         system("cls");
         printf("1 para cadastrar associados\n");
         printf("2 para apresentar número de pessoas que pode frequentar o clube\n");
+        printf("3 para listar aniversariantes do mês\n");
             scanf("%d",&opcao);
             fflush(stdin);
 
@@ -127,6 +128,39 @@ int main(){
                 if((fclose(arquivoSociados))==0){
 
                     printf("Êxito na busca!\n");
+                    system("pause");
+
+                }
+
+            break;
+             case 3:
+
+                if((arquivoSociados = fopen("arquivoS.dat","ab+"))==NULL){
+
+                    system("cls");
+                    printf("Erro ao abrir o arquivo!\n");
+                    exit(1);
+
+                }else{
+
+                    printf("\nDigite o mês: ");
+                        scanf("%d",&socioAux.dataDeAssociacao.mes);
+                    printf("\n");
+                    while(fread(&socio,sizeof(socio),1,arquivoSociados)){
+
+                        if(socioAux.dataDeAssociacao.mes==socio.dataDeAssociacao.mes){
+
+                            printf("Nome: %s",socio.nome);
+
+                        }
+
+                    }
+
+                }
+
+                if((fclose(arquivoSociados))==0){
+
+                    printf("\nÊxito na busca!\n");
                     system("pause");
 
                 }
