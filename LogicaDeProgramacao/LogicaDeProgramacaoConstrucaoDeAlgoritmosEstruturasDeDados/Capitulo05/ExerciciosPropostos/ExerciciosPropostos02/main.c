@@ -32,7 +32,7 @@ int main(){
 
     setlocale(LC_ALL,"");
 
-    int opcao;
+    int opcao,contador;
 
     FILE *arquivoSociados, *arquivoMensalidade;
 
@@ -42,6 +42,7 @@ int main(){
 
         system("cls");
         printf("1 para cadastrar associados\n");
+        printf("2 para apresentar número de pessoas que pode frequentar o clube\n");
             scanf("%d",&opcao);
             fflush(stdin);
 
@@ -83,7 +84,7 @@ int main(){
                         fgets(socio.estado,tam,stdin);
                         fflush(stdin);
                     printf("Número de dependentes: ");
-                        scanf("%d",&socio.numeroSocio);
+                        scanf("%d",&socio.dependentes);
                         fflush(stdin);
                     printf("Data de associação: ");
                         scanf("%d%d%d",&socio.dataDeAssociacao.dia,&socio.dataDeAssociacao.mes,&socio.dataDeAssociacao.ano);
@@ -96,6 +97,36 @@ int main(){
                 if((fclose(arquivoSociados))==0){
 
                     printf("Asóciado cadastrado com sucesso!\n");
+                    system("pause");
+
+                }
+
+            break;
+            case 2:
+
+                if((arquivoSociados = fopen("arquivoS.dat","ab+"))==NULL){
+
+                    system("cls");
+                    printf("Erro ao abrir o arquivo!\n");
+                    exit(1);
+
+                }else{
+
+                    contador = 0;
+
+                    while(fread(&socio,sizeof(socio),1,arquivoSociados)){
+
+                        contador+= socio.dependentes+1;
+
+                    }
+                    if(contador>0){
+                        printf("\nO total depssoas: %d\n\n",contador);
+                    }
+                }
+
+                if((fclose(arquivoSociados))==0){
+
+                    printf("Êxito na busca!\n");
                     system("pause");
 
                 }
