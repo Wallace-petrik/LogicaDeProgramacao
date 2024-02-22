@@ -34,14 +34,14 @@ int main(){
 
     int opcao,contador;
 
-    FILE *arquivoSociados, *arquivoMensalidade;
+    FILE *arquivoSociados, *arquivoMensalidade, *novoarquivo;
 
     Associados socio,socioAux;
     Mensalidade boleto;
     do{
 
         system("cls");
-        printf("1 para cadastrar associados\n");
+        printf("1 para associados\n");
         printf("2 para apresentar número de pessoas que pode frequentar o clube\n");
         printf("3 para listar aniversariantes do mês\n");
             scanf("%d",&opcao);
@@ -58,7 +58,7 @@ int main(){
             case 1:
 
                 system("cls");
-                if((arquivoSociados = fopen("arquivoS.dat","ab+"))==NULL){
+                if((arquivoSociados = fopen("arquivoS.dat","rb+"))==NULL){
 
                     printf("Erro ao abrir o arquivo!\n");
                     system("pause");
@@ -66,41 +66,111 @@ int main(){
 
                 }else{
 
-                    printf("Número de sócio: ");
-                        scanf("%d",&socio.numeroSocio);
-                        fflush(stdin);
-                    printf("Nome: ");
-                        fgets(socio.nome,tam,stdin);
-                        fflush(stdin);
-                    printf("Endereço: ");
-                        fgets(socio.endereco,tam,stdin);
-                        fflush(stdin);
-                    printf("Bairro: ");
-                        fgets(socio.bairro,tam,stdin);
-                        fflush(stdin);
-                    printf("Cidade: ");
-                        fgets(socio.cidade,tam,stdin);
-                        fflush(stdin);
-                    printf("Estado: ");
-                        fgets(socio.estado,tam,stdin);
-                        fflush(stdin);
-                    printf("Número de dependentes: ");
-                        scanf("%d",&socio.dependentes);
-                        fflush(stdin);
-                    printf("Data de associação: ");
-                        scanf("%d%d%d",&socio.dataDeAssociacao.dia,&socio.dataDeAssociacao.mes,&socio.dataDeAssociacao.ano);
-                        fflush(stdin);
+                    printf("1 para inclusões\n2 para alterações\n3 para exclusões\n");
+                        scanf("%d",&opcao);
 
-                        fwrite(&socio,sizeof(socio),1,arquivoSociados);
+                        if(opcao==1){
+                            printf("Número de sócio: ");
+                                scanf("%d",&socio.numeroSocio);
+                                fflush(stdin);
+                            printf("Nome: ");
+                                fgets(socio.nome,tam,stdin);
+                                fflush(stdin);
+                            printf("Endereço: ");
+                                fgets(socio.endereco,tam,stdin);
+                                fflush(stdin);
+                            printf("Bairro: ");
+                                fgets(socio.bairro,tam,stdin);
+                                fflush(stdin);
+                            printf("Cidade: ");
+                                fgets(socio.cidade,tam,stdin);
+                                fflush(stdin);
+                            printf("Estado: ");
+                                fgets(socio.estado,tam,stdin);
+                                fflush(stdin);
+                            printf("Número de dependentes: ");
+                                scanf("%d",&socio.dependentes);
+                                fflush(stdin);
+                            printf("Data de associação: ");
+                                scanf("%d%d%d",&socio.dataDeAssociacao.dia,&socio.dataDeAssociacao.mes,&socio.dataDeAssociacao.ano);
+                                fflush(stdin);
+
+                            fwrite(&socio,sizeof(socio),1,arquivoSociados);
+                        }else if(opcao == 2){
+
+                            printf("\nDigite o código do associado: ");
+                                scanf("%d",&socioAux.numeroSocio);
+
+                            printf("Número de sócio: ");
+                                scanf("%d",&socio.numeroSocio);
+                                fflush(stdin);
+                            printf("Nome: ");
+                                fgets(socio.nome,tam,stdin);
+                                fflush(stdin);
+                            printf("Endereço: ");
+                                fgets(socio.endereco,tam,stdin);
+                                fflush(stdin);
+                            printf("Bairro: ");
+                                fgets(socio.bairro,tam,stdin);
+                                fflush(stdin);
+                            printf("Cidade: ");
+                                fgets(socio.cidade,tam,stdin);
+                                fflush(stdin);
+                            printf("Estado: ");
+                                fgets(socio.estado,tam,stdin);
+                                fflush(stdin);
+                            printf("Número de dependentes: ");
+                                scanf("%d",&socio.dependentes);
+                                fflush(stdin);
+                            printf("Data de associação: ");
+                                scanf("%d%d%d",&socio.dataDeAssociacao.dia,&socio.dataDeAssociacao.mes,&socio.dataDeAssociacao.ano);
+                                fflush(stdin);
+
+                            fseek(arquivoSociados,sizeof(socio)*(socioAux.numeroSocio-1),SEEK_SET);
+                            fwrite(&socio,sizeof(socio),1,arquivoSociados);
+
+                        }else if(opcao==3){
+
+                            if((novoarquivo = fopen("novoarq.dat","a+b"))==NULL){
+
+                                    printf("Erro ao abrir o arquivo\n");
+
+                            }else{
+
+                                printf("Digite o número do socio: ");
+                                    scanf("%d",&socioAux.numeroSocio);
+
+                                while(fread(&socio,sizeof(socio),1,arquivoSociados)){
+
+                                    if(socioAux.numeroSocio!=socio.numeroSocio){
+                                        fwrite(&socio,sizeof(socio),1,novoarquivo);
+                                    }
+
+                                }
+
+                            }
+
+                        }else{
+                            printf("Opção invalida\n");
+                        }
 
                 }
 
                 if((fclose(arquivoSociados))==0){
 
-                    printf("Asóciado cadastrado com sucesso!\n");
+                    printf("Êxito\n");
                     system("pause");
 
                 }
+                if((fclose(novoarquivo))==0){
+
+                    printf("Êxito\n");
+                    system("pause");
+
+                }
+
+                remove("arquivoS.dat");
+                rename("novoarq.dat","arquivoS.dat");
 
             break;
             case 2:
