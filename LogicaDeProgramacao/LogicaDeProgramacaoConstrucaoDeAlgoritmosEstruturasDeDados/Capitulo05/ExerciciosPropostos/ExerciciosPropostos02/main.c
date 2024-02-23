@@ -32,7 +32,7 @@ int main(){
 
     setlocale(LC_ALL,"");
 
-    int opcao,contador;
+    int opcao,contador,controle;
 
     FILE *arquivoAssociados, *arquivoMensalidade, *novoarquivo;
 
@@ -44,7 +44,7 @@ int main(){
         printf("1 para associados\n");
         printf("2 para apresentar número de pessoas que pode frequentar o clube\n");
         printf("3 para listar aniversariantes do mês\n");
-        printf("4 para listar mensaldades dos socios\n");
+        printf("4 para listar mensaldades dos sócios\n");
             scanf("%d",&opcao);
             fflush(stdin);
 
@@ -138,12 +138,15 @@ int main(){
 
                             }else{
 
-                                printf("Digite o número do socio: ");
+                                printf("Digite o número do sócio: ");
                                     scanf("%d",&socioAux.numeroSocio);
 
                                 while(fread(&socio,sizeof(socio),1,arquivoAssociados)){
 
-                                    if(socioAux.numeroSocio!=socio.numeroSocio){
+                                    if(socio.numeroSocio<socioAux.numeroSocio){
+                                        fwrite(&socio,sizeof(socio),1,novoarquivo);
+                                    }else if(socio.numeroSocio>socioAux.numeroSocio){
+                                        socio.numeroSocio--;
                                         fwrite(&socio,sizeof(socio),1,novoarquivo);
                                     }
 
@@ -157,13 +160,7 @@ int main(){
 
                 }
 
-                if((fclose(arquivoAssociados))==0){
-
-                    printf("Êxito\n");
-                    system("pause");
-
-                }
-                if((fclose(novoarquivo))==0){
+                if((fclose(arquivoAssociados))== 0 && (fclose(novoarquivo))== 0){
 
                     printf("Êxito\n");
                     system("pause");
@@ -221,6 +218,7 @@ int main(){
 
                         if(socioAux.dataDeAssociacao.mes==socio.dataDeAssociacao.mes){
 
+                            printf("Nº: %d\n",socio.numeroSocio);
                             printf("Nome: %s",socio.nome);
 
                         }
@@ -240,18 +238,37 @@ int main(){
             case 4:
 
                 system("cls");
-                if((arquivoAssociados = fopen("arquivoS.dat","rb"))==NULL || (arquivoMensalidade = fopen("arquivosM.dat","w+b"))==NULL){
+                if((arquivoAssociados = fopen("arquivoS.dat","rb"))==NULL || (arquivoMensalidade = fopen("arquivosM.dat","ab+"))==NULL){
 
                     system("cls");
                     printf("Erro ao abrir os arquivos!\n");
                     exit(1);
                 }else{
 
+                    system("cls");
+                    printf("Digite o código so sócio: ");
+                        scanf("%d",&socioAux.numeroSocio);
 
+                    while(fread(&socio,sizeof(socio),1,arquivoAssociados)){
+
+                        if(socioAux.numeroSocio==socio.numeroSocio){
+
+                            printf("Digite o valor individual: ");
+                                scanf("%f",&boleto.valor);
+                                socio.dependentes > 0 ? (boleto.valor *= socio.dependentes): boleto.valor;
+                            printf("Digite a data de vencimento: ");
+                                scanf("%d%d%d",&boleto.dataDeVencimento.dia,&boleto.dataDeVencimento.mes,&boleto.dataDeVencimento.ano);
+                                boleto.dataDePagamento=boleto.dataDeVencimento;
+
+
+
+                        }
+
+                    }
 
                 }
 
-                if((fclose(arquivoAssociados))==0 && (fclose(arquivoMensalidade))){
+                if((fclose(arquivoAssociados))== 0 && (fclose(arquivoMensalidade))== 0){
 
                     printf("Busca realizada com sucesso!\n");
                     system("pause");
