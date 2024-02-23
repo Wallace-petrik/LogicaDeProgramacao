@@ -34,7 +34,7 @@ int main(){
 
     int opcao,contador;
 
-    FILE *arquivoSociados, *arquivoMensalidade, *novoarquivo;
+    FILE *arquivoAssociados, *arquivoMensalidade, *novoarquivo;
 
     Associados socio,socioAux;
     Mensalidade boleto;
@@ -44,6 +44,7 @@ int main(){
         printf("1 para associados\n");
         printf("2 para apresentar número de pessoas que pode frequentar o clube\n");
         printf("3 para listar aniversariantes do mês\n");
+        printf("4 para listar mensaldades dos socios\n");
             scanf("%d",&opcao);
             fflush(stdin);
 
@@ -58,7 +59,7 @@ int main(){
             case 1:
 
                 system("cls");
-                if((arquivoSociados = fopen("arquivoS.dat","rb+"))==NULL){
+                if((arquivoAssociados = fopen("arquivoS.dat","rb+"))==NULL){
 
                     printf("Erro ao abrir o arquivo!\n");
                     system("pause");
@@ -95,7 +96,7 @@ int main(){
                                 scanf("%d%d%d",&socio.dataDeAssociacao.dia,&socio.dataDeAssociacao.mes,&socio.dataDeAssociacao.ano);
                                 fflush(stdin);
 
-                            fwrite(&socio,sizeof(socio),1,arquivoSociados);
+                            fwrite(&socio,sizeof(socio),1,arquivoAssociados);
                         }else if(opcao == 2){
 
                             printf("\nDigite o código do associado: ");
@@ -126,8 +127,8 @@ int main(){
                                 scanf("%d%d%d",&socio.dataDeAssociacao.dia,&socio.dataDeAssociacao.mes,&socio.dataDeAssociacao.ano);
                                 fflush(stdin);
 
-                            fseek(arquivoSociados,sizeof(socio)*(socioAux.numeroSocio-1),SEEK_SET);
-                            fwrite(&socio,sizeof(socio),1,arquivoSociados);
+                            fseek(arquivoAssociados,sizeof(socio)*(socioAux.numeroSocio-1),SEEK_SET);
+                            fwrite(&socio,sizeof(socio),1,arquivoAssociados);
 
                         }else if(opcao==3){
 
@@ -140,7 +141,7 @@ int main(){
                                 printf("Digite o número do socio: ");
                                     scanf("%d",&socioAux.numeroSocio);
 
-                                while(fread(&socio,sizeof(socio),1,arquivoSociados)){
+                                while(fread(&socio,sizeof(socio),1,arquivoAssociados)){
 
                                     if(socioAux.numeroSocio!=socio.numeroSocio){
                                         fwrite(&socio,sizeof(socio),1,novoarquivo);
@@ -156,7 +157,7 @@ int main(){
 
                 }
 
-                if((fclose(arquivoSociados))==0){
+                if((fclose(arquivoAssociados))==0){
 
                     printf("Êxito\n");
                     system("pause");
@@ -175,7 +176,7 @@ int main(){
             break;
             case 2:
 
-                if((arquivoSociados = fopen("arquivoS.dat","ab+"))==NULL){
+                if((arquivoAssociados = fopen("arquivoS.dat","ab+"))==NULL){
 
                     system("cls");
                     printf("Erro ao abrir o arquivo!\n");
@@ -185,7 +186,7 @@ int main(){
 
                     contador = 0;
 
-                    while(fread(&socio,sizeof(socio),1,arquivoSociados)){
+                    while(fread(&socio,sizeof(socio),1,arquivoAssociados)){
 
                         contador+= socio.dependentes+1;
 
@@ -195,7 +196,7 @@ int main(){
                     }
                 }
 
-                if((fclose(arquivoSociados))==0){
+                if((fclose(arquivoAssociados))==0){
 
                     printf("Êxito na busca!\n");
                     system("pause");
@@ -203,9 +204,9 @@ int main(){
                 }
 
             break;
-             case 3:
+            case 3:
 
-                if((arquivoSociados = fopen("arquivoS.dat","ab+"))==NULL){
+                if((arquivoAssociados = fopen("arquivoS.dat","ab+"))==NULL){
 
                     system("cls");
                     printf("Erro ao abrir o arquivo!\n");
@@ -216,7 +217,7 @@ int main(){
                     printf("\nDigite o mês: ");
                         scanf("%d",&socioAux.dataDeAssociacao.mes);
                     printf("\n");
-                    while(fread(&socio,sizeof(socio),1,arquivoSociados)){
+                    while(fread(&socio,sizeof(socio),1,arquivoAssociados)){
 
                         if(socioAux.dataDeAssociacao.mes==socio.dataDeAssociacao.mes){
 
@@ -228,9 +229,31 @@ int main(){
 
                 }
 
-                if((fclose(arquivoSociados))==0){
+                if((fclose(arquivoAssociados))==0){
 
                     printf("\nÊxito na busca!\n");
+                    system("pause");
+
+                }
+
+            break;
+            case 4:
+
+                system("cls");
+                if((arquivoAssociados = fopen("arquivoS.dat","rb"))==NULL || (arquivoMensalidade = fopen("arquivosM.dat","w+b"))==NULL){
+
+                    system("cls");
+                    printf("Erro ao abrir os arquivos!\n");
+                    exit(1);
+                }else{
+
+
+
+                }
+
+                if((fclose(arquivoAssociados))==0 && (fclose(arquivoMensalidade))){
+
+                    printf("Busca realizada com sucesso!\n");
                     system("pause");
 
                 }
