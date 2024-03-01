@@ -37,7 +37,7 @@ int main(){
     FILE *arquivoAssociados, *arquivoMensalidade, *novoarquivo;
 
     Associados socio,socioAux;
-    Mensalidade boleto;
+    Mensalidade boleto,boletoAux;
     do{
 
         system("cls");
@@ -238,7 +238,9 @@ int main(){
             case 4:
 
                 system("cls");
-                if((arquivoAssociados = fopen("arquivoS.dat","rb"))==NULL || (arquivoMensalidade = fopen("arquivosM.dat","ab+"))==NULL){
+                controle = 0;
+                contador = 0;
+                if((arquivoAssociados = fopen("arquivoS.dat","rb"))==NULL || (arquivoMensalidade = fopen("arquivosM.dat","r+b"))==NULL){
 
                     system("cls");
                     printf("Erro ao abrir os arquivos!\n");
@@ -247,21 +249,46 @@ int main(){
 
                     system("cls");
                     printf("Digite o código so sócio: ");
-                        scanf("%d",&socioAux.numeroSocio);
+                        scanf("%d",&boletoAux.numeroSocio);
 
                     while(fread(&socio,sizeof(socio),1,arquivoAssociados)){
 
-                        if(socioAux.numeroSocio==socio.numeroSocio){
+                        if(boletoAux.numeroSocio==socio.numeroSocio){
 
                             printf("Digite o valor individual: ");
-                                scanf("%f",&boleto.valor);
-                                socio.dependentes > 0 ? (boleto.valor *= socio.dependentes): boleto.valor;
+                                scanf("%f",&boletoAux.valor);
+                                socio.dependentes > 0 ? (boletoAux.valor *= socio.dependentes): boletoAux.valor;
                             printf("Digite a data de vencimento: ");
-                                scanf("%d%d%d",&boleto.dataDeVencimento.dia,&boleto.dataDeVencimento.mes,&boleto.dataDeVencimento.ano);
-                                boleto.dataDePagamento=boleto.dataDeVencimento;
+                                scanf("%d%d%d",&boletoAux.dataDeVencimento.dia,&boletoAux.dataDeVencimento.mes,&boletoAux.dataDeVencimento.ano);
+                                boletoAux.dataDePagamento=boletoAux.dataDeVencimento;
 
 
 
+
+                            if(0 == fread(&boleto,sizeof(boleto),1,arquivoMensalidade)){
+
+                                fwrite(&boletoAux,sizeof(boletoAux),1,arquivoMensalidade);
+                                break;
+
+                            }else{
+
+                               fseek(arquivoMensalidade,0,SEEK_SET);
+
+                                while(fread(&boleto,sizeof(boleto),1,arquivoMensalidade)){
+
+                                    if(boleto.numeroSocio==boletoAux.numeroSocio){
+
+                                        fseek(arquivoMensalidade,-(sizeof(boletoAux)),SEEK_CUR);
+                                        fwrite(&boletoAux,sizeof(boletoAux),1,arquivoMensalidade);
+                                        controle = 1;
+                                        break;
+                                    }
+                                }
+
+                            }
+                            if(controle == 0){
+                                fwrite(&boletoAux,sizeof(boletoAux),1,arquivoMensalidade);
+                            }
                         }
 
                     }
@@ -270,7 +297,7 @@ int main(){
 
                 if((fclose(arquivoAssociados))== 0 && (fclose(arquivoMensalidade))== 0){
 
-                    printf("Busca realizada com sucesso!\n");
+                    printf("Operação finalizada!\n");
                     system("pause");
 
                 }
