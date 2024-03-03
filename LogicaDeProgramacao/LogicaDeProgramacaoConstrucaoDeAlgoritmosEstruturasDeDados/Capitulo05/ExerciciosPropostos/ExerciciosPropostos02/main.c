@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <time.h>
 
 #define tam 40
 
@@ -34,10 +35,17 @@ int main(){
 
     int opcao,contador,controle;
 
+    float dividaTotal = 0, divida = 0;
+
     FILE *arquivoAssociados, *arquivoMensalidade, *novoarquivo;
 
     Associados socio,socioAux;
     Mensalidade boleto,boletoAux;
+
+    time_t meuTime;
+    meuTime = time(NULL);
+    struct  tm tm = *localtime(&meuTime);
+
     do{
 
         system("cls");
@@ -45,6 +53,7 @@ int main(){
         printf("2 para apresentar número de pessoas que pode frequentar o clube\n");
         printf("3 para listar aniversariantes do mês\n");
         printf("4 para listar mensaldades dos sócios\n");
+        printf("5 para listar os inadimplentes\n");
             scanf("%d",&opcao);
             fflush(stdin);
 
@@ -239,7 +248,7 @@ int main(){
 
                 system("cls");
                 controle = 0;
-                contador = 0;
+
                 if((arquivoAssociados = fopen("arquivoS.dat","rb"))==NULL || (arquivoMensalidade = fopen("arquivosM.dat","r+b"))==NULL){
 
                     system("cls");
@@ -257,13 +266,22 @@ int main(){
 
                             printf("Digite o valor individual: ");
                                 scanf("%f",&boletoAux.valor);
-                                socio.dependentes > 0 ? (boletoAux.valor *= socio.dependentes): boletoAux.valor;
+                                socio.dependentes > 0 ? (boletoAux.valor *= (socio.dependentes+1)): boletoAux.valor;
                             printf("Digite a data de vencimento: ");
                                 scanf("%d%d%d",&boletoAux.dataDeVencimento.dia,&boletoAux.dataDeVencimento.mes,&boletoAux.dataDeVencimento.ano);
-                                boletoAux.dataDePagamento=boletoAux.dataDeVencimento;
 
+                            printf("Foi realizado o pagamento? \n1/p sim\n 2/p não");
+                                    scanf("%d",&opcao);
+                            if(opcao==1){
+                                printf("Digite a data de pagamento: ");
+                                    scanf("%d%d%d",&boletoAux.dataDePagamento.dia,&boletoAux.dataDePagamento.mes,&boletoAux.dataDePagamento.ano);
+                            }else{
 
+                                boletoAux.dataDePagamento.dia=0;
+                                boletoAux.dataDePagamento.mes=0;
+                                boletoAux.dataDePagamento.ano=0;
 
+                            }
 
                             if(0 == fread(&boleto,sizeof(boleto),1,arquivoMensalidade)){
 
@@ -300,6 +318,34 @@ int main(){
                     printf("Operação finalizada!\n");
                     system("pause");
 
+                }
+
+            break;
+            case 5:
+
+                system("cls");
+                if((arquivoMensalidade = fopen("arquivosM.dat","rb"))==NULL || (arquivoAssociados = fopen("arquivoS.dat","rb"))==NULL){
+                    printf("Erro ao abrir o arquivo!!!");
+                }else{
+
+                    while(fread(&boleto,sizeof(boleto),1,arquivoMensalidade)){
+
+                        if(boleto.dataDeVencimento.dia<tm.tm_mday && boleto.dataDePagamento.dia ==0){
+
+                            fseek(arquivoAssociados,(sizeof(socio)*(boleto.numeroSocio-1)),SEEK_SET);
+                            fread(&socio,sizeof(socio),1,arquivoAssociados);
+
+                            printf("Nome: %sDividas = %.2f\n\n",socio.nome,boleto.valor );
+                            dividaTotal += boleto.valor;
+                        }
+
+                    }
+                    printf("Divida total = %.2f\n",dividaTotal);
+                }
+
+                if(fclose(arquivoMensalidade)==0 && (fclose(arquivoAssociados))==0){
+                    printf("Sucesso na execução");
+                    system("pause");
                 }
 
             break;
