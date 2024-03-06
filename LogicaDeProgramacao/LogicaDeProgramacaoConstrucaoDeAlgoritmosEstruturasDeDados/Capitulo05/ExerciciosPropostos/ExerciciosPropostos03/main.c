@@ -46,8 +46,8 @@ int main(){
 
     setlocale(LC_ALL,"");
 
-    int opcao,controle,contador;
-
+    int opcao,controle,contador, pint = 0;
+    char pchar;
     FILE *arqCliente, *arqAgenciaBancaria, *arqTansacao, *arqRanking;
 
     Correntistas cliente;
@@ -194,7 +194,13 @@ int main(){
 
                     while(fread(&transacao,sizeof(transacao),1,arqTansacao)){
 
-                        if(transacao.contaCorrente==(agenciaBancariaAux.numeroAgencia*100)+agenciaBancariaAux.numeroAgencia){
+                        pint = transacao.contaCorrente;
+
+                        while(pint>=10){
+                            pint /= 10;
+                        }
+
+                        if(agenciaBancariaAux.numeroAgencia==pint){
 
                             saldoAgencia.saldoAg += transacao.valor;
 
@@ -217,15 +223,35 @@ int main(){
                         fseek(arqRanking,(i+1)*sizeof(saldoAgenciaAux2),SEEK_SET);
                         fread(&saldoAgenciaAux2,sizeof(saldoAgenciaAux2),1,arqRanking);
 
-                        /*if(){
+                        if(saldoAgenciaAux1.saldoAg<saldoAgenciaAux2.saldoAg){
 
+                            fseek(arqRanking,i*sizeof(saldoAgenciaAux1),SEEK_SET);
+                            fwrite(&saldoAgenciaAux2,sizeof(saldoAgenciaAux1),1,arqRanking);
+                            fseek(arqRanking,(i+1)*sizeof(saldoAgenciaAux2),SEEK_SET);
+                            fwrite(&saldoAgenciaAux1,sizeof(saldoAgenciaAux2),1,arqRanking);
 
-
-                           controle = i;
-                        }*/
+                            controle = i;
+                        }
+                        fseek(arqRanking,0,SEEK_SET);
                     }
                     contador--;
                 }while(controle!=0);
+
+                fseek(arqAgenciaBancaria,0,SEEK_SET);
+
+                contador = 0;
+
+                while(fread(&agenciaBancaria,sizeof(agenciaBancaria),1,arqAgenciaBancaria)){
+
+                    printf("%dº Nome: %s\n",++contador,agenciaBancaria.nomeAgencia);
+                    fseek(arqRanking,(agenciaBancaria.numeroAgencia-1)*(sizeof(saldoAgencia)),SEEK_SET);
+                    fread(&saldoAgencia,sizeof(saldoAgencia),1,arqRanking);
+                    printf("Saldo: %.2f\n\n",saldoAgencia.saldoAg);
+
+                    if(contador>10){
+                        break;
+                    }
+                }
 
             }
 
