@@ -47,10 +47,10 @@ int main(){
     setlocale(LC_ALL,"");
 
     int opcao,controle,contador, pint = 0;
-    char pchar;
+    float saldoCliente = 0;
     FILE *arqCliente, *arqAgenciaBancaria, *arqTansacao, *arqRanking;
 
-    Correntistas cliente;
+    Correntistas cliente,clienteAux;
     Agencia agenciaBancaria,agenciaBancariaAux;
     Lancamento transacao;
     Saldo saldoAgencia,saldoAgenciaAux1,saldoAgenciaAux2;
@@ -65,6 +65,7 @@ int main(){
         printf("1 para abrir conta.\n");
         printf("2 para listar quantidade de correntistas de cada agência.\n");
         printf("3 para listar ranking das agências com maior saldo.\n");
+        printf("4 para saldo correntista em determinada data.\n");
         printf("0 para sair!\n");
             scanf("%d",&opcao);
 
@@ -260,6 +261,49 @@ int main(){
                 system("pause");
             }
 
+        break;
+        case 4:
+
+            system("cls");
+            if((arqCliente = fopen("arqCliente.dat","r+b"))==NULL || (arqTansacao = fopen("arqTansacao.dat","r+b"))==NULL){
+                printf("Erro ao abrir os arquivos!!!\n");
+                exit(1);
+            }else{
+
+                printf("Digite sua agencia: ");
+                    scanf("%d",&cliente.agencia);
+                printf("Digite sua conta: ");
+                    scanf("%d",&cliente.contaCorrente);
+
+                printf("Digite a data: ");
+                    scanf("%d%d%d",&cliente.dataAbertura.dia,&cliente.dataAbertura.mes,&cliente.dataAbertura.ano);
+
+                saldoCliente = 0;
+
+                while(fread(&clienteAux,sizeof(clienteAux),1,arqCliente)){
+
+                    if(cliente.contaCorrente==clienteAux.contaCorrente){
+
+                        while(fread(&transacao,sizeof(transacao),1,arqTansacao)){
+
+
+
+                            if(transacao.contaCorrente==cliente.contaCorrente){
+
+                                saldoCliente = transacao.valor;
+
+                            }
+                        }
+                        break;
+                    }
+                }
+                printf("Nome: %s\n",clienteAux.correntista);
+                printf("Saldo = %.2f\n\n",saldoCliente);
+            }
+            if(fclose(arqCliente)==0 && fclose(arqTansacao)==0){
+                printf("Buca realizada com sucesso!!!\n");
+                system("pause");
+            }
 
         break;
         default:
