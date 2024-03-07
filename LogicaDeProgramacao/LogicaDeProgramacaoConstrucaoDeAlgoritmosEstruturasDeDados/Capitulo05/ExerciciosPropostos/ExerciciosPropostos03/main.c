@@ -48,7 +48,7 @@ int main(){
 
     int opcao,controle,contador, pint = 0;
     float saldoCliente = 0;
-    double diff;
+    double diff1, diff2;
     FILE *arqCliente, *arqAgenciaBancaria, *arqTansacao, *arqRanking;
 
     Correntistas cliente,clienteAux;
@@ -59,7 +59,11 @@ int main(){
     time_t mytime;
     mytime = time(NULL);
     struct tm tm = *localtime(&mytime);
-    struct tm data1 ={0}, data2 = {0};
+    struct tm data1 ={0};
+    struct tm data2 ={0};
+    struct tm data3 ={0};
+
+    time_t time1, time2, time3;
 
     do{
 
@@ -68,9 +72,9 @@ int main(){
         printf("2 para listar quantidade de correntistas de cada agência.\n");
         printf("3 para listar ranking das agências com maior saldo.\n");
         printf("4 para saldo correntista em determinada data.\n");
+        printf("5 para imprimi um estrato para um período\n");
         printf("0 para sair!\n");
             scanf("%d",&opcao);
-
 
         switch(opcao){
 
@@ -146,12 +150,11 @@ int main(){
         break;
         case 2:
 
-            system("cls");
             if((arqAgenciaBancaria = fopen("arqAgenciaBancaria.dat","rb"))==NULL || (arqCliente = fopen("arqCliente.dat","rb"))==NULL || (arqTansacao = fopen("arqTansacao.dat","rb"))== NULL){
                 printf("Erro ao abrir os arquivos!!!\n");
                 exit(1);
             }else{
-
+                system("cls");
                 while(fread(&agenciaBancariaAux,sizeof(agenciaBancariaAux),1,arqAgenciaBancaria)){
 
                     printf("%s\n",agenciaBancariaAux.nomeAgencia);
@@ -179,7 +182,6 @@ int main(){
         break;
         case 3:
 
-            system("cls");
             if((arqRanking = fopen("arqRanking.dat","w+"))==NULL ||
               (arqAgenciaBancaria = fopen("arqAgenciaBancaria.dat","rb"))==NULL ||
               (arqCliente = fopen("arqCliente.dat","rb"))==NULL ||
@@ -189,7 +191,7 @@ int main(){
 
                 exit(1);
             }else{
-
+                system("cls");
                 contador = 0;
                 while(fread(&agenciaBancariaAux,sizeof(agenciaBancariaAux),1,arqAgenciaBancaria)){
 
@@ -266,12 +268,12 @@ int main(){
         break;
         case 4:
 
-            system("cls");
             if((arqCliente = fopen("arqCliente.dat","r+b"))==NULL || (arqTansacao = fopen("arqTansacao.dat","r+b"))==NULL){
                 printf("Erro ao abrir os arquivos!!!\n");
                 exit(1);
             }else{
 
+                system("cls");
                 printf("Digite sua agencia: ");
                     scanf("%d",&cliente.agencia);
                 printf("Digite sua conta: ");
@@ -296,12 +298,12 @@ int main(){
                             data1.tm_mon = transacao.datalancamento.mes;
                             data1.tm_year = transacao.datalancamento.ano - 1900;
 
-                            time_t time1 = mktime(&data1);
-                            time_t time2 = mktime(&data2);
+                            time1 = mktime(&data1);
+                            time2 = mktime(&data2);
 
-                            diff = difftime(time1,time2);
+                            diff1 = difftime(time1,time2);
 
-                            if(transacao.contaCorrente==cliente.contaCorrente && diff < 0){
+                            if(transacao.contaCorrente==cliente.contaCorrente && diff1 < 0){
 
                                 saldoCliente = transacao.valor;
 
@@ -313,15 +315,103 @@ int main(){
                 printf("Nome: %s\n",clienteAux.correntista);
                 printf("Saldo = %.2f\n\n",saldoCliente);
             }
+
             if(fclose(arqCliente)==0 && fclose(arqTansacao)==0){
                 printf("Buca realizada com sucesso!!!\n");
                 system("pause");
             }
 
         break;
+        case 5:
+
+            if((arqAgenciaBancaria = fopen("arqAgenciaBancaria.dat","rb"))== NULL ||
+               (arqCliente = fopen("arqCliente.dat","rb"))== NULL ||
+               (arqTansacao = fopen("arqTansacao.dat","rb"))==NULL ||
+               (arqRanking = fopen("arqRanking.dat","r+"))== NULL){
+                printf("Erro ao abrir o arquivo!!!\n");
+                    exit(1);
+            }else{
+
+                system("cls");
+                printf("Entre com a data inicial: ");
+                    scanf("%d%d%d",&data1.tm_mday,&data1.tm_mon,&data1.tm_year);
+                    data1.tm_year -= 1900;
+                printf("Entre com a data final: ");
+                    scanf("%d%d%d",&data2.tm_mday,&data2.tm_mon,&data2.tm_year);
+                    data2.tm_year -= 1900;
+                printf("Digite a conta: ");
+                    scanf("%d",&clienteAux.contaCorrente);
+
+                time1 = mktime(&data1);
+                time2 = mktime(&data2);
+                saldoCliente = 0;
+
+                while(fread(&transacao,sizeof(transacao),1,arqTansacao)){
+
+                    data3.tm_mday = transacao.datalancamento.dia;
+                    data3.tm_mon = transacao.datalancamento.mes;
+                    data3.tm_year = transacao.datalancamento.ano - 1900;
+
+                    time3 = mktime(&data3);
+
+                    diff1 = difftime(time3,time1);
+
+                    if(transacao.contaCorrente==clienteAux.contaCorrente && diff1 < 0){
+
+                        saldoCliente += transacao.valor;
+
+                    }
+
+                }
+                printf("\n\nSalto anterior: %.2f\n",saldoCliente);
+
+                fseek(arqTansacao,0,SEEK_SET);
+
+                while(fread(&transacao,sizeof(transacao),1,arqTansacao)){
+                    if(transacao.contaCorrente==clienteAux.contaCorrente){
+
+                        data3.tm_mday = transacao.datalancamento.dia;
+                        data3.tm_mon = transacao.datalancamento.mes;
+                        data3.tm_year = transacao.datalancamento.ano - 1900;
+
+                        time3 = mktime(&data3);
+
+                        diff1 = difftime(time3,time1);
+                        diff2 = difftime(time3,time2);
+
+                        if(diff1 >= 0 && diff2 <= 0){
+
+                            printf("Ext -- %d/%d/%d -- Saldo = %.2f\n",transacao.datalancamento.dia,transacao.datalancamento.mes,transacao.datalancamento.ano,transacao.valor);
+
+                        }
+
+                    }
+                }
+                fseek(arqTansacao,0,SEEK_SET);
+                saldoCliente = 0;
+
+                while(fread(&transacao,sizeof(transacao),1,arqTansacao)){
+                    if(transacao.contaCorrente==clienteAux.contaCorrente){
+                        saldoCliente += transacao.valor;
+                    }
+
+                }
+                printf("Salto atual: %.2f\n\n",saldoCliente);
+
+            }
+
+            if(fclose(arqAgenciaBancaria)== 0 && fclose(arqCliente)== 0 && fclose(arqRanking)== 0 && fclose(arqTansacao) == 0){
+
+                printf("Sucesso na execução!!!\n");
+                system("pause");
+
+            }
+
+        break;
         default:
             system("cls");
             printf("Opção invalda!\n");
+            system("pause");
         }
 
     }while(opcao!=0);
