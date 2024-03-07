@@ -48,6 +48,7 @@ int main(){
 
     int opcao,controle,contador, pint = 0;
     float saldoCliente = 0;
+    double diff;
     FILE *arqCliente, *arqAgenciaBancaria, *arqTansacao, *arqRanking;
 
     Correntistas cliente,clienteAux;
@@ -58,6 +59,7 @@ int main(){
     time_t mytime;
     mytime = time(NULL);
     struct tm tm = *localtime(&mytime);
+    struct tm data1 ={0}, data2 = {0};
 
     do{
 
@@ -278,6 +280,10 @@ int main(){
                 printf("Digite a data: ");
                     scanf("%d%d%d",&cliente.dataAbertura.dia,&cliente.dataAbertura.mes,&cliente.dataAbertura.ano);
 
+                data2.tm_mday = cliente.dataAbertura.dia;
+                data2.tm_mon = cliente.dataAbertura.mes;
+                data2.tm_year = cliente.dataAbertura.ano - 1900;
+
                 saldoCliente = 0;
 
                 while(fread(&clienteAux,sizeof(clienteAux),1,arqCliente)){
@@ -286,9 +292,16 @@ int main(){
 
                         while(fread(&transacao,sizeof(transacao),1,arqTansacao)){
 
+                            data1.tm_mday = transacao.datalancamento.dia;
+                            data1.tm_mon = transacao.datalancamento.mes;
+                            data1.tm_year = transacao.datalancamento.ano - 1900;
 
+                            time_t time1 = mktime(&data1);
+                            time_t time2 = mktime(&data2);
 
-                            if(transacao.contaCorrente==cliente.contaCorrente){
+                            diff = difftime(time1,time2);
+
+                            if(transacao.contaCorrente==cliente.contaCorrente && diff < 0){
 
                                 saldoCliente = transacao.valor;
 
