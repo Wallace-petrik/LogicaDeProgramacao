@@ -34,11 +34,11 @@ int main(){
 
     int opcao = 0, contador = 0,controle = 0;
 
-    FILE *arqClientes, *arqFilmes,*arqLocacao;
+    FILE *arqClientes, *arqFilmes,*arqLocacao, *arqLocacaoAux;
 
     Cliente cliente,clienteAux;
     Filme filme,filmeAux;
-    Locacao aluguel;
+    Locacao aluguel,aluguelAux;
 
     do{
 
@@ -224,15 +224,25 @@ int main(){
             }else{
 
                 printf("Digite o código do filme que foi devolvido: ");
-                    scanf("%d",&filmeAux.codigo);
+                    scanf("%d",&aluguelAux.codigoFita);
 
-                while(fread(&filme,sizeof(filme),1,arqLocacao)){
-                    if(filmeAux.codigo==filme.codigo){
-                        fseek(arqLocacao,0,SEEK_SET);
+                while(fread(&aluguel,sizeof(aluguel),1,arqLocacao)){
+                    if(aluguelAux.codigoFita==aluguel.codigoFita){
 
-                        //Criar um novo arquivo e apagar o antigo, em seguida renomear o novo.
+                        if((arqLocacaoAux = fopen("aluguelAux.dat","a+b"))==NULL){
+                            printf("Erro ao abrir o arquivo!!!\n");
+                        }else{
+                            fseek(arqLocacao,0,SEEK_SET);
+                            while(fread(&aluguel,sizeof(aluguel),1,arqLocacao)){
 
+                                if(aluguel.codigoFita!=aluguelAux.codigoFita){
+                                    fwrite(&aluguel,sizeof(aluguel),1,arqLocacaoAux);
+                                }
 
+                            }
+                        }
+
+                        controle = 0;
                         break;
                     }else{
                         controle = 1;
@@ -246,10 +256,14 @@ int main(){
                 }
             }
 
-            if(fclose(arqLocacao)==0){
+            if(fclose(arqLocacao)==0 && fclose(arqLocacaoAux)==0){
                 printf("Fim da operação!!!\n");
-                system("pause");
+
             }
+
+            remove("aluguel.dat");
+            rename("aluguelAux.dat","aluguel.dat");
+            system("pause");
 
         break;
         default:
