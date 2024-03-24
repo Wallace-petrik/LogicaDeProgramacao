@@ -1,5 +1,5 @@
 # Lógica De Programação
-## Este repositório visa compartilhar materiais de lógica de programação, algoritmos e estrutura de dados.
+## Este repositório visa compartilhar materiais de lógica de programação, algoritmos.
  
 ### O diretório LogicaDeProgramação e destinado para os seguintes conteúdos 
 * Exercícios de Fixação e exercício proposto dos **Livros recomendados**
@@ -17,6 +17,6 @@
 * [Code Blocks](https://www.codeblocks.org/downloads/).
 
 ###  Obs 🚩
-* O diretório LogicaDeProgramacao contem os exercícios no livro Lógica de programação: A construção de algoritmos e estruturas de dados. 3ª Edição.
+* O diretório LogicaDeProgramacao contem os exercícios no livro Lógica de programação: A construção de algoritmos 3ª Edição.
 
 ### [Acesse meu perfil no Linkedin](https://www.linkedin.com/in/wallace-petrik-45b9471b4/). 💣
