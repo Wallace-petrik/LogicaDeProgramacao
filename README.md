@@ -3,8 +3,6 @@
  
 ### O diretório LogicaDeProgramação e destinado para os seguintes conteúdos 
 * Exercícios de Fixação e exercício proposto dos **Livros recomendados**
-* [Problemas do Beecrowd/URI](https://www.beecrowd.com.br/judge/en/profile/697186).
-
 
 ### Livros 📚
 * [Lógica de programação: A construção de algoritmos e estruturas de dados. 3ª Edição.
