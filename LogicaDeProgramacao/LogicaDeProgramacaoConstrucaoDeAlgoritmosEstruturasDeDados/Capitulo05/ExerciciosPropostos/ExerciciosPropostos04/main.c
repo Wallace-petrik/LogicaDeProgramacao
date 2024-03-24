@@ -48,6 +48,7 @@ int main(){
         printf("3 para aluguel de filmes \n");
         printf("4 para devolução de filme\n");
         printf("5 para buscar histórico de filmes alugados\n");
+        printf("6 para buscar qual cliente  locaram determinado filme\n");
         printf("\nOpção: ");
             scanf("%d",&opcao);
             fflush(stdin);
@@ -314,6 +315,61 @@ int main(){
             }
 
             if(fclose(arqHistorico)==0 && fclose(arqFilmes)==0 && fclose(arqHistoricoCliente)==0){
+                printf("Sucesso!\n");
+                remove("historicocliente.dat");
+                system("pause");
+            }
+
+        break;
+        case 6:
+
+            if((arqHistorico = fopen("historico.dat","a+b"))==NULL || (arqClientes = fopen("clientes.dat","a+b"))== NULL){
+                printf("Erro ao abrir o arquivo!\n");
+                exit(1);
+            }else{
+
+                printf("Entre com o código do filme: ");
+                    scanf("%d",&filme.codigo);
+
+                while(fread(&aluguel,sizeof(aluguel),1,arqHistorico)){
+                    controle = 0;
+                    if(aluguel.codigoFita==filme.codigo){
+
+                       if((arqHistoricoCliente = fopen("historicocliente.dat","a+b"))==NULL){
+                            printf("Erro ao abrir o arquivo!!!!\n");
+                            exit(1);
+                        }else{
+                            while(fread(&aluguelAux,sizeof(aluguelAux),1,arqHistoricoCliente)){
+                                if(aluguelAux.codigoCliente==aluguel.codigoCliente){
+                                    controle = 1;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if(controle==0){
+                            fwrite(&aluguel,sizeof(aluguel),1,arqHistoricoCliente);
+                            fclose(arqHistoricoCliente);
+                        }
+
+                    }
+                }
+
+                if((arqHistoricoCliente = fopen("historicocliente.dat","rb"))==NULL){
+                    printf("Esse cliente não possui historico!!!!\n");
+                    system("pause");
+                }else{
+                    while(fread(&aluguelAux,sizeof(aluguelAux),1,arqHistoricoCliente)){
+                        fseek(arqClientes,(aluguelAux.codigoCliente-1)*(sizeof(cliente)),SEEK_SET);
+                        fread(&clienteAux,sizeof(clienteAux),1,arqClientes);
+                        printf("Nome do cliente: %s\n",clienteAux.nome);
+                        printf("Tel: %d\n",clienteAux.telefone);
+                    }
+                }
+
+            }
+
+            if(fclose(arqHistorico)==0 && fclose(arqClientes)==0 && fclose(arqHistoricoCliente)==0){
                 printf("Sucesso!\n");
                 remove("historicocliente.dat");
                 system("pause");
