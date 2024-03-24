@@ -34,7 +34,7 @@ int main(){
 
     int opcao = 0, contador = 0,controle = 0;
 
-    FILE *arqClientes, *arqFilmes,*arqLocacao, *arqLocacaoAux;
+    FILE *arqClientes, *arqFilmes,*arqLocacao, *arqLocacaoAux, *arqHistorico, *arqHistoricoCliente;
 
     Cliente cliente,clienteAux;
     Filme filme,filmeAux;
@@ -47,6 +47,7 @@ int main(){
         printf("2 para Cadastrar filmes \n");
         printf("3 para aluguel de filmes \n");
         printf("4 para devolução de filme\n");
+        printf("5 para buscar histórico de filmes alugados\n");
         printf("\nOpção: ");
             scanf("%d",&opcao);
             fflush(stdin);
@@ -141,15 +142,16 @@ int main(){
         break;
         case 3:
 
-            if((arqLocacao = fopen("aluguel.dat","a+b"))==NULL || (arqClientes = fopen("clientes.dat","a+b"))== NULL || (arqFilmes = fopen("filmes.dat","a+b")) == NULL){
+            if((arqLocacao = fopen("aluguel.dat","a+b"))==NULL || (arqClientes = fopen("clientes.dat","a+b"))== NULL || (arqFilmes = fopen("filmes.dat","a+b")) == NULL ||(arqHistorico = fopen("historico.dat","a+b"))== NULL){
                 printf("Erro ao abrir o arquivo\n");
+
                 exit(1);
             }else{
 
                 system("cls");
                 printf("Digite o código do filme que deseja alugar: ");
                     scanf("%d",&filmeAux.codigo);
-                    contador = 0;
+                    controle = 0;
 
                 while(fread(&aluguel,sizeof(aluguel),1,arqLocacao)){
                     if(aluguel.codigoFita==filmeAux.codigo){
@@ -157,8 +159,8 @@ int main(){
                     }
                 }
 
-                if(contador==1){
-                    printf("Filme encontra-se alugado!!!");
+                if(controle==1){
+                    printf("Filme encontra-se alugado!!!\n");
                     system("pause");
                 }else{
 
@@ -186,7 +188,7 @@ int main(){
                             }
                         }
 
-                        if(contador==1){
+                        if(controle==1){
                             printf("Cliente não cadastrado!!!");
                             system("pause");
                         }else{
@@ -200,7 +202,7 @@ int main(){
                                 aluguel.codigoFita=filme.codigo;
 
                             fwrite(&aluguel,sizeof(aluguel),1,arqLocacao);
-
+                            fwrite(&aluguel,sizeof(aluguel),1,arqHistorico);
                         }
 
                     }
@@ -209,7 +211,7 @@ int main(){
 
             }
 
-            if(fclose(arqLocacao)==0 && fclose(arqClientes)==0 && fclose(arqLocacao)==0){
+            if(fclose(arqLocacao)==0 && fclose(arqClientes)==0 && fclose(arqFilmes)==0 && fclose(arqHistorico)==0){
                 printf("Operação realizada com sucesso!!\n");
                 system("pause");
             }
@@ -266,6 +268,58 @@ int main(){
             system("pause");
 
         break;
+        case 5:
+
+            if((arqHistorico = fopen("historico.dat","a+b"))==NULL || (arqFilmes = fopen("filmes.dat","a+b")) == NULL){
+                printf("Erro ao abrir o arquivo!!!!\n");
+                exit(1);
+            }else{
+                printf("Entre com o códido do cliente: ");
+                    scanf("%d",&cliente.codigo);
+
+                while(fread(&aluguel,sizeof(aluguel),1,arqHistorico)){
+                    if(aluguel.codigoCliente==cliente.codigo){
+                        controle = 0;
+
+                        if((arqHistoricoCliente = fopen("historicocliente.dat","a+b"))==NULL){
+                            printf("Erro ao abrir o arquivo!!!!\n");
+                            exit(1);
+                        }else{
+                            while(fread(&aluguelAux,sizeof(aluguelAux),1,arqHistoricoCliente)){
+                                if(aluguelAux.codigoFita==aluguel.codigoFita){
+                                    controle = 1;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if(controle==0){
+                            fwrite(&aluguel,sizeof(aluguel),1,arqHistoricoCliente);
+                            fclose(arqHistoricoCliente);
+                        }
+                    }
+                }
+
+                if((arqHistoricoCliente = fopen("historicocliente.dat","rb"))==NULL){
+                    printf("Esse cliente não possui historico!!!!\n");
+                    system("pause");
+                }else{
+                    while(fread(&aluguelAux,sizeof(aluguelAux),1,arqHistoricoCliente)){
+                        fseek(arqFilmes,(aluguelAux.codigoFita-1)*(sizeof(filmeAux)),SEEK_SET);
+                        fread(&filmeAux,sizeof(filmeAux),1,arqFilmes);
+                        printf("Nome do filme: %s\n",filmeAux.titulo);
+                        printf("Assunto: %s\n",filmeAux.assunto);
+                    }
+                }
+            }
+
+            if(fclose(arqHistorico)==0 && fclose(arqFilmes)==0 && fclose(arqHistoricoCliente)==0){
+                printf("Sucesso!\n");
+                remove("historicocliente.dat");
+                system("pause");
+            }
+
+        break;
         default:
 
             system("cls");
@@ -273,7 +327,6 @@ int main(){
             system("pause");
 
         }
-
     }while(opcao != 0);
 
     return 0;
