@@ -32,9 +32,9 @@ typedef struct{
 int main(){
     setlocale(LC_ALL,"");
 
-    int opcao = 0, contador = 0,controle = 0;
-
-    FILE *arqClientes, *arqFilmes,*arqLocacao, *arqLocacaoAux, *arqHistorico, *arqHistoricoCliente;
+    int opcao = 0,opcao2 = 0, contador = 0,controle = 0;
+    float gastoDeCliente = 0;
+    FILE *arqClientes, *arqFilmes, *arqFilmesAux, *arqLocacao, *arqLocacaoAux, *arqHistorico, *arqHistoricoCliente;
 
     Cliente cliente,clienteAux;
     Filme filme,filmeAux;
@@ -49,7 +49,8 @@ int main(){
         printf("4 para devolução de filme\n");
         printf("5 para buscar histórico de filmes alugados\n");
         printf("6 para buscar qual cliente  locaram determinado filme\n");
-        printf("\nOpção: ");
+        printf("7 para imprimir relatórios\n");
+        printf("\nDigite uma opção: ");
             scanf("%d",&opcao);
             fflush(stdin);
 
@@ -374,6 +375,124 @@ int main(){
                 remove("historicocliente.dat");
                 system("pause");
             }
+
+        break;
+        case 7:
+
+            do{
+
+                system("cls");
+                printf("1 para imprimir gastos de cada cliente\n");
+                printf("2 para imprimir filmes ganhadores de Oscar\n");
+                printf("3 para imprimir filme por assunto\n");
+                printf("0 para voltar ao menu anterior\n");
+
+                printf("\nDigite uma opção: ");
+                    scanf("%d",&opcao2);
+                fflush(stdin);
+
+                switch(opcao2){
+                    case 0:
+
+                        printf("Ok voltando!!!");
+                        system("pause");
+
+                    break;
+                    case 1:
+
+                        if(((arqClientes = fopen("clientes.dat","a+b"))==NULL) || (arqHistorico = fopen("historico.dat","a+b"))==NULL){
+                            printf("Erro ao abrir os arquivos!!\n");
+                            exit(1);
+                        }else{
+
+                            while(fread(&cliente,sizeof(cliente),1,arqClientes)){
+
+                                    gastoDeCliente = 0;
+
+                                    while(fread(&aluguel,sizeof(aluguel),1,arqHistorico)){
+                                        if(cliente.codigo==aluguel.codigoCliente){
+                                            gastoDeCliente+=aluguel.preco;
+                                        }
+                                    }
+
+                                printf("Nome: %s\nValor gasto: %.2f\n\n",cliente.nome,gastoDeCliente);
+                                fseek(arqHistorico,0,SEEK_SET);
+                            }
+
+                        }
+
+                        if(fclose(arqClientes)==0 && fclose(arqHistorico)==0){
+                            printf("Sucesso!!!\n");
+                            system("pause");
+                        }
+
+                    break;
+                    case 2:
+
+                        if((arqFilmes = fopen("filmes.dat","a+b")) == NULL){
+                            printf("Erro ao abrir o arquivo\n");
+                            exit(1);
+                        }else{
+
+                            printf("Filmes com Oscar\n\n");
+
+                            while(fread(&filme,sizeof(filme),1,arqFilmes)){
+
+                               if(filme.oscar == 's' || filme.oscar == 'S'){
+
+                                 printf("Nome: %s Oscar: %c\n",filme.titulo,filme.oscar);
+
+                               }
+
+                            }
+
+                        }
+
+                        if(fclose(arqFilmes)==0){
+                            printf("Fim da lista\n");
+                            system("pause");
+                        }
+
+                    break;
+                    case 3:
+
+                        if((arqFilmes = fopen("filmes.dat","a+b")) == NULL){
+                            printf("Erro ao abrir os arquivos\n");
+                            exit(1);
+                        }else{
+
+
+                            while(fread(&filme,sizeof(filme),1,arqFilmes)){
+                                controle = 0;
+
+                                if((arqFilmesAux = fopen("filmesAux.dat","a+b")) == NULL){
+                                    printf("Erro!!!\n");
+                                    exit(1);
+                                }else{
+
+
+
+                                }
+                                fclose(arqFilmesAux);
+                            }
+
+                        }
+
+                        if(fclose(arqFilmes)==0){
+                            printf("Fim da lista\n");
+                            system("pause");
+                        }
+
+                    break;
+                    default:
+
+                        printf("Opção invalida!");
+                        system("pause");
+
+                }
+
+
+            }while(opcao2!=0);
 
         break;
         default:
