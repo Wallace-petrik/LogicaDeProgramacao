@@ -227,6 +227,7 @@ int main(){
                 exit(1);
             }else{
 
+                system("cls");
                 printf("Digite o código do filme que foi devolvido: ");
                     scanf("%d",&aluguelAux.codigoFita);
 
@@ -276,6 +277,8 @@ int main(){
                 printf("Erro ao abrir o arquivo!!!!\n");
                 exit(1);
             }else{
+
+                system("cls");
                 printf("Entre com o códido do cliente: ");
                     scanf("%d",&cliente.codigo);
 
@@ -328,7 +331,7 @@ int main(){
                 printf("Erro ao abrir o arquivo!\n");
                 exit(1);
             }else{
-
+                system("cls");
                 printf("Entre com o código do filme: ");
                     scanf("%d",&filme.codigo);
 
@@ -385,6 +388,7 @@ int main(){
                 printf("1 para imprimir gastos de cada cliente\n");
                 printf("2 para imprimir filmes ganhadores de Oscar\n");
                 printf("3 para imprimir filme por assunto\n");
+                printf("4 para imprimir fitas alugadas mais de uma vez\n");
                 printf("0 para voltar ao menu anterior\n");
 
                 printf("\nDigite uma opção: ");
@@ -395,7 +399,6 @@ int main(){
                     case 0:
 
                         printf("Ok voltando!!!");
-                        system("pause");
 
                     break;
                     case 1:
@@ -405,6 +408,7 @@ int main(){
                             exit(1);
                         }else{
 
+                            system("cls");
                             while(fread(&cliente,sizeof(cliente),1,arqClientes)){
 
                                     gastoDeCliente = 0;
@@ -433,7 +437,7 @@ int main(){
                             printf("Erro ao abrir o arquivo\n");
                             exit(1);
                         }else{
-
+                            system("cls");
                             printf("Filmes com Oscar\n\n");
 
                             while(fread(&filme,sizeof(filme),1,arqFilmes)){
@@ -455,31 +459,127 @@ int main(){
 
                     break;
                     case 3:
-
+                        remove("filmesAux.dat");
                         if((arqFilmes = fopen("filmes.dat","a+b")) == NULL){
                             printf("Erro ao abrir os arquivos\n");
                             exit(1);
                         }else{
 
-
+                            system("cls");
+                            contador = 0;
                             while(fread(&filme,sizeof(filme),1,arqFilmes)){
-                                controle = 0;
-
+                                contador++;
                                 if((arqFilmesAux = fopen("filmesAux.dat","a+b")) == NULL){
                                     printf("Erro!!!\n");
                                     exit(1);
                                 }else{
 
-
+                                    fwrite(&filme,sizeof(filme),1,arqFilmesAux);
 
                                 }
+
                                 fclose(arqFilmesAux);
+
+                            }
+
+                            if((arqFilmesAux = fopen("filmesAux.dat","r+b")) == NULL){
+                                    printf("Erro!!!\n");
+                                    exit(1);
+                            }else{
+
+                                do{
+                                    controle = 0;
+
+                                    for(int i = 0; i < contador - 1; i++){
+
+                                        fseek(arqFilmesAux,i*sizeof(filme),SEEK_SET);
+                                        fread(&filme,sizeof(filme),1,arqFilmesAux);
+                                        fseek(arqFilmesAux,(i+1)*sizeof(filmeAux),SEEK_SET);
+                                        fread(&filmeAux,sizeof(filmeAux),1,arqFilmesAux);
+
+                                        if(strcmp(filme.assunto,filmeAux.assunto)>0){
+
+                                            fseek(arqFilmesAux,i*sizeof(filme),SEEK_SET);
+                                            fwrite(&filmeAux,sizeof(filme),1,arqFilmesAux);
+                                            fseek(arqFilmesAux,(i+1)*sizeof(filmeAux),SEEK_SET);
+                                            fwrite(&filme,sizeof(filmeAux),1,arqFilmesAux);
+
+                                            controle = i;
+                                        }
+                                        fseek(arqFilmesAux,0,SEEK_SET);
+                                    }
+                                    contador--;
+                                }while(controle!=0);
+
+
+                            }
+
+                            fclose(arqFilmesAux);
+
+                        }
+
+                        if((arqFilmesAux = fopen("filmesAux.dat","a+b")) == NULL){
+                            printf("Erro!!!\n");
+                            exit(1);
+                        }else{
+                            controle = 0;
+                            printf("\n");
+                            while(fread(&filme,sizeof(filme),1,arqFilmesAux)){
+
+                               printf("Nome: %-20s \t Assunto: %s\n",filme.titulo,filme.assunto);
+
                             }
 
                         }
 
+                        fclose(arqFilmesAux);
+
                         if(fclose(arqFilmes)==0){
-                            printf("Fim da lista\n");
+                            printf("\nFim da lista\n");
+                            system("pause");
+                        }
+
+                    break;
+                    case 4:
+
+                        system("cls");
+
+                        if((arqClientes = fopen("clientes.dat","r+b"))== NULL || (arqFilmes = fopen("filmes.dat","r+b")) == NULL || (arqHistorico = fopen("historico.dat","r+b"))==NULL){
+                            printf("Erro ao abrir os arquivos\n");
+                            exit(1);
+                        }else{
+                            system("cls");
+                            while(fread(&cliente,sizeof(cliente),1,arqClientes)){
+                                controle = 0;
+                                while(fread(&filme,sizeof(filme),1,arqFilmes)){
+                                contador = 0;
+                                    while(fread(&aluguel,sizeof(aluguel),1,arqHistorico)){
+
+                                        if(cliente.codigo==aluguel.codigoCliente && filme.codigo==aluguel.codigoFita){
+
+                                            contador++;
+
+                                        }
+
+                                    }
+                                    fseek(arqHistorico,0,SEEK_SET);
+                                    if(contador>=2){
+                                        printf("Filme %s alugados %d vezes\n",filme.titulo,contador);
+                                        controle = 1;
+                                    }
+
+                                }
+                                fseek(arqFilmes,0,SEEK_SET);
+                                if(controle==1){
+                                    printf("Cliente: %s\n\n",cliente.nome);
+                                }
+
+                            }
+
+                        }
+
+                        if(fclose(arqClientes) == 0 && fclose(arqFilmes) ==0 && fclose(arqHistorico) == 0){
+                            printf("Fim da lista!!!\n");
                             system("pause");
                         }
 
@@ -495,6 +595,7 @@ int main(){
             }while(opcao2!=0);
 
         break;
+
         default:
 
             system("cls");
