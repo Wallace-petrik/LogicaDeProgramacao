@@ -50,6 +50,7 @@ int main(){
         printf("5 para buscar histórico de filmes alugados\n");
         printf("6 para buscar qual cliente  locaram determinado filme\n");
         printf("7 para imprimir relatórios\n");
+        printf("8 para consultar filmes premeados com oscar alugado por um cliente\n");
         printf("\nDigite uma opção: ");
             scanf("%d",&opcao);
             fflush(stdin);
@@ -595,7 +596,54 @@ int main(){
             }while(opcao2!=0);
 
         break;
+        case 8:
 
+            if((arqClientes = fopen("clientes.dat","r+b"))==NULL || (arqFilmes = fopen("filmes.dat","r+b"))==NULL || (arqHistorico = fopen("historico.dat","r+b"))==NULL){
+                printf("Erro ao abrir o arquivo!\n");
+                exit(1);
+            }else{
+
+                system("cls");
+
+                printf("Entre com o código do cliente: ");
+                    scanf("%d",&cliente.codigo);
+
+                fseek(arqClientes,(cliente.codigo-1)*sizeof(cliente),SEEK_SET);
+                fread(&cliente,sizeof(cliente),1,arqClientes);
+                controle = 0;
+                filmeAux.codigo = 0;
+
+                printf("Cliente: %s\n",cliente.nome);
+
+                while(fread(&filme,sizeof(filme),1,arqFilmes)){
+
+                    if((filme.oscar == 's' || filme.oscar == 'S')){
+
+                        while(fread(&aluguel,sizeof(aluguel),1,arqHistorico)){
+
+                            if(cliente.codigo==aluguel.codigoCliente &&  filme.codigo!=filmeAux.codigo && filme.codigo==aluguel.codigoFita){
+                                printf("Filme com Oscar: %s\n",filme.titulo);
+                                filmeAux.codigo=filme.codigo;
+                                controle = 1;
+                            }
+
+                        }
+                        fseek(arqHistorico,0,SEEK_SET);
+                    }
+
+                }
+
+                if(controle == 0){
+                        printf("O cliente não alugou filmes vencedores de Oscar!\n");
+                }
+            }
+
+            if(fclose(arqClientes)==0 && fclose(arqFilmes)==0 && fclose(arqHistorico)==0){
+                printf("Fim da lista");
+                system("pause");
+            }
+
+        break;
         default:
 
             system("cls");
