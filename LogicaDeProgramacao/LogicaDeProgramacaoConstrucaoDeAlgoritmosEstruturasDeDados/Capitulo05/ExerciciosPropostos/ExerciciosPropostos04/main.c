@@ -34,7 +34,8 @@ int main(){
 
     int opcao = 0,opcao2 = 0, contador = 0,controle = 0;
     float gastoDeCliente = 0;
-    FILE *arqClientes, *arqFilmes, *arqFilmesAux, *arqLocacao, *arqLocacaoAux, *arqHistorico, *arqHistoricoCliente;
+
+    FILE *arqClientes, *arqFilmes, *arqFilmesAux, *arqLocacao, *arqLocacaoAux, *arqHistorico, *arqRanking, *arqHistoricoCliente;
 
     Cliente cliente,clienteAux;
     Filme filme,filmeAux;
@@ -52,6 +53,7 @@ int main(){
         printf("7 para imprimir relatórios\n");
         printf("8 para consultar filmes premeados com oscar alugado por um cliente\n");
         printf("9 para relacação de filmes e total de tempo locada\n");
+        printf("10 para imprimir relatório com os dez filmes mais locados\n");
         printf("\nDigite uma opção: ");
             scanf("%d",&opcao);
             fflush(stdin);
@@ -671,6 +673,46 @@ int main(){
 
             if(fclose(arqFilmes)==0 && fclose(arqHistorico)==0){
                 printf("Fim da lista de filmes\n\n");
+                system("pause");
+            }
+
+        break;
+        case 10:
+
+            if((arqHistorico = fopen("historico.dat","r+b"))==NULL || (arqFilmes = fopen("filmes.dat","r+b"))== NULL){
+                printf("Erro ao abrir os arquivos!!!\n");
+                exit(1);
+            }else{
+
+                system("cls");
+
+                while(fread(&filme,sizeof(filme),1,arqFilmes)){
+                    contador = 0;
+                    while(fread(&aluguel,sizeof(aluguel),1,arqHistorico)){
+                        if(aluguel.codigoFita==filme.codigo){
+                            contador +=aluguel.qtdDiasFora;
+                        }
+                    }
+                    fseek(arqHistorico,0,SEEK_SET);
+                    aluguel.qtdDiasFora = contador;
+
+                    if(contador>0){
+                        if((arqRanking = fopen("arqRanking.dat","a+b"))==NULL){
+                            printf("Erro ao abrir o arquivo!!!\n");
+                            exit(1);
+                        }else{
+                            fwrite(&aluguel,sizeof(aluguel),1,arqRanking);
+                        }
+                        fclose(arqRanking);
+                    }
+                }
+                //ordenar nados
+                //imprimir lista
+            }
+
+            if(fclose(arqHistorico)==0 && fclose(arqFilmes)==0){
+                printf("Fim da lista!!!\n");
+                remove("arqRanking.dat");
                 system("pause");
             }
 
