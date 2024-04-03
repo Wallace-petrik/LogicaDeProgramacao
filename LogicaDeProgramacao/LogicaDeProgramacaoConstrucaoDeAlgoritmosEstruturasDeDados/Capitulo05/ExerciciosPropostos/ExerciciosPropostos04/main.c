@@ -32,7 +32,7 @@ typedef struct{
 int main(){
     setlocale(LC_ALL,"");
 
-    int opcao = 0,opcao2 = 0, contador = 0,controle = 0;
+    int opcao = 0,opcao2 = 0, contador = 0,controle = 0, fim = 0;
     float gastoDeCliente = 0;
 
     FILE *arqClientes, *arqFilmes, *arqFilmesAux, *arqLocacao, *arqLocacaoAux, *arqHistorico, *arqRanking, *arqHistoricoCliente;
@@ -685,7 +685,7 @@ int main(){
             }else{
 
                 system("cls");
-
+                fim = 0;
                 while(fread(&filme,sizeof(filme),1,arqFilmes)){
                     contador = 0;
                     while(fread(&aluguel,sizeof(aluguel),1,arqHistorico)){
@@ -695,6 +695,7 @@ int main(){
                     }
                     fseek(arqHistorico,0,SEEK_SET);
                     aluguel.qtdDiasFora = contador;
+                    aluguel.codigoFita=filme.codigo;
 
                     if(contador>0){
                         if((arqRanking = fopen("arqRanking.dat","a+b"))==NULL){
@@ -702,12 +703,58 @@ int main(){
                             exit(1);
                         }else{
                             fwrite(&aluguel,sizeof(aluguel),1,arqRanking);
+                            fim++;
                         }
                         fclose(arqRanking);
                     }
                 }
-                //ordenar nados
-                //imprimir lista
+                if((arqRanking = fopen("arqRanking.dat","r+b")) == NULL){
+                        printf("Erro!!!\n");
+                        exit(1);
+                }else{
+
+                    do{
+                        controle = 0;
+
+                        for(int i = 0; i < fim - 1; i++){
+
+                            fseek(arqRanking,i*sizeof(aluguel),SEEK_SET);
+                            fread(&aluguel,sizeof(aluguel),1,arqRanking);
+                            fseek(arqRanking,(i+1)*sizeof(aluguelAux),SEEK_SET);
+                            fread(&aluguelAux,sizeof(aluguelAux),1,arqRanking);
+
+                            if(aluguel.qtdDiasFora>aluguelAux.qtdDiasFora){
+
+                                fseek(arqRanking,i*sizeof(aluguel),SEEK_SET);
+                                fwrite(&aluguelAux,sizeof(aluguel),1,arqRanking);
+                                fseek(arqRanking,(i+1)*sizeof(aluguelAux),SEEK_SET);
+                                fwrite(&aluguel,sizeof(aluguelAux),1,arqRanking);
+
+                                controle = i;
+                            }
+                            fseek(arqRanking,0,SEEK_SET);
+                        }
+                        fim--;
+                    }while(controle!=0);
+
+
+                }
+
+                fclose(arqRanking);
+                if((arqRanking = fopen("arqRanking.dat","r+b")) == NULL){
+                        printf("Erro!!!\n");
+                        exit(1);
+                }else{
+                    controle = 0;
+                    while((fread(&aluguel,sizeof(aluguel),1,arqRanking))&& controle<10){
+                        fseek(arqFilmes,(aluguel.codigoFita-1)*sizeof(filme),SEEK_SET);
+                        fread(&filme,sizeof(filme),1,arqFilmes);
+                        printf("Ranking %dº Nome %s QTD: %d\n",++controle,filme.titulo,aluguel.qtdDiasFora);
+                        fseek(arqFilmes,0,SEEK_SET);
+                    }
+
+                }
+                fclose(arqRanking);
             }
 
             if(fclose(arqHistorico)==0 && fclose(arqFilmes)==0){
