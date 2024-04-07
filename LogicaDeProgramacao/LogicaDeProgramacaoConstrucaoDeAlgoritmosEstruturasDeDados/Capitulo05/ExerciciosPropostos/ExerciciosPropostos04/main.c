@@ -55,6 +55,8 @@ int main(){
         printf("9 para relacação de filmes e total de tempo locada\n");
         printf("10 para imprimir relatório com os dez filmes mais locados\n");
         printf("11 para imprimir de rentabilidade\n");
+        printf("12 para imprimir os filmes que já se pagaram\n");
+        printf("00 para sair ")
         printf("\nDigite uma opção: ");
             scanf("%d",&opcao);
             fflush(stdin);
@@ -870,6 +872,47 @@ int main(){
 
             if(fclose(arqHistorico)==0 && fclose(arqFilmes)==0){
                 printf("Fim da lista!!!\n");
+                system("pause");
+            }
+
+        break;
+        case 12:
+
+            if((arqFilmes = fopen("filmes.dat","r+b")) == NULL || (arqHistorico = fopen("historico.dat","r+b")) == NULL){
+                printf("Erro ao abrir os arquivos!!!\n");
+                system("pause");
+                exit(1);
+            }else{
+
+                controle = 0;
+
+                while(fread(&filme,sizeof(filme),1,arqFilmes)){
+                    while(fread(&aluguel,sizeof(aluguel),1,arqHistorico)){
+
+                        if(filme.codigo==aluguel.codigoFita){
+
+                            filmeAux.preco += aluguel.preco;
+
+                        }
+
+                    }
+                    if(filmeAux.preco>=filme.preco){
+                        printf("O filme %s já se pagou e temos um lucro de %.2f\n",filme.titulo,filmeAux.preco-filme.preco);
+                        controle = 1;
+                    }
+
+                    fseek(arqHistorico,0,SEEK_SET);
+                    filmeAux.preco = 0;
+                }
+
+                if(controle==0){
+                        printf("\nNenhum filme já se pagou!!!\n");
+                }
+
+            }
+            system("pause");
+            if(fclose(arqFilmes) != 0 && fclose(arqHistorico) != 0){
+                printf("Erro ao fechar os arquivos");
                 system("pause");
             }
 
