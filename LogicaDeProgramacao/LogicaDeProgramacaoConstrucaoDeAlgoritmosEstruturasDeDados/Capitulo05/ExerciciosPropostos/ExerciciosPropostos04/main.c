@@ -56,7 +56,7 @@ int main(){
         printf("10 para imprimir relatório com os dez filmes mais locados\n");
         printf("11 para imprimir de rentabilidade\n");
         printf("12 para imprimir os filmes que já se pagaram\n");
-        printf("00 para sair ")
+        printf("00 para sair ");
         printf("\nDigite uma opção: ");
             scanf("%d",&opcao);
             fflush(stdin);
