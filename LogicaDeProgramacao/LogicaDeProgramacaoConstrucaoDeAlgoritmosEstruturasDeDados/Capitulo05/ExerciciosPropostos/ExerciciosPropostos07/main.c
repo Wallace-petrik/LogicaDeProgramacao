@@ -20,7 +20,7 @@ typedef struct{
     int mes;
     int ano;
     int quantidade;
-    char tipo[tam];
+    int tipo;
     float valor;
 
 }Movimentacao;
@@ -31,9 +31,9 @@ int main(){
     FILE *arqProdutos, *arqMovimentacao;
 
     Produtos produtos;
-    Movimentacao movimentacao;
+    Movimentacao movimentacao, movimentacaoAux;
 
-    int opcao;
+    int opcao, total = 0;
 
     if((arqProdutos = fopen("arqProdutos.dat","a+b"))==NULL){
         system("cls");
@@ -46,6 +46,7 @@ int main(){
         system("cls");
         printf("1 para cadastrar produto\n");
         printf("2 para entrada no estoque\n");
+        printf("3 para saída de estoque\n");
 
         printf("\nDigite uma oção: ");
             scanf("%d",&opcao);
@@ -87,7 +88,64 @@ int main(){
             break;
             case 2:
 
+                if((arqMovimentacao = fopen("arqMovimentacao.dat","a+b"))==NULL){
+                    printf("Erro ao abrir o arquivo!!");
+                    system("pause");
+                }else{
 
+                    printf("Digite o código do produto: ");
+                        scanf("%d",&movimentacao.codigo);
+                    printf("Digite a data da compro: ");
+                        scanf("%d%d%d",&movimentacao.dia,&movimentacao.mes,&movimentacao.ano);
+                    printf("Digite a quantidade do produto: ");
+                        scanf("%d",&movimentacao.quantidade);
+                    printf("\n1 para compra\n2 para devolução\nDigite o tipo de entrada: ");
+                        scanf("%d",&movimentacao.tipo);
+                    if(movimentacao.tipo==1){
+                        printf("Digite o preço da compra: ");
+                            scanf("%f",&movimentacao.valor);
+                    }else if(movimentacao.tipo==2){
+                         movimentacao.valor = 0;
+                    }else{
+                        printf("Opção invalida!!!");
+                    }
+
+                    fwrite(&movimentacao,sizeof(movimentacao),1,arqMovimentacao);
+                }
+
+                if(fclose(arqMovimentacao)==0){
+                    printf("Operação realizada com sucesso!!!");
+                    system("pause");
+                }
+
+            break;
+            case 3:
+
+                if((arqMovimentacao = fopen("arqMovimentacao.dat","a+b"))==NULL){
+                    printf("Erro ao abrir o arquivo!!!");
+                    system("pause");
+                }else{
+                    printf("Digite o código do produto: ");
+                        scanf("%d",&movimentacaoAux.codigo);
+                    printf("Digite a quantidade da compra: ");
+                        scanf("%d",&movimentacaoAux.quantidade);
+
+                    while(fread(&movimentacao,sizeof(movimentacao),1,arqMovimentacao)){
+                        if(movimentacaoAux.codigo==movimentacao.codigo){
+                            if(movimentacao.tipo==1 || movimentacao.tipo==2){
+                                total += movimentacao.quantidade;
+                            }else{
+
+                            }
+                        }
+                    }
+
+                }
+
+                if(fclose(arqMovimentacao)==0){
+                    printf("Operação realizada com sucesso!!!");
+                    system("pause");
+                }
 
             break;
             default:
