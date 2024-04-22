@@ -33,7 +33,7 @@ int main(){
     Produtos produtos;
     Movimentacao movimentacao, movimentacaoAux;
 
-    int opcao, total = 0;
+    int opcao, total = 0, controle = 0;
 
     if((arqProdutos = fopen("arqProdutos.dat","a+b"))==NULL){
         system("cls");
@@ -88,32 +88,39 @@ int main(){
             break;
             case 2:
 
-                if((arqMovimentacao = fopen("arqMovimentacao.dat","a+b"))==NULL){
+                if((arqMovimentacao = fopen("arqMovimentacao.dat","a+b"))==NULL || (arqProdutos = fopen("arqProdutos.dat","r+b"))==NULL){
                     printf("Erro ao abrir o arquivo!!");
                     system("pause");
                 }else{
 
                     printf("Digite o código do produto: ");
                         scanf("%d",&movimentacao.codigo);
-                    printf("Digite a data da compro: ");
-                        scanf("%d%d%d",&movimentacao.dia,&movimentacao.mes,&movimentacao.ano);
-                    printf("Digite a quantidade do produto: ");
-                        scanf("%d",&movimentacao.quantidade);
-                    printf("\n1 para compra\n2 para devolução\nDigite o tipo de entrada: ");
-                        scanf("%d",&movimentacao.tipo);
-                    if(movimentacao.tipo==1){
-                        printf("Digite o preço da compra: ");
-                            scanf("%f",&movimentacao.valor);
-                    }else if(movimentacao.tipo==2){
-                         movimentacao.valor = 0;
-                    }else{
-                        printf("Opção invalida!!!");
-                    }
 
-                    fwrite(&movimentacao,sizeof(movimentacao),1,arqMovimentacao);
+                        fseek(arqProdutos,(movimentacao.codigo-1)*sizeof(produtos),SEEK_SET);
+                        fread(&produtos,sizeof(produtos),1,arqProdutos);
+
+                        if(produtos.codigo == movimentacao.codigo){
+
+                            printf("Digite a data da compro: ");
+                                scanf("%d%d%d",&movimentacao.dia,&movimentacao.mes,&movimentacao.ano);
+                            printf("Digite a quantidade do produto: ");
+                                scanf("%d",&movimentacao.quantidade);
+                            printf("\n1 para compra\n2 para devolução\nDigite o tipo de entrada: ");
+                                scanf("%d",&movimentacao.tipo);
+                            if(movimentacao.tipo==1){
+                                printf("Digite o preço da compra: ");
+                                    scanf("%f",&movimentacao.valor);
+                            }else if(movimentacao.tipo==2){
+                                 movimentacao.valor = 0;
+                            }else{
+                                printf("Opção invalida!!!");
+                            }
+                            fwrite(&movimentacao,sizeof(movimentacao),1,arqMovimentacao);
+                        }else{
+                            printf("Produto não encontrado!!!");
+                        }
                 }
-
-                if(fclose(arqMovimentacao)==0){
+                if(fclose(arqMovimentacao)==0 && fclose(arqProdutos)==0){
                     printf("Operação realizada com sucesso!!!");
                     system("pause");
                 }
@@ -121,29 +128,58 @@ int main(){
             break;
             case 3:
 
-                if((arqMovimentacao = fopen("arqMovimentacao.dat","a+b"))==NULL){
+                if((arqMovimentacao = fopen("arqMovimentacao.dat","a+b"))==NULL || (arqProdutos = fopen("arqProdutos.dat","r+b"))==NULL){
                     printf("Erro ao abrir o arquivo!!!");
                     system("pause");
                 }else{
-                    printf("Digite o código do produto: ");
+                    controle = 0;
+                    printf("Digite o código do produto para venda: ");
                         scanf("%d",&movimentacaoAux.codigo);
-                    printf("Digite a quantidade da compra: ");
-                        scanf("%d",&movimentacaoAux.quantidade);
 
-                    while(fread(&movimentacao,sizeof(movimentacao),1,arqMovimentacao)){
-                        if(movimentacaoAux.codigo==movimentacao.codigo){
+                    fseek(arqProdutos,(movimentacaoAux.codigo-1)*sizeof(produtos),SEEK_SET);
+                    fread(&produtos,sizeof(produtos),1,arqProdutos);
+
+                    if(produtos.codigo==movimentacaoAux.codigo){
+                        total = 0;
+                        while(fread(&movimentacao,sizeof(movimentacao),1,arqMovimentacao)){
                             if(movimentacao.tipo==1 || movimentacao.tipo==2){
-                                total += movimentacao.quantidade;
+                                total +=  movimentacao.quantidade;
                             }else{
-
+                                total -= movimentacao.quantidade;
                             }
                         }
+
+                        printf("Digite a quantidade do produto vendido: ");
+                            scanf("%d",&movimentacaoAux.quantidade);
+
+                        if(total>=movimentacaoAux.quantidade){
+                            printf("Digite a data da venda: ");
+                                scanf("%d%d%d",&movimentacaoAux.dia,&movimentacaoAux.mes,&movimentacaoAux.ano);
+                            printf("\n3 para venda\n4 para tranferencia\nDigite uma opção: ");
+                                scanf("%d",&movimentacaoAux.tipo);
+
+                            if(movimentacaoAux.tipo==3){
+                                printf("Digite o valor da venda: ");
+                                    scanf("%f",&movimentacaoAux.valor);
+                            }else if(movimentacaoAux.tipo==4){
+                                movimentacaoAux.valor=0;
+                            }else{
+                                printf("Opção invalida!!!");
+                            }
+                            fwrite(&movimentacaoAux,sizeof(movimentacaoAux),1,arqMovimentacao);
+                        }else{
+                            printf("Quantidade de produto no estoque insuficiente!!!\n");
+                             printf("Quantidade em estoque %d\n",total);
+                        }
+
+                    }else{
+                        printf("Produto não encontrado!!!");
                     }
 
                 }
-
-                if(fclose(arqMovimentacao)==0){
+                if(fclose(arqMovimentacao)==0  && fclose(arqProdutos)==0){
                     printf("Operação realizada com sucesso!!!");
+
                     system("pause");
                 }
 
