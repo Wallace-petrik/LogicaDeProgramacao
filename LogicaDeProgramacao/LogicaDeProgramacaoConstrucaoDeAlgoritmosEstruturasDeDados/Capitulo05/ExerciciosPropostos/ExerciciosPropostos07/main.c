@@ -30,10 +30,11 @@ int main(){
 
     FILE *arqProdutos, *arqMovimentacao;
 
-    Produtos produtos;
-    Movimentacao movimentacao, movimentacaoAux;
+    Produtos produtos, produtoAux;
+    Movimentacao movimentacao, movimentacaoAux,movimentacaoAuxx;
 
-    int opcao, total = 0, controle = 0;
+    int opcao, total = 0, controle = 0,qtdV = 0, qtdC = 0;
+    float precoMedioV = 0, precoMedioC = 0;
 
     if((arqProdutos = fopen("arqProdutos.dat","a+b"))==NULL){
         system("cls");
@@ -47,6 +48,7 @@ int main(){
         printf("1 para cadastrar produto\n");
         printf("2 para entrada no estoque\n");
         printf("3 para saída de estoque\n");
+        printf("4 para dados de um poduto\n");
 
         printf("\nDigite uma oção: ");
             scanf("%d",&opcao);
@@ -78,7 +80,7 @@ int main(){
                         scanf("%d",&produtos.estoqueMinimo);
 
                     fseek(arqProdutos,(produtos.codigo-1)*sizeof(produtos),SEEK_SET);
-                    fwrite (&produtos,sizeof(produtos),1,arqProdutos);
+                    fwrite(&produtos,sizeof(produtos),1,arqProdutos);
                 }
                 if((fclose(arqProdutos))==0){
                     printf("Produto cadastrado com sucesso!!!!\n");
@@ -183,6 +185,61 @@ int main(){
                     system("pause");
                 }
 
+            break;
+            case 4:
+
+                if((arqProdutos = fopen("arqProdutos.dat","r+b"))==NULL || (arqMovimentacao = fopen("arqMovimentacao.dat","r+b"))==NULL){
+                    printf("Erro ao abrir os arquivos!!!");
+                    system("pause");
+                }else{
+
+                    system("cls");
+                    printf("Digite o código do produto que deseja encontrar: ");
+                        scanf("%d",&produtos.codigo);
+
+                    fseek(arqProdutos,(produtos.codigo-1)*sizeof(produtos),SEEK_SET);
+                    fread(&produtos,sizeof(produtos),1,arqProdutos);
+
+                    printf("\nNome: %s",produtos.nome);
+                    printf("\nTipo: %s",produtos.tipo);
+
+                    movimentacaoAux.quantidade = 0;
+                    precoMedioV = 0, precoMedioC = 0;
+                    qtdV = 0, qtdC = 0;
+
+                    while(fread(&movimentacao,sizeof(movimentacao),1,arqMovimentacao)){
+                        if(movimentacao.codigo==produtos.codigo){
+                            if(movimentacao.tipo>=1 && movimentacao.tipo<=2){
+                                movimentacaoAux.quantidade += movimentacao.quantidade;
+                                if(movimentacao.tipo==1){
+                                    precoMedioC += movimentacao.valor/movimentacao.quantidade;
+                                    qtdC++;
+                                    movimentacaoAuxx.dia = movimentacao.dia;
+                                    movimentacaoAuxx.mes = movimentacao.mes;
+                                    movimentacaoAuxx.ano = movimentacao.ano;
+                                }
+                            } else if(movimentacao.tipo>=3 && movimentacao.tipo<=4){
+                                movimentacaoAux.quantidade -= movimentacao.quantidade;
+                                if(movimentacao.tipo==3){
+                                    precoMedioV += movimentacao.valor/movimentacao.quantidade;
+                                    qtdV++;
+                                    movimentacaoAux.dia = movimentacao.dia;
+                                    movimentacaoAux.mes = movimentacao.mes;
+                                    movimentacaoAux.ano = movimentacao.ano;
+                                }
+                            }
+                        }
+                    }
+                    printf("\nEstoque atual: %d",movimentacaoAux.quantidade);
+                    printf("\nPreço médio de venda: %.1f",precoMedioV/qtdV);
+                    printf("\nData da ultima venda: %d/%d/%d",movimentacaoAux.dia,movimentacaoAux.mes,movimentacaoAux.ano);
+                    printf("\nPreço médio de compra: %.1f",precoMedioC/qtdC);
+                    printf("\nData da ultima compra: %d/%d/%d",movimentacaoAuxx.dia,movimentacaoAuxx.mes,movimentacaoAuxx.ano);
+                }
+                if(fclose(arqProdutos)==0 & fclose(arqMovimentacao)==0){
+                    printf("Sucesso ao fechar o arquivo!!!");
+                    system("pause");
+                }
             break;
             default:
                 printf("Opcção invalida!!!\n");
