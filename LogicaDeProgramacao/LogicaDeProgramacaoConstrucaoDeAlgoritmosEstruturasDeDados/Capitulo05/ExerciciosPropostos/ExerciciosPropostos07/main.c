@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 
 #define tam 20
 
@@ -33,8 +34,8 @@ int main(){
     Produtos produtos, produtoAux;
     Movimentacao movimentacao, movimentacaoAux,movimentacaoAuxx;
 
-    int opcao, total = 0, controle = 0,qtdV = 0, qtdC = 0;
-    float precoMedioV = 0, precoMedioC = 0;
+    int opcao, total = 0, controle = 0,qtdV = 0, qtdC = 0, saldoEstoque = 0;
+    float precoMedioV = 0, precoMedioC = 0, ultimoCusto = 0, custo = 0, custoTotal = 0;
 
     if((arqProdutos = fopen("arqProdutos.dat","a+b"))==NULL){
         system("cls");
@@ -49,6 +50,7 @@ int main(){
         printf("2 para entrada no estoque\n");
         printf("3 para saída de estoque\n");
         printf("4 para dados de um poduto\n");
+        printf("5 para relatório por tipo de produo\n");
 
         printf("\nDigite uma oção: ");
             scanf("%d",&opcao);
@@ -240,6 +242,58 @@ int main(){
                     printf("Sucesso ao fechar o arquivo!!!");
                     system("pause");
                 }
+
+            break;
+            case 5:
+
+                if((arqProdutos = fopen("arqProdutos.dat","r+b"))==NULL || (arqMovimentacao = fopen("arqMovimentacao.dat","r+b"))==NULL){
+                    printf("Erro ao abrir os arquivos!!!");
+                    system("pause");
+                }else{
+
+                    system("cls");
+                    printf("Digite o tipo do produto: ");
+                        fflush(stdin);
+                        scanf("%[^\n]",&produtos.tipo);
+
+                    while(fread(&produtoAux,sizeof(produtoAux),1,arqProdutos)){
+                        if((strcmp(produtos.tipo,produtoAux.tipo)==0)){
+                            saldoEstoque = 0;
+                            custoTotal = 0;
+                            custo = 0;
+                            qtdC = 0;
+                            qtdV = 0;
+                            ultimoCusto = 0;
+                            while(fread(&movimentacao,sizeof(movimentacao),1,arqMovimentacao)){
+                                if(produtoAux.codigo==movimentacao.codigo){
+
+                                    if(movimentacao.tipo==1 || movimentacao.tipo==2){
+
+                                        saldoEstoque += movimentacao.quantidade;
+                                        ultimoCusto = movimentacao.valor;
+                                        qtdC += movimentacao.quantidade;
+                                        if(movimentacao.tipo==1){
+                                            custo = movimentacao.valor;
+                                        }
+                                    }else{
+                                        qtdV += movimentacao.quantidade;
+                                    }
+
+                                }
+                            }
+                            custoTotal = (qtdC > 0) ? ((custo/qtdC)*(qtdC-qtdV)) : 0;
+                            printf("Nome do produto: %s Qtd em estoque %d Último custo %.2f Custo dotal do estoque %.2f\n",
+                                produtoAux.nome,saldoEstoque,ultimoCusto,custoTotal);
+                            fseek(arqMovimentacao,0,SEEK_SET);
+                        }
+                    }
+
+                }
+                if(fclose(arqProdutos)==0 && fclose(arqMovimentacao)==0){
+                    printf("Arquivo fechado com sucesso!!!");
+                    system("pause");
+                }
+
             break;
             default:
                 printf("Opcção invalida!!!\n");
