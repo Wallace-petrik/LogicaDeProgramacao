@@ -51,6 +51,8 @@ int main(){
         printf("3 para saída de estoque\n");
         printf("4 para dados de um poduto\n");
         printf("5 para relatório por tipo de produo\n");
+        printf("6 para produtos que saldo em estoque e inferior ao estoque mínimo\n");
+        printf("0 para sair\n");
 
         printf("\nDigite uma oção: ");
             scanf("%d",&opcao);
@@ -294,6 +296,41 @@ int main(){
                     system("pause");
                 }
 
+            break;
+            case 6:
+
+                if((arqMovimentacao = fopen("arqMovimentacao.dat","r+b")) == NULL || (arqProdutos = fopen("arqProdutos.dat","r+b")) == NULL){
+                    printf("Eroor ao abrir o arquivo!!!");
+                    system("pause");
+                }else{
+                    controle = 0;
+                    while(fread(&produtos,sizeof(produtos),1,arqProdutos)){
+                            saldoEstoque = 0;
+
+                        while(fread(&movimentacao,sizeof(movimentacao),1,arqMovimentacao)){
+
+                            if(movimentacao.tipo == 1 || movimentacao.tipo == 2){
+                                saldoEstoque +=movimentacao.quantidade;
+                            }else{
+                                saldoEstoque -=movimentacao.quantidade;
+                            }
+                        }
+
+                        if(saldoEstoque<produtos.estoqueMinimo){
+                            printf("O produto %s está com quantidade abaixo do quantidade de estoque mínimo\n",produtos.nome);
+                            controle = 1;
+                        }
+                    }
+
+                    if(controle == 0){
+                        printf("Nenhum produto abaixo da quantidade mínima");
+                    }
+
+                }
+                if(fclose(arqMovimentacao) == 0 && fclose(arqProdutos) == 0){
+                    printf("Operação realizada com sucesso!!!\n");
+                    system("pause");
+                }
             break;
             default:
                 printf("Opcção invalida!!!\n");
