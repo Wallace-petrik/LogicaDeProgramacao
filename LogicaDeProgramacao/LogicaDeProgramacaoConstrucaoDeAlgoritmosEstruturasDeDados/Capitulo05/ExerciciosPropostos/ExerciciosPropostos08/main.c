@@ -39,7 +39,7 @@ int main(){
     FILE *arqCliente, *arqAtendimento;
 
     Cliente cliente, clienteAux;
-    Atendimento atendimento;
+    Atendimento atendimento, atendimentoAnt;
 
     int opcao = 0, controle = 0, contador = 0;
 
@@ -146,6 +146,9 @@ int main(){
                     struct tm data1 = {0};
                     struct tm data2 = {0};
 
+                    time_t segundos1;
+                    time_t segundos2;
+
                     printf("Digite o CNPJ: ");
                         scanf("%d",&cliente.cnpj);
 
@@ -157,44 +160,64 @@ int main(){
                         system("pause");
                     }else{
 
-                        printf("Nome = %s\n",clienteAux.razaoSocial);
+                        printf("\n\nNome = %s\n",clienteAux.razaoSocial);
 
                         fseek(arqAtendimento,0,SEEK_END);
                         long fileSize = ftell(arqAtendimento);
                         long qtdRegistros = fileSize / sizeof(atendimento);
 
-                        for(int i = qtdRegistros - 1; i >= 0 ; i--){
+                        for(int i = qtdRegistros - 1, contador = 0; i >= 0 && contador<=5 ; i--,++contador){
 
                             fseek(arqAtendimento,(i * sizeof(atendimento)),SEEK_SET);
                             fread(&atendimento,sizeof(atendimento),1,arqAtendimento);
 
                             if(cliente.cnpj == atendimento.cnpj && atendimento.origem == 2){
                                 int dias = 0;
-                                printf("Data %d/%d/%d",atendimento.data.dia,atendimento.data.mes,atendimento.data.ano);
+                                printf("Data %d/%d/%d\t",atendimento.data.dia,atendimento.data.mes,atendimento.data.ano);
+                                printf("Problema: %s\t",atendimento.problema);
 
-                                if(i+1 == qtdRegistros){
+                                controle = (i == 0) ? i : i - 1;
+
+                                while(controle>=0){
+
+                                    fseek(arqAtendimento,(controle * sizeof(atendimentoAnt)),SEEK_SET);
+                                    fread(&atendimentoAnt,sizeof(atendimentoAnt),1,arqAtendimento);
+
+                                    if(cliente.cnpj == atendimentoAnt.cnpj && atendimentoAnt.origem == 2){
+                                        break;
+                                    }else{
+                                        controle--;
+                                    }
+                                }
+
+                                if(atendimentoAnt.cnpj==atendimento.cnpj){
+
                                     data1.tm_year = atendimento.data.ano - 1900;
                                     data1.tm_mon = atendimento.data.mes;
                                     data1.tm_mday = atendimento.data.dia;
-                                    data2.tm_year = atendimento.data.ano - 1900;
-                                    data2.tm_mon = atendimento.data.mes;
-                                    data2.tm_mday = atendimento.data.dia;
+                                    data2.tm_year = atendimentoAnt.data.ano - 1900;
+                                    data2.tm_mon = atendimentoAnt.data.mes;
+                                    data2.tm_mday = atendimentoAnt.data.dia;
 
-                                    time_t segundos1 = mktime(&data1);
-                                    time_t segundos2 = mktime(&data2);
+                                }else{
+
+                                    atendimentoAnt = atendimento;
+
+                                }
+                                    segundos1 = mktime(&data1);
+                                    segundos2 = mktime(&data2);
 
                                     double diferenca = difftime(segundos2, segundos1);
 
                                     dias = diferenca / 86400;
-                                }else{
 
+                                    atendimentoAnt = atendimento;
 
-
-                                }
-                                printf("O tempo desde o chamado anterior e de %d dias\n",dias);
+                                printf("O tempo desde o chamado anterior é de %d dias\n",abs(dias));
 
                             }
                         }
+                        system("pause");
                     }
                 }
                 if(fclose(arqCliente) != 0 && fclose(arqAtendimento) != 0){
