@@ -58,8 +58,9 @@ int main(){
          system("cls");
         printf("1 para cadastrar cliente\n");
         printf("2 para cadastrar atendimento\n");
-        printf("3 para mostrar os últimos 5 atendimentos originados pelo ciente:\n");
-        printf("4 para mostrar os últimos 5 atendimentos originados na empresa:\n");
+        printf("3 para mostrar os últimos 5 atendimentos originados pelo ciente\n");
+        printf("4 para mostrar os últimos 5 atendimentos originados na empresa\n");
+        printf("5 para apresentar relatório do mes\n");
 
         printf("\n0 para sair\n");
 
@@ -316,6 +317,34 @@ int main(){
                     system("pause");
                 }
 
+            break;
+            case 5:
+
+                if((arqCliente = fopen("arqCliente.dat","r+b"))==NULL || (arqAtendimento = fopen("arqAtendimento.dat","r+b"))==NULL){
+                    printf("Erro ao abrir os arquivos!!!");
+                    system("pause");
+                }else{
+
+                    time_t tempo;
+                    tempo = time(NULL);
+                    struct tm tm = *localtime(&tempo);
+
+                     while(fread(&atendimento,sizeof(atendimento),1,arqAtendimento)){
+                        fseek(arqCliente,(atendimento.cnpj-1)*sizeof(cliente),SEEK_SET);
+                        fread(&cliente,sizeof(cliente),1,arqCliente);
+
+                        if(atendimento.data.mes=tm.tm_mon){
+                            printf("Nome: %s\t CNPJ: %d\t Data: %2.d/%2.d/%d\t Problema: %s\n",cliente.razaoSocial,cliente.cnpj,atendimento.data.dia,atendimento.data.mes,atendimento.data.ano,atendimento.problema);
+                        }
+
+                     }
+
+                    system("pause");
+                }
+                if(fclose(arqCliente)!= 0 && fclose(arqAtendimento)!= 0){
+                    printf("Erro ao fechar os arquivos!!!");
+                    system("pause");
+                }
             break;
             default:
                 printf("Opção invalida!!!\n");
