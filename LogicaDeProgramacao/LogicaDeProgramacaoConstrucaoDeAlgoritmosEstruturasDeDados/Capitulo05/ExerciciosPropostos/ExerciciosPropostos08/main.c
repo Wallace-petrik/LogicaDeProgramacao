@@ -61,6 +61,7 @@ int main(){
         printf("3 para mostrar os últimos 5 atendimentos originados pelo ciente\n");
         printf("4 para mostrar os últimos 5 atendimentos originados na empresa\n");
         printf("5 para apresentar relatório do mes\n");
+        printf("6 para média de tendimento de por cliente por mês\n");
 
         printf("\n0 para sair\n");
 
@@ -340,6 +341,43 @@ int main(){
                      }
 
                     system("pause");
+                }
+                if(fclose(arqCliente)!= 0 && fclose(arqAtendimento)!= 0){
+                    printf("Erro ao fechar os arquivos!!!");
+                    system("pause");
+                }
+            break;
+            case 6:
+
+                if((arqCliente = fopen("arqCliente.dat","r+b"))==NULL || (arqAtendimento = fopen("arqAtendimento.dat","r+b"))==NULL){
+                    printf("Erro ao abrir os arquivos!!!");
+                    system("pause");
+                }else{
+
+                    system("cls");
+                    printf("Entre com o CNPJ do cliente: ");
+                        scanf("%d",&cliente.cnpj);
+
+                    fseek(arqCliente,(cliente.cnpj-1)*sizeof(cliente),SEEK_SET);
+                    fread(&clienteAux,sizeof(clienteAux),1,arqCliente);
+
+                    if(cliente.cnpj != clienteAux.cnpj){
+                        printf("Cliente não encontrado!!!");
+                        system("pause");
+                    }else{
+
+                        contador = 0;
+
+                        while(fread(&atendimento,sizeof(atendimento),1,arqAtendimento)){
+                            if(cliente.cnpj == atendimento.cnpj){
+                                contador++;
+                            }
+                        }
+
+                        printf("O cliente %s tem uma média de atendimento por mês de %.2f\n",clienteAux.razaoSocial,contador/12.0);
+                        system("pause");
+                    }
+
                 }
                 if(fclose(arqCliente)!= 0 && fclose(arqAtendimento)!= 0){
                     printf("Erro ao fechar os arquivos!!!");
