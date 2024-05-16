@@ -37,10 +37,12 @@ int calcularDivisor(int numero){
 }
 
 int inverterNumero(int numero, int divisor){
+
     int resto  = 0;
     int numeroInvertido = 0;
+    int resposta = 0;
 
-    for(int i = divisor, j = 1; i >= 10; i/=10, j*=10){
+    for(int i = divisor, j = 1; i >= 1; i/=10, j*=10){
 
         numeroInvertido = numero/i;
         resto = numero%i;
@@ -48,7 +50,8 @@ int inverterNumero(int numero, int divisor){
         numeroInvertido *= j;
 
         numero = resto;
-
+        resposta += numeroInvertido;
     }
-    return numeroInvertido;
+
+    return resposta;
 }
