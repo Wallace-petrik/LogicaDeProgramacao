@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-int somarNumeroDeContaComSeuInverso(int numeroDeContaCorrente);
+int verificador(int numeroDeContaCorrente);
 
 int main(){
     setlocale(LC_ALL,"");
@@ -13,9 +13,9 @@ int main(){
     printf("\nDigite o número da sua conta corrente com cinco dígitos: ");
         scanf("%d",&numeroDeContaCorrente);
 
-    //digitoVerificador = calcularDigitoVerificador(numeroDeContaCorrente);
+    digitoVerificador = verificador(numeroDeContaCorrente);
 
-    printf("\nDígito verificador: %d",somarNumeroDeContaComSeuInverso(numeroDeContaCorrente));
+    printf("\nDígito verificador: %d",digitoVerificador);
     return 0;
 }
 
@@ -56,5 +56,40 @@ int somarNumeroDeContaComSeuInverso(int numeroDeContaCorrente){
     int soma = 0;
 
     return numeroDeContaCorrente + inverterNumero(numeroDeContaCorrente);
+
+}
+
+int multiplicarDigitoPorOrdemPosicional(int numeroDeContaCorrente){
+    int quociente = 0;
+    int resto = 0;
+    int numeroMultiplicado = 0;
+    int numeroDeConta = somarNumeroDeContaComSeuInverso(numeroDeContaCorrente);
+
+    for(int i = calcularDivisor(numeroDeConta), j = 1; i > 0; i/=10, j++){
+
+        quociente = numeroDeConta/i;
+        resto = numeroDeConta%i;
+
+        numeroMultiplicado += quociente*j;
+
+        numeroDeConta = resto;
+
+    }
+
+    return numeroMultiplicado;
+}
+
+int verificador(int numeroDeContaCorrente){
+    int resto = 0;
+    int numeroMultiplicado = multiplicarDigitoPorOrdemPosicional(numeroDeContaCorrente);
+
+    for(int i = calcularDivisor(numeroMultiplicado); i >=10; i/=10){
+
+        resto = numeroMultiplicado%i;
+        numeroMultiplicado = resto;
+
+    }
+
+    return resto;
 
 }
