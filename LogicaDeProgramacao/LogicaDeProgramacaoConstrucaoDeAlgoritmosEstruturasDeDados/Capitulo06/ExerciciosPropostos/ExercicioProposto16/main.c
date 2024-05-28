@@ -6,6 +6,7 @@
 
 void digitacaoValoresNoVetor(int *vetor);
 void imprimirSomatorio(int *vetor);
+void imprimirMedia(int *vetor);
 
 int main(){
     setlocale(LC_ALL,"Portuguese");
@@ -13,7 +14,8 @@ int main(){
     int vet[tam] = {1,10,100};
 
     //digitacaoValoresNoVetor(vet);
-    imprimirSomatorio(vet);
+    //imprimirSomatorio(vet);
+    imprimirMedia(vet);
     return 0;
 }
 
@@ -34,3 +36,15 @@ void imprimirSomatorio(int *vetor){
     }
     printf("\nO somatório dos itens do vetor é = %d",somatorio);
 }
+
+void imprimirMedia(int *vetor){
+    float media = 0, somatorio;
+    for(int i = 0; i < tam; i++){
+        somatorio += vetor[i];
+    }
+    media = somatorio/tam;
+    printf("\nA média é = %2.f",media);
+}
+
+
+
