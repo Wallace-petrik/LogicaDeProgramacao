@@ -9,16 +9,18 @@ void digitacaoValoresNoVetor(int *vetor);
 void imprimirSomatorio(int *vetor);
 float calcularMedia(int *vetor);
 float calcularDesvioPadrao(int *vet);
+void substituirValorNegativosPorZero(int *vetor);
 
 int main(){
     setlocale(LC_ALL,"Portuguese");
 
-    int vet[tam] = {1,10,100};
+    int vet[tam] = {1,-10,100};
 
     //digitacaoValoresNoVetor(vet);
     //calcularMedia(vet);
     //printf("\nA média é = %.2f",calcularMedia(vet));
-    printf("\nDesvio padrão: %.2f",calcularDesvioPadrao(vet));
+    //printf("\nDesvio padrão: %.2f",calcularDesvioPadrao(vet));
+    substituirValorNegativosPorZero(vet);
     return 0;
 }
 
@@ -49,22 +51,31 @@ float calcularMedia(int *vetor){
     return media;
 }
 
-float calcularDesvioPadrao(int *vet){
+float calcularDesvioPadrao(int *vetor){
 
-    float media = calcularMedia(vet);
+    float media = calcularMedia(vetor);
     float variancia = 0;
     float desvioPadrao = 0;
 
     for(int i = 0; i < tam; i++){
-        if(media>=vet[i]){
-            variancia += (media-vet[i])*(media-vet[i]);
+        if(media>=vetor[i]){
+            variancia += (media-vetor[i])*(media-vetor[i]);
         }else{
-            variancia += (vet[i]-media)*(vet[i]-media);
+            variancia += (vetor[i]-media)*(vetor[i]-media);
         }
     }
     variancia = variancia/tam;
     desvioPadrao = sqrt(variancia);
     return desvioPadrao;
+}
+
+void substituirValorNegativosPorZero(int *vetor){
+    for(int i = 0; i < tam; i++){
+
+        if(vetor[i]<0){
+            vetor[i]=0;
+        }
+    }
 }
 
 
