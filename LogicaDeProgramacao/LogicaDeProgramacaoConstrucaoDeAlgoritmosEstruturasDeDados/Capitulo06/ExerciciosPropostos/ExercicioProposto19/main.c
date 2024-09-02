@@ -17,9 +17,7 @@ Cheque cheque;
 int main(){
     setlocale(LC_ALL,"Portuguese");
 
-
     leituraDosCheques();
-
 
     return 0;
 }
