@@ -17,9 +17,40 @@ Cheque cheque;
 int main(){
     setlocale(LC_ALL,"Portuguese");
 
-    leituraDosCheques();
+    menu();
 
     return 0;
+}
+
+void menu(){
+
+    int opcao = 0;
+
+    do{
+        printf("1 /p leitua do cheque\n");
+        printf("0 /p sai\n\n");
+
+        printf("Digite uma opção: ");
+            scanf("%d",&opcao);
+
+        switch(opcao){
+            case 0:
+                system("cls");
+                printf("Até logo !!!\n\n");
+            break;
+            case 1:
+                system("cls");
+                leituraDosCheques();
+            break;
+            default:
+                printf("Opção invalida!!!\n");
+                system("pause");
+                system("cls");
+
+        }
+
+    }while(opcao!=0);
+
 }
 
 void leituraDosCheques(){
