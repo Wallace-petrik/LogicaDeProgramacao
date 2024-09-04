@@ -14,6 +14,8 @@ typedef struct{
 FILE *arqCheque;
 Cheque cheque;
 
+void leituraDosCheques();
+
 int main(){
     setlocale(LC_ALL,"Portuguese");
 
@@ -52,6 +54,10 @@ void menu(){
     }while(opcao!=0);
 
 }
+
+void imprimirSomaTotalChequeMesmoCliente(){}
+
+void validacaoCodigo(){}
 
 void leituraDosCheques(){
     if((arqCheque = fopen("arquivo.dat","a+b"))==NULL){
