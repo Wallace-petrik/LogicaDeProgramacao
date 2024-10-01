@@ -55,6 +55,8 @@ void menu(){
 
 }
 
+void digitoverificador(){}
+
 void imprimirSomaTotalChequeMesmoCliente(){}
 
 void validacaoCodigo(){}
