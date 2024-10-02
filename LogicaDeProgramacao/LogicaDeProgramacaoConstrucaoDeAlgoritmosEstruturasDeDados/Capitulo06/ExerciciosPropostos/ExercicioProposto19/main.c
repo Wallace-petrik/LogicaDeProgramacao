@@ -15,6 +15,7 @@ FILE *arqCheque;
 Cheque cheque;
 
 void leituraDosCheques();
+void menu();
 
 int main(){
     setlocale(LC_ALL,"Portuguese");
@@ -55,12 +56,6 @@ void menu(){
 
 }
 
-void digitoverificador(){}
-
-void imprimirSomaTotalChequeMesmoCliente(){}
-
-void validacaoCodigo(){}
-
 void leituraDosCheques(){
     if((arqCheque = fopen("arquivo.dat","a+b"))==NULL){
        printf("Erro ao abrir o arquivo!!!\n");
@@ -74,8 +69,7 @@ void leituraDosCheques(){
             scanf("%d",&cheque.agencia);
         printf("Conta: ");
             scanf("%d",&cheque.conta);
-        printf("DV: ");
-            scanf("%d",&cheque.dv);
+            cheque.dv = digitoVerificador(cheque.conta);
         printf("Nome: ");
             fflush(stdin);
             scanf("%[^\n]",&cheque.nome);
@@ -88,6 +82,23 @@ void leituraDosCheques(){
         printf("Erro ao fechar o arquivo!!!");
         exit(1);
     }
+}
+
+int inversorNumero(int numeroParaInverter){
+    int rev = 0;
+
+    while (numeroParaInverter != 0) {
+        int digit = numeroParaInverter % 10;
+        rev = rev * 10 + digit;
+        numeroParaInverter /= 10;
+    }
+    return rev;
+}
+
+void digitoVerificador(int numeroConta){
+
+    int numeroInvertido = inversorNumero(numeroConta);
+
 }
 
 
