@@ -77,6 +77,7 @@ void leituraDosCheques(){
             scanf("%f",&cheque.valor);
 
         fwrite(&cheque,1,sizeof(cheque),arqCheque);
+        system("cls");
     }
     if(fclose(arqCheque)!= 0){
         printf("Erro ao fechar o arquivo!!!");
@@ -86,19 +87,43 @@ void leituraDosCheques(){
 
 int inversorNumero(int numeroParaInverter){
     int rev = 0;
-
-    while (numeroParaInverter != 0) {
-        int digit = numeroParaInverter % 10;
+    int num = numeroParaInverter;
+    while (num != 0) {
+        int digit = num % 10;
         rev = rev * 10 + digit;
-        numeroParaInverter /= 10;
+        num /= 10;
     }
-    return rev;
+    return rev + numeroParaInverter;
+}
+
+int qualcularQuantidadeDeDigitos(int numero){
+
+    int quantidadeDeDigitos = 0;
+
+    while(numero>0){
+
+        numero = numero/10;
+        quantidadeDeDigitos++;
+    }
+
+    return quantidadeDeDigitos;
 }
 
 void digitoVerificador(int numeroConta){
 
-    int numeroInvertido = inversorNumero(numeroConta);
+    int digito = 0, soma = 0;
 
+    int numeroInvertido = inversorNumero(numeroConta);
+    int quantidadeDeDigitos = qualcularQuantidadeDeDigitos(numeroInvertido);
+
+    for(int i = quantidadeDeDigitos; i >= 1; i--){
+
+        digito = numeroInvertido % 10;
+        soma += digito * i;
+        numeroInvertido /= 10;
+
+    }
+    return soma;
 }
 
 
