@@ -4,8 +4,9 @@
 	<stdlib.h>
 	<locale.h>
 
-1728030562 source:c:\users\petrik\documents\meusrepositoios\logicadeprogramacao\logicadeprogramacao\logicadeprogramacaoconstrucaodealgoritmosestruturasdedados\capitulo06\exerciciospropostos\exercicioproposto19\main.c
+1728178641 source:c:\users\petrik\documents\meusrepositoios\logicadeprogramacao\logicadeprogramacao\logicadeprogramacaoconstrucaodealgoritmosestruturasdedados\capitulo06\exerciciospropostos\exercicioproposto19\main.c
 	<stdio.h>
 	<stdlib.h>
 	<locale.h>
+	<string.h>
 

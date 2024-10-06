@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 
 typedef struct{
     int numeroDoCheque;
@@ -16,6 +17,10 @@ Cheque cheque;
 
 void leituraDosCheques();
 void menu();
+int digitoVerificador(int numeroConta);
+int qualcularQuantidadeDeDigitos(int numero);
+int inversorNumero(int numeroParaInverter);
+
 
 int main(){
     setlocale(LC_ALL,"Portuguese");
@@ -28,9 +33,10 @@ int main(){
 void menu(){
 
     int opcao = 0;
-
+    int contaAux = 0;
     do{
         printf("1 /p leitua do cheque\n");
+        printf("2 /p saldo\n");
         printf("0 /p sai\n\n");
 
         printf("Digite uma opção: ");
@@ -44,6 +50,12 @@ void menu(){
             case 1:
                 system("cls");
                 leituraDosCheques();
+            break;
+            case 2:
+                system("cls");
+                printf("Digite o número da conta: ");
+                    scanf("%d",&contaAux);
+                    somaTotalCheques(contaAux);
             break;
             default:
                 printf("Opção invalida!!!\n");
@@ -109,7 +121,8 @@ int qualcularQuantidadeDeDigitos(int numero){
     return quantidadeDeDigitos;
 }
 
-void digitoVerificador(int numeroConta){
+int digitoVerificador(int numeroConta){
+
 
     int digito = 0, soma = 0;
 
@@ -126,9 +139,52 @@ void digitoVerificador(int numeroConta){
     return soma;
 }
 
-void  imprimirSaldo (){
+void somaTotalCheques(int numeroConta){
+    Cheque dados;
 
+    float saldo = 0;
+    int controle = 0;
+    int controleAux = 0;
 
+    char nomeAux[10];
+
+    if((arqCheque = fopen("arquivo.dat","r+b"))==NULL){
+
+        printf("Erro ao abrir o arquivo!!!");
+        system("pause");
+        exit(1);
+
+    }else{
+        fseek(arqCheque, 0, SEEK_END);
+        int tam = (ftell(arqCheque))/(sizeof(cheque));
+
+        while(controle< tam){
+
+            fseek(arqCheque,controle*sizeof(cheque),SEEK_SET);
+            fread(&dados,sizeof(cheque),1,arqCheque);
+
+            if(dados.conta==numeroConta){
+                strcpy(nomeAux, dados.nome);
+                saldo+= dados.valor;
+                controleAux++;
+            }
+            controle++;
+        }
+        if(controle!=0){
+            printf("Cliente : %s\n",nomeAux);
+            printf("R$ %f\n",saldo);
+            system("pause");
+            system("cls");
+        }else{
+            printf("Cliente não encontrado!!!");
+            system("pause");
+            system("cls");
+        }
+
+    }
+    if(fclose(arqCheque)!=0){
+        printf("Erro ao fechar o arquivo");
+        system("pause");
+        exit(1);
+    }
 }
-
-
