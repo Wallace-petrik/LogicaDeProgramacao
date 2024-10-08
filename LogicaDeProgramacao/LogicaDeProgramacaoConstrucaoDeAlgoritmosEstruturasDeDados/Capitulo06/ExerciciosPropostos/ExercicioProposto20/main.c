@@ -87,7 +87,14 @@ int main(){
     }
 
     void Impressao(){
-
+        for(int i = 1; i <= cont; i++){
+            printf("\n%d\t%d",cartao[i].em,cartao[i].sm);
+            printf("\n%d\t%d",cartao[i].et,cartao[i].st);
+            printf("\n%d", (totalDia->horas) / 60);
+            printf("\n%d", (totalDia->horas) % 60);
+            printf("\n%d", (totalDia->atraso) / 60);
+            printf("\n%d", (totalDia->atraso) % 60);
+        }
     }
 
     return 0;
