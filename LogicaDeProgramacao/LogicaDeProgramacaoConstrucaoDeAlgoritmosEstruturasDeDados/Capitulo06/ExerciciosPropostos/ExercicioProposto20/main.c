@@ -95,7 +95,11 @@ int main(){
             printf("\n%d", (totalDia->atraso) / 60);
             printf("\n%d", (totalDia->atraso) % 60);
         }
+        printf("\n\n%d\t%d\n",(toth/cont)/60,(toth/cont)%60);
+        printf("\n%d\t%d",(toth/60),toth%60);
+        printf("\n%d\t%d",(totatr/cont)/60,(totatr/cont)%60);
+        printf("\n%d\t%d",(totatr/60),totatr%60);
     }
-
+    Entreda;
     return 0;
 }
