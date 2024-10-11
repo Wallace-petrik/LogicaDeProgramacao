@@ -90,16 +90,38 @@ int main(){
         for(int i = 1; i <= cont; i++){
             printf("\n%d\t%d",cartao[i].em,cartao[i].sm);
             printf("\n%d\t%d",cartao[i].et,cartao[i].st);
-            printf("\n%d", (totalDia->horas) / 60);
-            printf("\n%d", (totalDia->horas) % 60);
-            printf("\n%d", (totalDia->atraso) / 60);
-            printf("\n%d", (totalDia->atraso) % 60);
+            printf("\n%d",(totalDia->horas) / 60);
+            printf("\n%d",(totalDia->horas) % 60);
+            printf("\n%d",(totalDia->atraso) / 60);
+            printf("\n%d",(totalDia->atraso) % 60);
         }
         printf("\n\n%d\t%d\n",(toth/cont)/60,(toth/cont)%60);
         printf("\n%d\t%d",(toth/60),toth%60);
         printf("\n%d\t%d",(totatr/cont)/60,(totatr/cont)%60);
         printf("\n%d\t%d",(totatr/60),totatr%60);
     }
+
+    void saldoDeHoras(){
+
+        if(totalDia->horas == 40){
+            printf("\nSem horas extras e horas devidas\n");
+        }else if(totalDia->horas < 40){
+            printf("Total de horas devidas: %d",40 - totalDia->horas);
+        }else if(totalDia->horas > 40){
+            printf("Total de horas extras: %d",totalDia->horas - 40);
+        }
+
+    }
+
     Entreda;
+
+    if( cont>0){
+
+        Calculo();
+        Impressao();
+        saldoDeHoras();
+    }
+
+
     return 0;
 }
