@@ -19,4 +19,4 @@
 ###  Obs 🚩
 * O diretório LogicaDeProgramacao contem os exercícios no livro Lógica de programação: A construção de algoritmos 3ª Edição.
 
-### [Acesse meu perfil no Linkedin](https://www.linkedin.com/in/wallace-petrik-45b9471b4/) 💣💣
+### [Acesse meu perfil no portfólio](https://devpetrik.com.br/)  | [Acesse meu perfil no Linkedin](https://www.linkedin.com/in/wallace-petrik-45b9471b4/)
