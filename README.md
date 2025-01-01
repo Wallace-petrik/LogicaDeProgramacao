@@ -12,7 +12,6 @@
 
 ### Cursos Grátis 👨‍🏫
 * [Curso de Lógica de Programação](https://www.youtube.com/playlist?list=PLHz_AreHm4dmSj0MHol_aoNYCSGFqvfXV)
-* [Curso de algoritmos e lógica de programação](https://www.youtube.com/playlist?list=PLHz_AreHm4dmSj0MHol_aoNYCSGFqvfXV)
 
 ###  IDE 💻
 * [Code Blocks](https://www.codeblocks.org/downloads/)
