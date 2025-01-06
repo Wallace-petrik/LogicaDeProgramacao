@@ -11,7 +11,7 @@ int main(){
     int atual = 1;
     int proximo = 0;
 
-    while(contador++<=15){
+    while(contador++<15){
 
         printf("%d\n",anterior);
         proximo = anterior+atual;
