@@ -5,7 +5,7 @@ int main(){
 
     setlocale(LC_ALL,"");
 
-    int vetA[tam];
+    /*int vetA[tam];
     int vetB[tam];
 
     for(int i  = 0; i < tam; i++){
@@ -17,8 +17,12 @@ int main(){
     }
     for(int i = 0; i < tam; i++){
         printf("VetA[%d] = %d\tVetB[%d] = %d\n",i,vetA[i],i,vetB[i]);
-    }
+    }*/
 
+    int a = 5;
+    int b = 2;
+
+    printf(" Resto da divisão = %d",a - b * (a/b));
 
     return 0;
 }
