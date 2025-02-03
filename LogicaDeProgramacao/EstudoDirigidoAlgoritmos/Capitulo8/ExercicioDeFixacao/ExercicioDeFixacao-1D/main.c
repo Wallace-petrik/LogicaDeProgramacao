@@ -16,6 +16,9 @@ int main(){
     for(int j = 0; j < 10; j++){
          matriz[0][j] = vetor[j] + 5;
     }
+    for(int j = 0; j < 10; j++){
+         matriz[1][j] = pow(vetor[j],2);
+    }
 
     return 0;
 }
