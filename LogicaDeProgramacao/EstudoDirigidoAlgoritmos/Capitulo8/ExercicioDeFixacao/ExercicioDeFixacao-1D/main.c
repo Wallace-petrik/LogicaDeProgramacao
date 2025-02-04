@@ -16,9 +16,25 @@ int main(){
     for(int j = 0; j < 10; j++){
          matriz[0][j] = vetor[j] + 5;
     }
+
     for(int j = 0; j < 10; j++){
-         matriz[1][j] = pow(vetor[j],2);
+         matriz[2][j] = pow(vetor[j],2);
     }
 
+    for(int i = 0; i < 10; i++){
+        int j = 1;
+        int fat = 1;
+        while(j<=vetor[j]){
+            fat *= j;
+            j++;
+        }
+        matriz[1][i] = fat;
+    }
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 10; j++){
+            printf("[%3.d]",matriz[i][j]);
+        }
+        printf("\n");
+    }
     return 0;
 }
