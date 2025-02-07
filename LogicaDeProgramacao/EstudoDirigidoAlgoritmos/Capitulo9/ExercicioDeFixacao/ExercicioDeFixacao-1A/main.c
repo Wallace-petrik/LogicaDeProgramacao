@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define tam 10
+#define tam 3
 
 struct {
 
@@ -29,6 +29,22 @@ int main(){
 
         switch(opcao){
             case 1:
+
+                system("cls");
+                for(int i = 0; i < tam; i++){
+                    system("cls");
+                    printf("Contato %d\n",i+1);
+                    printf("Digite o nome: ");
+                        fflush(stdin);
+                        scanf("%[^\n]s",minhaAgenda[i].nome);
+                    printf("Digite o Endereço: ");
+                        fflush(stdin);
+                        scanf("%[^\n]s",minhaAgenda[i].endereco);
+                    printf("Digite o telefone: ");
+                        fflush(stdin);
+                        scanf("%d",&minhaAgenda[i].telefone);
+                        system("pause");
+                }
 
             break;
             case 2:
