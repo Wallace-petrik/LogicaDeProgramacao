@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define tam 3
+#define tam 2
 
 struct {
 
@@ -15,8 +15,9 @@ int main(){
     setlocale(LC_ALL,"");
 
     Agenda minhaAgenda[tam];
-
+    Agenda auxAgenda;
     int opcao = 0;
+    int achou = 0, index;
 
     do{
         system("cls");
@@ -48,6 +49,28 @@ int main(){
 
             break;
             case 2:
+
+                system("cls");
+                achou = 0;
+                printf("Digite o nome que deseja buscar: \n");
+                    fflush(stdin);
+                    scanf("%[^\n]s",&auxAgenda.nome);
+
+                for(int i = 0; i < tam; i++){
+                    if(strcmp (auxAgenda.nome,minhaAgenda[i].nome)==0){
+                       achou =  1;
+                       index = i;
+                       break;
+                    }else{
+                        achou =  0;
+                    }
+                }
+                if(achou == 1){
+                    printf("O nome %s foi localizado no index: %d\n",minhaAgenda[index].nome,index
+                           );
+                }else
+                    printf("Nome não localizado\n");
+                system("pause");
 
             break;
             case 3:
