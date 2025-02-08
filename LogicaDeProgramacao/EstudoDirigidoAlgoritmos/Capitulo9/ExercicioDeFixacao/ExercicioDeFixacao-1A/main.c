@@ -88,7 +88,9 @@ int main(){
                     fim--;
                 }while(continua!=0);
 
-
+                for(int i = 0; i < tam; i++){
+                    printf("\n%dº contato Nome: %s Endereço: %s Telefone: %d",i+1,minhaAgenda[i].nome, minhaAgenda[i].endereco,minhaAgenda[i].telefone);
+                }
                 printf("\n");
                 system("pause");
             break;
