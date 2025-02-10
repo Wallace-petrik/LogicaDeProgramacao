@@ -78,11 +78,13 @@ int main(){
                 int fim = tam;
 
                 do{
+                    continua = 0;
                     for(int i = 0; i < tam-1; i++){
                         if(strcmp(minhaAgenda[i].nome,minhaAgenda[i+1].nome)>0){
                             auxAgenda = minhaAgenda[i];
                             minhaAgenda[i] = minhaAgenda[i+1];
                             minhaAgenda[i+1] = auxAgenda;
+                            continua = i;
                         }
                     }
                     fim--;
