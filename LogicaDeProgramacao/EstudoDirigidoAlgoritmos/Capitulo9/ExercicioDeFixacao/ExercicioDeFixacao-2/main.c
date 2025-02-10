@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <locale.h>
-#define tam 3;
+#define tam 2
 
 struct{
     char nome[30];
-    int notas[4];
-};
+    float notas[4];
+}typedef Aluno;
 
 int main(){
 
     setlocale(LC_ALL,"");
 
     int opc = 4;
+    Aluno aluno[tam];
 
     do{
         system("cls");
@@ -25,6 +26,22 @@ int main(){
 
             case 1:{
 
+                system("cls");
+                for(int i = 0; i < tam; i++){
+
+                    fflush(stdin);
+                    printf("Digite o nome do aluno: ");
+                        scanf("%[^\n]",aluno[i].nome);
+
+                    printf("Digite as notas do aluno: ");
+                    for(int j = 0; j < 4; j++){
+                        scanf("%f",&aluno[i].notas[j]);
+                    }
+
+                }
+
+
+
             break;}
 
             case 2:{
@@ -36,7 +53,7 @@ int main(){
             break;}
 
             case 4:{
-                printf("\nAté logo !!!\n");
+                printf("\nAté logo !!!\ngit sta");
                 fflush(stdin);
             break;}
 
@@ -44,7 +61,6 @@ int main(){
                 printf("\nOpção invalida!!!\nPressione ENTER para continuar...\n");
                 fflush(stdin);
                 getchar();
-
             }
 
         }
