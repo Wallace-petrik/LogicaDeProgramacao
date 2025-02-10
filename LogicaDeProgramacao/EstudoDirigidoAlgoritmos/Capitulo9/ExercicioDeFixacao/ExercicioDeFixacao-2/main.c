@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define tam 2
+#define tam 3
 
 struct{
     char nome[30];
@@ -26,6 +26,9 @@ int main(){
 
             case 1:{
 
+                int fim = tam;
+                int continua = 0;
+                Aluno auxAluno;
                 system("cls");
                 for(int i = 0; i < tam; i++){
 
@@ -40,7 +43,20 @@ int main(){
 
                 }
 
+                do{
+                    continua = 0;
 
+                    for(int i = 0; i < tam-1; i++){
+                        if(strcmp(aluno[i].nome,aluno[i+1].nome)>0){
+                            auxAluno = aluno[i];
+                            aluno[i] = aluno[i+1];
+                            aluno[i+1] = auxAluno;
+                            continua = i;
+                        }
+                    }
+
+                    fim--;
+                }while(continua != 0);
 
             break;}
 
