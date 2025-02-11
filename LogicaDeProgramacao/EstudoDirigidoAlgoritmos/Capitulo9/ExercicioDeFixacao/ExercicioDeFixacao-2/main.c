@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define tam 3
+#define tam 1
 
 struct{
     char nome[30];
@@ -61,7 +61,36 @@ int main(){
             break;}
 
             case 2:{
+                system("cls");
+                Aluno auxAluno;
+                float media = 0;
+                char situacao[10];
+                int achou = 0;
+                fflush(stdin);
+                printf("Digite o nome do aluno: ");
+                    scanf("%[^\n]",auxAluno.nome);
 
+                for(int i = 0; i < tam; i++){
+                    if(strcmp(auxAluno.nome,aluno[i].nome)==0){
+                        printf("Aluno encontrado!!!\n");
+                        for(int j = 0; j < 4; j++){
+                            media+= aluno[i].notas[j];
+                        }
+                        media /= 4;
+                        if(media > 5){
+                            strcpy(situacao,"Aprovado");
+                        }else{
+                           strcpy(situacao,"Reprovado");
+                        }
+                        printf("Nome: %s\nNota: %.2f\nSituação: %s\n",aluno[i].nome,media,situacao);
+                        achou = 1;
+                        break;
+                    }
+                }
+                if(achou = 0){
+                    printf("Aluno não encontrado\n");
+                }
+                system("pause");
             break;}
 
             case 3:{
