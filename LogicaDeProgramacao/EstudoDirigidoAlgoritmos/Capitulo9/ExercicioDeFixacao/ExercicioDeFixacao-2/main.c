@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <locale.h>
+<<<<<<< HEAD
 #include <string.h>
 #define tam 2
+=======
+#define tam 1
+>>>>>>> 01f905beb96114abdc73258c05e9efb334417f47
 
 struct{
     char nome[30];
