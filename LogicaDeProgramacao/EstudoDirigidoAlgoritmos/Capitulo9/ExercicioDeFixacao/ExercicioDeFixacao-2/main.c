@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <locale.h>
-<<<<<<< HEAD
 #include <string.h>
 #define tam 2
-=======
-#define tam 1
->>>>>>> 01f905beb96114abdc73258c05e9efb334417f47
 
 struct{
     char nome[30];
@@ -66,12 +62,14 @@ int main(){
             break;}
 
             case 2:{
+
                 system("cls");
                 Aluno auxAluno;
                 float media = 0;
                 char situacao[10];
                 int achou = 0;
                 fflush(stdin);
+
                 printf("Digite o nome do aluno: ");
                     scanf("%[^\n]",auxAluno.nome);
 
@@ -92,7 +90,7 @@ int main(){
                         break;
                     }
                 }
-                if(achou = 0){
+                if(achou == 0){
                     printf("Aluno não encontrado\n");
                 }
                 system("pause");
@@ -114,7 +112,7 @@ int main(){
                     if(media>5){
                         strcpy(situacao,"Aprovado");
                     }else{
-                         strcpy(situacao,"Reprovado");
+                        strcpy(situacao,"Reprovado");
                     }
 
                     printf("Nome: %s\tMédia %.2f\t Situação: %s\n",aluno[i].nome, media, situacao);
@@ -123,7 +121,7 @@ int main(){
             break;}
 
             case 4:{
-                printf("\nAté logo !!!\ngit sta");
+                printf("\nAté logo !!!\n");
                 fflush(stdin);
             break;}
 
