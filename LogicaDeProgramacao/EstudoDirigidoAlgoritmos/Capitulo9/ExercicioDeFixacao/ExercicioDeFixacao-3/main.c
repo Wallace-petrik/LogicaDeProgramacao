@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <locale.h>
 
+#define elem 2
+
 struct{
     char nome[30];
     float altura;
@@ -10,7 +12,7 @@ int main(){
 
     setlocale(LC_ALL,"");
 
-    Pessoa pessoa;
+    Pessoa pessoa[elem];
 
     int opcao = 0;
 
@@ -36,9 +38,20 @@ int main(){
 
             case 1:{
 
+                system("cls");
+                for(int i = 0; i < elem; i++){
+                    printf("O nome e %dª pessoa: ",i+1);
+                        scanf("%[^\n]%*c",pessoa[i].nome);
+                    printf("Altura: ");
+                        scanf("%f%*c",&pessoa[i].altura);
+                    system("cls");
+                }
+
             break;}
 
             case 2:{
+
+                system("cls");
 
             break;}
 
