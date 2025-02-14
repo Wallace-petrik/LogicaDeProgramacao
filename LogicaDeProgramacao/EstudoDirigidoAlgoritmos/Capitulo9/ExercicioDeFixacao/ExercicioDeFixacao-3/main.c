@@ -67,7 +67,19 @@ int main(){
             break;}
 
             case 3:{
+                system("cls");
+                int controle = 0;
 
+                for(int i = 0; i < elem; i++){
+                    if(pessoa[i].altura>1.5){
+                        printf("%s\t%.2f",pessoa[i].nome,pessoa[i].altura);
+                        controle = 1;
+                    }
+                }
+                if(controle==0){
+                    printf("Nenhuma pessoa encontrada !!!");
+                }
+                getchar();
             break;}
 
             case 4:{
