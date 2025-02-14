@@ -56,7 +56,7 @@ int main(){
 
                 for(int i = 0; i < elem; i++){
                     if(pessoa[i].altura<=1.5){
-                        printf("%s\t%.2f",pessoa[i].nome,pessoa[i].altura);
+                        printf("%s\t%.2f\n",pessoa[i].nome,pessoa[i].altura);
                         controle = 1;
                     }
                 }
@@ -72,7 +72,7 @@ int main(){
 
                 for(int i = 0; i < elem; i++){
                     if(pessoa[i].altura>1.5){
-                        printf("%s\t%.2f",pessoa[i].nome,pessoa[i].altura);
+                        printf("%s\t%.2f\n",pessoa[i].nome,pessoa[i].altura);
                         controle = 1;
                     }
                 }
@@ -88,7 +88,7 @@ int main(){
 
                 for(int i = 0; i < elem; i++){
                     if(pessoa[i].altura > 1.5 && pessoa[i].altura < 2){
-                        printf("%s\t%.2f",pessoa[i].nome,pessoa[i].altura);
+                        printf("%s\t%.2f\n",pessoa[i].nome,pessoa[i].altura);
                         controle = 1;
                     }
                 }
@@ -99,7 +99,16 @@ int main(){
             break;}
 
             case 5:{
+                system("cls");
 
+                int somatoria = 0;
+
+                for(int i = 0; i < elem; i++){
+                    printf("%s\t%.2f\n",pessoa[i].nome,pessoa[i].altura);
+                    somatoria += pessoa[i].altura;
+                }
+                printf("\nMédia: %.2f",somatoria/(float) elem);
+                getchar();
             break;}
 
             default:{
