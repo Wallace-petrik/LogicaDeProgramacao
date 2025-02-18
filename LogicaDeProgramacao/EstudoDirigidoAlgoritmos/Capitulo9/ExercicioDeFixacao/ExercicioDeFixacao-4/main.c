@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
-#define elem 2
+#define elem 3
 
 struct{
 
@@ -15,10 +15,12 @@ int main(){
     setlocale(LC_ALL,"");
 
     Empregado empregado[elem];
+
     int opcao = 0;
 
 
     do{
+        system("cls");
         printf("1 para cadastra empregados\n");
         printf("2 para casificar por matrícula\n");
         printf("3 para pesquisar empregado\n");
@@ -38,7 +40,7 @@ int main(){
 
             case 1:{
                 for(int i = 0; i < elem; i++){
-                     system("cls");
+                    system("cls");
                     printf("Digite a matrícula do empregado: ");
                         scanf("%d%*c",&empregado[i].mat);
                     printf("Entre com o nome do empregado: ");
@@ -47,13 +49,38 @@ int main(){
                     printf("Entre com o salário: ");
                         scanf("%f%*c",&empregado[i].sal);
                 }
+
             break;}
 
             case 2:{
+            int continua;
+            int fim = elem;
+            Empregado aux;
+            system("cls");
+            do{
+                continua = 0;
+                for(int i = 0; i < elem-1; i++){
+                    if(empregado[i].mat>empregado[i+1].mat){
+                        aux = empregado[i];
+                        empregado[i] = empregado[i+1];
+                        empregado[i+1] =  aux;
 
+                        continua = i;
+                    }
+                }
+               fim--;
+            }while(continua != 0);
+
+            printf("\n\tCassificação\n\n");
+
+            for(int i = 0; i < elem; i++){
+                printf("Mat: %d\tNome: %s\n",empregado[i].mat, empregado[i].nome);
+            }
+            getchar();
             break;}
 
             case 3:{
+
 
             break;}
 
