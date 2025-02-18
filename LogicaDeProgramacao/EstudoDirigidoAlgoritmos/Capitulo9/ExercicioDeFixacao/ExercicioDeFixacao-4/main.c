@@ -81,6 +81,29 @@ int main(){
 
             case 3:{
 
+            int achou = 0;
+            int indexe;
+            int mat;
+
+            system("cls");
+            printf("Digite a matrícula do empregado: ");
+                    scanf("%d%*c",&mat);
+
+            for(int i = 0; i < elem; i ++){
+
+
+                if(mat==empregado[i].mat){
+                    achou = 1;
+                    indexe = i;
+                    break;
+                }
+            }
+
+            if(achou == 1){
+                printf("Enpregado encontrado\nNome: %s\tSalário: %.2f",empregado[indexe].nome,empregado[indexe].sal);
+            }else printf("Empregado não encontrado !!!");
+
+            getchar();
 
             break;}
 
