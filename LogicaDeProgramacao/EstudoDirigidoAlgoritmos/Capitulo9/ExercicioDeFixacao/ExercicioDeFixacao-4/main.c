@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <locale.h>
-#define elem 3
+#include <string.h>
+
+#define elem 1
 
 struct{
 
@@ -108,7 +110,35 @@ int main(){
             break;}
 
             case 4:{
+                system("cls");
+                int fim = elem;
+                int continua;
+                int achou = 0;
+                Empregado auxEmpregado;
 
+                do{
+                    continua = 0;
+                    for(int i = 0; i< elem-1; i++){
+                        if(empregado[i].mat>empregado[i].mat){
+                            auxEmpregado = empregado[i];
+                            empregado[i] = empregado[i+1];
+                            empregado[i+1] = auxEmpregado;
+                            continua = i;
+                        }
+                    }
+                    fim--;
+                }while(continua != 0);
+
+                for(int i = 0; i < elem; i++){
+                    if(empregado[i].sal>1000){
+                        printf("\nMat: %d\tNome: %s\tSalário: %.2f",empregado[i].mat,empregado[i].nome,empregado[i].sal);
+                        achou = 1;
+                    }
+                }
+                if(achou == 0){
+                    printf("\nEmpregado não encontrado !!!");
+                }
+                getchar();
             break;}
 
             case 5:{
