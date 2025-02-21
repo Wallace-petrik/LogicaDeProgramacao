@@ -15,19 +15,19 @@ int main(){
 
     do{
         system("cls");
-        printf("======================\n");
-        printf("|1 para cadastramento |\n");
-        printf("======================\n");
-        printf("|2 para classificação |\n");
-        printf("======================\n");
-        printf("|3 para pesquisa      |\n");
-        printf("======================\n");
-        printf("|4 para correção      |\n");
-        printf("======================\n");
-        printf("|5 para remoção       |\n");
-        printf("======================\n");
-        printf("|6 para sair          |\n");
-        printf("======================\n:");
+        printf(" ======================\n");
+        printf(" |1 para cadastramento |\n");
+        printf(" ======================\n");
+        printf(" |2 para classificação |\n");
+        printf(" ======================\n");
+        printf(" |3 para pesquisa      |\n");
+        printf(" ======================\n");
+        printf(" |4 para correção      |\n");
+        printf(" ======================\n");
+        printf(" |5 para remoção       |\n");
+        printf(" ======================\n");
+        printf(" |6 para sair          |\n");
+        printf(" ======================\n : ");
             scanf("%d",&opcao);
 
         switch(opcao){
@@ -52,12 +52,14 @@ int main(){
             break;}
 
             case 6:{
+                fflush(stdin);
+                printf("\n Até logo !!! ");
 
             break;}
 
             default:{
                 fflush(stdin);
-                printf("Opção invalida !!!\n");
+                printf(" Opção invalida !!!\n");
                 getchar();
             }
 
