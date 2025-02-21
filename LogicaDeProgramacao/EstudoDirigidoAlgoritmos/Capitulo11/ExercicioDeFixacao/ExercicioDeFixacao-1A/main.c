@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <locale.h>
 
+#define qtd 3
+
 struct{
-    char endereco[50];
     char nome[50];
+    char endereco[50];
     int telefone;
 }typedef Agenda;
+
+Agenda contato[qtd];
+int indice = 0, fim = qtd;
 
 int main(){
 
@@ -31,8 +36,9 @@ int main(){
             scanf("%d",&opcao);
 
         switch(opcao){
-            case 1:{
 
+            case 1:{
+                cadastrarContato();
             break;}
 
             case 2:{
@@ -68,4 +74,26 @@ int main(){
     }while(opcao != 6);
 
     return 0;
+}
+
+void cadastrarContato(){
+    system("cls");
+    fflush(stdin);
+    if(indice == qtd){
+        printf(" Agenda lotada !!!\n");
+        getchar();
+    }else{
+
+        printf(" Digite o nome do contato: ");
+            gets(contato[indice].nome);
+        printf(" Digite o endereço: ");
+            gets(contato[indice].endereco);
+        printf(" Digite o telefone: ");
+            scanf("%d",&contato[indice].telefone);
+
+        printf(" Cadastro realizado com sucesso !!!");
+        system("pause");
+        indice++;
+
+    }
 }
