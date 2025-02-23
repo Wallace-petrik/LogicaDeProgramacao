@@ -9,10 +9,11 @@ struct{
     int telefone;
 }typedef Agenda;
 
-Agenda contato[qtd];
-int indice = 0, fim = qtd;
+Agenda contato[qtd], contatoAux;
+int indice = 0;
 
 void cadastrarContato();
+void classificar();
 
 int main(){
 
@@ -39,6 +40,7 @@ int main(){
 
             case 1:{
                 cadastrarContato();
+                classificar();
             break;}
 
             case 2:{
@@ -93,3 +95,33 @@ void cadastrarContato(){
 
     }
 }
+
+
+void classificar(){
+
+    int continuar;
+    int fim = indice;
+    if(indice >= 2){
+
+        do{
+            continuar = 0;
+
+                for(int i = 0; i < fim-1; i++){
+
+                    if(strcmp(contato[i].nome,contato[i+1].nome)>0){
+                        contatoAux = contato[i];
+                        contato[i] = contato[i+1];
+                        contato[i+1] = contatoAux;
+                        continuar = i;
+                    }
+
+                }
+
+            fim--;
+        }while(continuar != 0);
+
+    }
+
+}
+
+
