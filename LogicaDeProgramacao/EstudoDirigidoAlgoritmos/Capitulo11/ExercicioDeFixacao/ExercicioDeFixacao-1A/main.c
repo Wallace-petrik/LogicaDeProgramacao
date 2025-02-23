@@ -12,6 +12,8 @@ struct{
 Agenda contato[qtd];
 int indice = 0, fim = qtd;
 
+void cadastrarContato();
+
 int main(){
 
     setlocale(LC_ALL,"");
@@ -23,15 +25,13 @@ int main(){
         printf(" ======================\n");
         printf(" |1 para cadastramento |\n");
         printf(" ======================\n");
-        printf(" |2 para classificação |\n");
+        printf(" |2 para pesquisa      |\n");
         printf(" ======================\n");
-        printf(" |3 para pesquisa      |\n");
+        printf(" |3 para correção      |\n");
         printf(" ======================\n");
-        printf(" |4 para correção      |\n");
+        printf(" |4 para remoção       |\n");
         printf(" ======================\n");
-        printf(" |5 para remoção       |\n");
-        printf(" ======================\n");
-        printf(" |6 para sair          |\n");
+        printf(" |5 para sair          |\n");
         printf(" ======================\n : ");
             scanf("%d",&opcao);
 
@@ -54,10 +54,6 @@ int main(){
             break;}
 
             case 5:{
-
-            break;}
-
-            case 6:{
                 fflush(stdin);
                 printf("\n Até logo !!! ");
 
@@ -71,7 +67,7 @@ int main(){
 
         }
 
-    }while(opcao != 6);
+    }while(opcao != 5);
 
     return 0;
 }
