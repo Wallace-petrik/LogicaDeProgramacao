@@ -14,6 +14,7 @@ int indice = 0;
 
 void cadastrarContato();
 void classificar();
+void corrigir();
 
 int main(){
 
@@ -48,7 +49,7 @@ int main(){
             break;}
 
             case 3:{
-
+                corrigir();
             break;}
 
             case 4:{
@@ -95,7 +96,6 @@ void cadastrarContato(){
 
     }
 }
-
 
 void classificar(){
 
@@ -144,3 +144,35 @@ void pesquisa(){
     }
     getchar();
 }
+
+void corrigir(){
+
+    system("cls");
+    classificar();
+    int achou = 0;
+    printf("Digite o nome de deseja corrigir: ");
+        fflush(stdin);
+        gets(auxContato.nome);
+
+    for(int i = 0; i < indice; i++){
+        if(strcmp(auxContato.nome,contato[i].nome)== 0){
+            printf(" Digite o novo nome do contato: ");
+                gets(contato[i].nome);
+            printf(" Digite o novo endereço: ");
+                gets(contato[i].endereco);
+            printf(" Digite o novo telefone: ");
+                scanf("%d%*c",&contato[i].telefone);
+
+            printf(" Correção realizado com sucesso !!!");
+            achou = 1;
+            getchar();
+            break;
+        }
+    }
+    if(achou == 0){
+        printf("\nContato não encontrado !!!");
+    }
+    getchar();
+}
+
+
