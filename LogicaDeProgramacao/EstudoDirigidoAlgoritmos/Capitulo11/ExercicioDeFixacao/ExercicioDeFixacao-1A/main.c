@@ -9,7 +9,7 @@ struct{
     int telefone;
 }typedef Agenda;
 
-Agenda contato[qtd], contatoAux;
+Agenda contato[qtd], auxContato;
 int indice = 0;
 
 void cadastrarContato();
@@ -44,7 +44,7 @@ int main(){
             break;}
 
             case 2:{
-
+                pesquisa();
             break;}
 
             case 3:{
@@ -109,9 +109,9 @@ void classificar(){
                 for(int i = 0; i < fim-1; i++){
 
                     if(strcmp(contato[i].nome,contato[i+1].nome)>0){
-                        contatoAux = contato[i];
+                        auxContato = contato[i];
                         contato[i] = contato[i+1];
-                        contato[i+1] = contatoAux;
+                        contato[i+1] = auxContato;
                         continuar = i;
                     }
 
@@ -124,4 +124,23 @@ void classificar(){
 
 }
 
+void pesquisa(){
 
+    system("cls");
+    classificar();
+    int achou = 0;
+    printf("Digite o nome de deseja pesquisar: ");
+        fflush(stdin);
+        gets(auxContato.nome);
+
+    for(int i = 0; i < indice; i++){
+        if(strcmp(auxContato.nome,contato[i].nome)== 0){
+            printf("\nNome: %s\nEndereço: %s\nTelefone: %d",contato[i].nome,contato[i].endereco,contato[i].telefone);
+            achou = 1;
+        }
+    }
+    if(achou == 0){
+        printf("\nContato não encontrado !!!");
+    }
+    getchar();
+}
