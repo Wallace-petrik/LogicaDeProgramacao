@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <locale.h>
 
-#define  elem 2
+#define  elem 3
 
+void classificar();
 void cadastrar();
 
 struct{
@@ -12,6 +13,7 @@ struct{
 }typedef Alunos;
 
 Alunos aluno[elem];
+Alunos auxAluno;
 
 int main(){
 
@@ -85,8 +87,27 @@ void cadastrar(){
         aluno[i].media =  soma / 4;
         fflush(stdin);
     }
+    classificar();
     printf("Alunos cadastrardos com sucesso !!!");
     getchar();
 }
 
+void classificar(){
 
+    int fim = elem;
+    int continua;
+
+    do{
+        continua = 0;
+        for(int i = 0; i < fim-1; i++){
+            if(strcmp(aluno[i].nome,aluno[i+1].nome)>0){
+                auxAluno = aluno[i];
+                aluno[i] = aluno[i+1];
+                aluno[i+1] = auxAluno;
+                continua = i;
+            }
+        }
+        fim--;
+    }while(continua != 0);
+
+}
