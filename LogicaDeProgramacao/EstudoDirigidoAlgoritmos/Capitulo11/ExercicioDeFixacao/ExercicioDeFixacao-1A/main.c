@@ -15,6 +15,7 @@ int indice = 0;
 void cadastrarContato();
 void classificar();
 void corrigir();
+void remover();
 
 int main(){
 
@@ -53,7 +54,7 @@ int main(){
             break;}
 
             case 4:{
-
+                remover();
             break;}
 
             case 5:{
@@ -175,4 +176,31 @@ void corrigir(){
     getchar();
 }
 
+void remover(){
 
+    system("cls");
+    classificar();
+    int achou = 0;
+    printf("Digite o nome de deseja deletar: ");
+        fflush(stdin);
+        gets(auxContato.nome);
+
+    for(int i = 0; i < indice; i++){
+        if(strcmp(auxContato.nome,contato[i].nome)== 0){
+
+            strcpy(contato[i].nome, "");
+            strcpy(contato[i].endereco, "");
+            contato[i].telefone = 0;
+
+            printf(" Correção realizado com sucesso !!!");
+            indice--;
+            achou = 1;
+            getchar();
+            break;
+        }
+    }
+    if(achou == 0){
+        printf("\nContato não encontrado !!!");
+    }
+    getchar();
+}
