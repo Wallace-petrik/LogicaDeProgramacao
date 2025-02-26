@@ -22,7 +22,7 @@ int main(){
         printf("\n4 para listar Ap");
         printf("\n5 para listar Rp");
         printf("\n6 para sair\n:");
-            scanf("%d",&opcao);
+            scanf("%d%*c",&opcao);
             fflush(stdin);
 
         switch(opcao){
@@ -47,7 +47,8 @@ int main(){
             break;}
 
             case 6:{
-
+                printf("\nAté logo !!!");
+                getchar();
             break;}
 
             default:{
