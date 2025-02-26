@@ -1,11 +1,17 @@
 #include <stdio.h>
 #include <locale.h>
 
+#define  elem 2
+
+void cadastrar();
+
 struct{
     char nome[50];
-    int notas[4];
+    float notas[4];
     float media;
 }typedef Alunos;
+
+Alunos aluno[elem];
 
 int main(){
 
@@ -27,7 +33,7 @@ int main(){
 
         switch(opcao){
             case 1:{
-
+                cadastrar();
             break;}
 
             case 2:{
@@ -61,3 +67,26 @@ int main(){
 
     return 0;
 }
+
+void cadastrar(){
+
+    fflush(stdin);
+    system("cls");
+    int soma = 0;
+    for(int i = 0; i < elem; i++){
+        printf("Digite o nome do aluno: ");
+            gets(aluno[i].nome);
+        printf("Digite as notas do aluno !\n");
+        for(int j = 0; j < 4; j++){
+            printf("Nota %d: ",j+1);
+            scanf("%f",&aluno[i].notas[j]);
+            soma += aluno[i].notas[j];
+        }
+        aluno[i].media =  soma / 4;
+        fflush(stdin);
+    }
+    printf("Alunos cadastrardos com sucesso !!!");
+    getchar();
+}
+
+
