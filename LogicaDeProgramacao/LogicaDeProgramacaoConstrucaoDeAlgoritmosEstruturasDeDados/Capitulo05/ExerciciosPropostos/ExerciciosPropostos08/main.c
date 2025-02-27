@@ -58,7 +58,7 @@ int main(){
          system("cls");
         printf("1 para cadastrar cliente\n");
         printf("2 para cadastrar atendimento\n");
-        printf("3 para mostrar os últimos 5 atendimentos originados pelo ciente\n");
+        printf("3 para mostrar os últimos 5 atendimentos originados pelo cliente\n");
         printf("4 para mostrar os últimos 5 atendimentos originados na empresa\n");
         printf("5 para apresentar relatório do mes\n");
         printf("6 para média de tendimento de por cliente por mês\n");
