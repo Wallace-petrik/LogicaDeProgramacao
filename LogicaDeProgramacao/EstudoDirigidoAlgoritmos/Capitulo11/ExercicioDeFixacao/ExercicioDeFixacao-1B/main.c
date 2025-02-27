@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <locale.h>
 
-#define  elem 3
+#define  elem 2
 
 void classificar();
 void cadastrar();
+void corrigir();
 
 struct{
     char nome[50];
@@ -39,7 +40,7 @@ int main(){
             break;}
 
             case 2:{
-
+                corrigir();
             break;}
 
             case 3:{
@@ -109,5 +110,43 @@ void classificar(){
         }
         fim--;
     }while(continua != 0);
+
+}
+
+
+void corrigir(){
+
+    fflush(stdin);
+    system("cls");
+    int soma = 0;
+    int achor = 0;
+    int indice = 0;
+    printf("Digite o nome do aluno para corrigir: ");
+        scanf("%[^\n]",&auxAluno.nome);
+        fflush(stdin);
+    for(int i = 0; i < elem; i++){
+        if(strcmp(aluno[i].nome,auxAluno.nome)==0){
+            indice = i;
+            achor = 1;
+            break;
+        }
+    }
+
+    if(achor = 1){
+        printf("Digite o nome corrigido: ");
+            scanf("%[^\n]",aluno[indice].nome);
+            fflush(stdin);
+        for(int i = 0; i < 4; i++){
+            printf("Digite a nota %d corrigida: ",i+1);
+                scanf("%f",&aluno[indice].notas[i]);
+                soma += aluno[indice].notas[i];
+        }
+        aluno[indice].media = soma/4.0;
+        printf("Dados corrigidos !!!");
+        getchar();
+    }else{
+        printf("\nAluno não encontrado !!! ");
+        getchar();
+    }
 
 }
