@@ -6,6 +6,7 @@
 void classificar();
 void cadastrar();
 void corrigir();
+void pesquisa();
 
 struct{
     char nome[50];
@@ -44,7 +45,7 @@ int main(){
             break;}
 
             case 3:{
-
+                pesquisa();
             break;}
 
             case 4:{
@@ -85,7 +86,8 @@ void cadastrar(){
             scanf("%f",&aluno[i].notas[j]);
             soma += aluno[i].notas[j];
         }
-        aluno[i].media =  soma / 4;
+        aluno[i].media =  soma / 4.0;
+        soma = 0;
         fflush(stdin);
     }
     classificar();
@@ -112,7 +114,6 @@ void classificar(){
     }while(continua != 0);
 
 }
-
 
 void corrigir(){
 
@@ -150,3 +151,34 @@ void corrigir(){
     }
 
 }
+
+void pesquisa(){
+
+    fflush(stdin);
+    system("cls");
+    int achou = 0;
+
+    printf("Digite o nome que deseja buscar: ");
+        scanf("%[^\n]",auxAluno.nome);
+        fflush(stdin);
+
+    for(int i = 0; i < 4; i++){
+        if(strcmp(aluno[i].nome,auxAluno.nome)==0){
+            achou = 1;
+            auxAluno = aluno[i];
+            break;
+        }
+    }
+    if(achou == 0){
+        printf("\n Aluno não encontrado !!!");
+        getchar();
+    }else{
+        printf("\nNome: %s\n\n",auxAluno.nome);
+        for(int i = 0; i < 4; i++){
+            printf("Nota %d: %.2f\n",i+1,auxAluno.notas[i]);
+        }
+        printf("\nMédia: %.2f\n\n",auxAluno.media);
+        getchar();
+    }
+}
+
