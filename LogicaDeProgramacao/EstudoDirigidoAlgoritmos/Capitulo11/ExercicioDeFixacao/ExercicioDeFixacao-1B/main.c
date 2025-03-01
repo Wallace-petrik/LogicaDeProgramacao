@@ -4,6 +4,7 @@
 #define  elem 2
 
 void classificar();
+void reprovados();
 void cadastrar();
 void aprovados();
 void corrigir();
@@ -55,7 +56,7 @@ int main(){
             break;}
 
             case 5:{
-
+                reprovados();
             break;}
 
             case 6:{
@@ -194,6 +195,20 @@ void aprovados(){
     }
     if(achou == 0){
         printf("Nenhum aluno aprovado !!!");
+    }
+    getchar();
+}
+
+void reprovados(){
+    int achou = 0;
+    for(int i = 0; i < elem; i++){
+        if(aluno[i].media>=7){
+            printf("Nome: %s\tReprovado\n",aluno[i].nome);
+            achou = 1;
+        }
+    }
+    if(achou == 0){
+        printf("Nenhum aluno reprovado !!!");
     }
     getchar();
 }
