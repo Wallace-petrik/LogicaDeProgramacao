@@ -5,8 +5,10 @@
 
 void classificar();
 void cadastrar();
+void aprovados();
 void corrigir();
 void pesquisa();
+
 
 struct{
     char nome[50];
@@ -49,7 +51,7 @@ int main(){
             break;}
 
             case 4:{
-
+                aprovados();
             break;}
 
             case 5:{
@@ -182,3 +184,16 @@ void pesquisa(){
     }
 }
 
+void aprovados(){
+    int achou = 0;
+    for(int i = 0; i < elem; i++){
+        if(aluno[i].media>=7){
+            printf("Nome: %s\tAprovado\n",aluno[i].nome);
+            achou = 1;
+        }
+    }
+    if(achou == 0){
+        printf("Nenhum aluno aprovado !!!");
+    }
+    getchar();
+}
