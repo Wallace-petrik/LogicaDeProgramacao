@@ -23,6 +23,6 @@ int main(){
 
 void calcularPrestacaoAtaso(float valor , int taxa, int tempo){
     float pret = 0;
-    pret = valor + (valor *(taxa/100)*tempo);
+    pret = valor + (valor *(taxa/100,0)*tempo);
     printf("O valor com as taxas é %.2f",pret);
 }
