@@ -21,5 +21,3 @@
 ###  Obs 🚩
 * O diretório LogicaDeProgramacaoConstrucaoDeAlgoritmosEstruturasDeDados contem os exercícios no livro Lógica de programação: A construção de algoritmos 3ª Edição.
 * O diretório EstudoDirigidoAlgoritmos contem os exercícios no livro Estudo dirigido: Algoritmos.
-
-### [Acesse meu perfil no portfólio](https://devpetrik.com.br/)  | [Acesse meu perfil no Linkedin](https://www.linkedin.com/in/wallace-petrik-45b9471b4/)
