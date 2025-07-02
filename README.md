@@ -1,5 +1,5 @@
-# Lógica De Programação
-## Este repositório visa compartilhar materiais de lógica de programação, algoritmos.
+# Lógica De Programação, Algoritmos e Estrutura de Dados
+## Este repositório visa compartilhar materiais de lógica de programação, algoritmos e estrutura de dados.
 ### O diretório LogicaDeProgramação e destinado para os seguintes conteúdos.
 * Exercícios de Fixação e exercício proposto dos **Livros recomendados**
 ### Livros 📚
