@@ -1,8 +1,10 @@
 # Lógica De Programação, Algoritmos e Estrutura de Dados
 ## Este repositório visa compartilhar materiais de lógica de programação, algoritmos e estrutura de dados.
 ### O diretório LogicaDeProgramação e destinado para os seguintes conteúdos.
-* Exercícios de Fixação e exercício proposto dos **Livros recomendados**
-### Livros 📚
+* Exercícios de Fixação e exercício proposto dos **Livros**
+  1. Estudo dirigido: Algoritmos
+  2. Lógica de programação: A construção de algoritmos e estruturas de dados. 3ª Edição
+### Livros recomendados 📚
 * [Estudo dirigido: Algoritmos
 ](https://www.amazon.com.br/Dirigido-Algoritmos-Augusto-Figueiredo-Oliveira/dp/857194413X/ref=sr_1_1?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3A70219JTNB0U&dib=eyJ2IjoiMSJ9.yDwtAoaEx_33Y-0sIKIB2_H9M4wxTIaiVwvtVObe_mmmUOcUiNTas_SycUfGEMI9HtrWh6gRkRSexkquphKrPNpWAYTwx9sNFhGAxHLMWhvT52ph0enOj7taryNBJZAJM9LRTdjQerN_YAYR7PZ2uSNBWzYVsHn6upl610HJ5pP-aJyJnkoYJNT8_XPmGSwWws7Jw8AxoLO6g5-0RgYhuQ.XPkkb791UtlFFusdCuo32BcXB5RDGIO4a6czaeMIOf8&dib_tag=se&keywords=algoritmos+estudo+dirigido&qid=1728950376&s=books&sprefix=algoritmos+estudo+dirigido%2Cstripbooks%2C187&sr=1-1&ufe=app_do%3Aamzn1.fos.6121c6c4-c969-43ae-92f7-cc248fc6181d)
 * [Lógica de programação: A construção de algoritmos e estruturas de dados. 3ª Edição
