@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <locale.h>
 
+void abrir();
+void fechar();
 typedef struct{
     int codigoDoLivro;
     char titulo[30];
@@ -12,6 +14,7 @@ typedef struct{
 }Livro;
 
 FILE *arqLivros;
+Livro livroAux;
 Livro livro;
 
 int main(){
@@ -32,11 +35,8 @@ void menu(){
             fflush(stdin);
         switch(opcao){
             case 1:{
-                if((arqLivros = fopen("Livros.dat","a+b"))==NULL){
-                    printf("Erro ao abrir o arquivo !!!");
-                    getchar();
-                    exit(1);
-                }
+
+                abrir();
 
                 printf("Entre com os dados do livro !!!\n");
                 printf("Código\; ");
@@ -73,7 +73,26 @@ void menu(){
 
             break;}
             case 2:{
+                abrir();
 
+                int controle;
+                printf("Digite o assunto que esta buscando: ");
+                    scanf("%[^\n]",&livroAux.assunto);
+                while(!feof(arqLivros)){
+                        controle = fread(&livro,sizeof(Livro),1,arqLivros);
+                        if(ferror(arqLivros)){
+                            printf("Erro na leitura do arquivo");
+                        }else{
+                            if((strcmp(livroAux.assunto,livro.assunto) == 0) && controle != 0){
+                                printf("Nome do livro: %s\n",livro.titulo);
+                                printf("Nome do autor: %s\n",livro.autor);
+                            }
+                        }
+                }
+                fechar();
+                fflush(stdin);
+                getchar();
+                system("cls");
             break;}
             case 3:{
                 printf("Até logo !!!");
@@ -87,3 +106,16 @@ void menu(){
     }while(opcao!=3);
 }
 
+void abrir(){
+    if((arqLivros = fopen("Livros.dat","a+b"))==NULL){
+        printf("Erro ao abrir o arquivo !!!");
+        getchar();
+        exit(1);
+    }
+}
+
+void fechar(){
+    if(fclose(arqLivros)){
+        printf("Erro no fechamentob do arquivo!!!\n");
+    }
+}
