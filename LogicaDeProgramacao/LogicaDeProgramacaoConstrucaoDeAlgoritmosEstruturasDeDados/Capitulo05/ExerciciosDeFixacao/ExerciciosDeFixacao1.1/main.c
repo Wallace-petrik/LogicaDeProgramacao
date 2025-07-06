@@ -11,6 +11,9 @@ typedef struct{
     int edicao;
 }Livro;
 
+FILE *arqLivros;
+Livro livro;
+
 int main(){
 
     setlocale(LC_ALL,"");
@@ -29,6 +32,44 @@ void menu(){
             fflush(stdin);
         switch(opcao){
             case 1:{
+                if((arqLivros = fopen("Livros.dat","a+b"))==NULL){
+                    printf("Erro ao abrir o arquivo !!!");
+                    getchar();
+                    exit(1);
+                }
+
+                printf("Entre com os dados do livro !!!\n");
+                printf("Código\; ");
+                    scanf("%d",&livro.codigoDoLivro);
+                    fflush(stdin);
+                printf("Titulo: ");
+                    scanf("%[^\n]",&livro.titulo);
+                    fflush(stdin);
+                printf("Autor: ");
+                    scanf("%[^\n]",&livro.autor);
+                    fflush(stdin);
+                printf("Assunto: ");
+                    scanf("%[^\n]",&livro.assunto);
+                    fflush(stdin);
+                printf("Editora: ");
+                    scanf("%[^\n]",&livro.editora);
+                    fflush(stdin);
+                printf("Ano: ");
+                    scanf("%d",&livro.ano);
+                    fflush(stdin);
+                printf("Edição: ");
+                    scanf("%d",&livro.edicao);
+                    fflush(stdin);
+
+                if((fwrite(&livro,sizeof(livro),1,arqLivros)!=1)){
+                    printf("Erro ao gravar  os arquivos\n");
+                }else if(!fclose(arqLivros)){
+                    printf("Arquivo fechado com sucesso !!!");
+                }else{
+                    printf("Erro ao fechar o arquivo !!!");
+                }
+                getchar();
+                system("cls");
 
             break;}
             case 2:{
