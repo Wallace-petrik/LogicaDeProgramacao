@@ -7,6 +7,8 @@ int main(){
 
     int opcao;
 
+    FILE *arquivo;
+    FILE *abrirArquivo(char *nomeDoArquivo,char *modoDeAbertura);
     do{
         system("cls");
         printf("SISTEMA DE GERENCIAMENTO DE LIVROS\n");
@@ -21,7 +23,7 @@ int main(){
 
         switch(opcao){
             case 1:{
-
+                arquivo = abrirArquivo("livros.dat","ab");
             break;}
             case 2:{
 
@@ -47,4 +49,14 @@ int main(){
     }while(opcao!=6);
 
     return 0;
+}
+
+FILE *abrirArquivo(char *nomeDoArquivo,char *modoDeAbertura){
+    FILE *arquivo = fopen(nomeDoArquivo,modoDeAbertura);
+    if(arquivo ==NULL){
+        printf("Falha ao abrir o arquivo %s!!!",nomeDoArquivo);
+        system("pause");
+        exit(1);
+    }
+    return arquivo;
 }
