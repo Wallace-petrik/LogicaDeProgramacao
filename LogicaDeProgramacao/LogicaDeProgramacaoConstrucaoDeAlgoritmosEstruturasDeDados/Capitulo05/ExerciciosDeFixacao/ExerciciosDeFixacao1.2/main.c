@@ -2,13 +2,27 @@
 #include <locale.h>
 #include <stdlib.h>
 
+struct{
+    int codigo;
+    char titulo[30];
+    char autor[30];
+    char assunto[30];
+    char editora[30];
+    int ano;
+    int edicao;
+}typedef Livro;
+
+FILE *abrirArquivo(char *nomeDoArquivo,char *modoDeAbertura);
+
 int main(){
     setlocale(LC_ALL,"");
 
     int opcao;
 
+    Livro livro;
     FILE *arquivo;
-    FILE *abrirArquivo(char *nomeDoArquivo,char *modoDeAbertura);
+
+
     do{
         system("cls");
         printf("SISTEMA DE GERENCIAMENTO DE LIVROS\n");
@@ -23,7 +37,32 @@ int main(){
 
         switch(opcao){
             case 1:{
+                system("cls");
                 arquivo = abrirArquivo("livros.dat","ab");
+                printf("\tEntre com os dados do livro !!!\n\n");
+                printf("Código: ");
+                    scanf("%d%*c",&livro.codigo);
+                printf("Titulo: ");
+                    scanf("%[^\n]%*c",&livro.titulo);
+                printf("Autor: ");
+                    scanf("%[^\n]%*c",&livro.autor);
+                printf("Assunto: ");
+                    scanf("%[^\n]%*c",&livro.assunto);
+                printf("Editora: ");
+                    scanf("%[^\n]%*c",&livro.editora);
+                printf("Ano");
+                    scanf("%d%*c",&livro.ano);
+                printf("Edição: ");
+                    scanf("%d%*c",&livro.edicao);
+                fwrite(&livro,sizeof(livro),1,arquivo);
+
+                if(!ferror(arquivo)){
+                    if(!fclose(arquivo)){
+                        printf("\nSucesso ao salvar os dados !!!");
+                    }else printf("Erro ao fechar o arquivo !!! ");
+
+                }else printf("\n\nErro ao salvar os dados.");
+                getchar();
             break;}
             case 2:{
 
